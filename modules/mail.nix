@@ -11,7 +11,6 @@
 
   mailserver = {
     enable = true;
-    stateVersion = 1;
     fqdn = "mail.wurt.net";
     domains = [ "wurt.net" ];
 
