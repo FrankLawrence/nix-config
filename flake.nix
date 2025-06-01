@@ -5,10 +5,11 @@
  
    outputs = { nixpkgs, ... }: {
      nixosConfigurations = {
-       hetzner-x86_64 = nixpkgs.lib.nixosSystem {
+       hetzner = nixpkgs.lib.nixosSystem {
          system = "x86_64-linux";
          modules = [
-           ./configuration.nix
+           ./hosts/hetzner/configuration.nix
+           ./modules/mail.nix
          ];
        };
      };
