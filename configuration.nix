@@ -23,6 +23,18 @@
        device = "/dev/disk/by-label/swap";
      }
    ];
+
+   systemd.network.enable = true;
+   systemd.network.networks."30-wan" = {
+     matchConfig.Name = "enp1s0";
+     networkConfig.DHCP = "ipv4";
+     address = [
+       "2a01:4f9:c012:d8e::1/64"
+     ];
+     routes = [
+       { Gateway = "fe80::1"; }
+     ];
+   };
    
    time.timeZone = "Europe/Helsinki";
    i18n.defaultLocale = "en_US.UTF-8";
