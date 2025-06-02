@@ -9,7 +9,12 @@
          system = "x86_64-linux";
          modules = [
            ./hosts/hetzner/configuration.nix
-           ./modules/mail.nix
+         ];
+       };
+       homelab = nixpkgs.lib.nixosSystem {
+         system = "x86_64-linux";
+         modules = [
+           ./hosts/homelab/configuration.nix
          ];
        };
      };
