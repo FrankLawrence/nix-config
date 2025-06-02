@@ -7,7 +7,6 @@
 {
   imports = [
 	  ../../modules/glance.nix
-	  ../../modules/navidrome.nix
     ../../modules/reverse-proxy.nix
 	  ../../users/pinkfloyd.nix
     ];
