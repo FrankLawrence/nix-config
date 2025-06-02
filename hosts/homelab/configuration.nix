@@ -8,6 +8,7 @@
   imports = [
 	  ../../modules/glance.nix
 	  ../../modules/navidrome.nix
+    ../../modules/reverse-proxy.nix
 	  ../../users/pinkfloyd.nix
     ];
 
@@ -16,13 +17,22 @@
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.useOSProber = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
-  networking.networkmanager.enable = true;
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking = {
+    hostName = "centauri";
+    networkmanager.enable = true;
+    # Configure static IP for your local network
+    interfaces.eth0.ipv4.addresses = [{
+      address = "192.168.178.60";  # Adjust to your network
+      prefixLength = 24;
+    }];
+    defaultGateway = "192.168.178.1";  # Your router IP
+    nameservers = [ "1.1.1.1" "8.8.8.8" ];
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [ 22 80 443 ];
+      # allowedDUPPorts = [ ... ];
+    };
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
@@ -49,27 +59,8 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.pinkfloyd = {
-    isNormalUser = true;
-    description = "pinkfloyd";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      firefox
-    ];
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDLxYWRdvzd01GebtUTxUgLO6F5z/ricceiy6Gs6IU/H pinkfloyd@terra.local"
-    ];
-  };
-
   environment.systemPackages = with pkgs; [
-    neovim
-    unzip
-    bash
-    fzf
-    eza
-    ripgrep
-    bat
+    neovim bash fzf eza ripgrep bat curl git
   ];
 
   programs.bash.shellAliases = {
