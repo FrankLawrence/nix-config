@@ -7,9 +7,9 @@
 
   environment.systemPackages = with pkgs; [
     neovim
-      git
-      age
-      agenix
+    git
+    age
+    frp
   ];
 
   fileSystems."/" = {
@@ -73,7 +73,7 @@
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ 22 ];
+  networking.firewall.allowedTCPPorts = [ 22 6000 7000 ];
 
   system.stateVersion = "24.11";
 }
