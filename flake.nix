@@ -1,7 +1,7 @@
  {
    inputs = {
      nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
-     inputs.agenix.url = "github:ryantm/agenix";
+     agenix.url = "github:ryantm/agenix";
    };
 
    outputs = { self, nixpkgs, agenix, ... }: {

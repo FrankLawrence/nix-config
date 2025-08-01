@@ -79,13 +79,27 @@
               style = "grid-cards";
               video-url-template = "https://yewtu.be/watch?v={VIDEO-ID}";
               channels = [
-                "UCR-DXc1voovS8nhAvccRZhg" # Jeff Geerling
-                  "UCsnGwSIHyoYN0kiINAGUKxg" # Wolfgang Channel
-                  "UCWQaM7SpSECp9FELz-cHzuQ" # Dreams of Code
                   "UCXuqSBlHAE6Xw-yeJA0Tunw" # Linus Tech Tips
+                  "UCdBK94H6oZT2Q7l0-b0xmMg" # Short circuit
                   "UCeeFfhMcJa1kjtfZAGskOCA" # TechLinked
-                  "UC7YOGHUfC1Tb6E4pudI9STA" # Mental Outlaw
+
+                  # Homelab
+                  "UCR-DXc1voovS8nhAvccRZhg" # Jeff Geerling
+                  "UCsnGwSIHyoYN0kiINAGUKxg" # Wolfgang Channel
                   "UCZNhwA1B5YqiY1nLzmM0ZRg" # Christian Lempa
+                  "UCgdTVe88YVSrOZ9qKumhULQ" # Hardware Haven
+
+                  # 3D Print and Homelab
+                  "UCmlzNHg8QiWVutUyFOV2UdQ" # Thestockpot
+
+                  "UC7YOGHUfC1Tb6E4pudI9STA" # Mental Outlaw
+                  "UC9x0AN7BWHpCDHSm9NiJFJQ" # Networkchuck
+
+                  "UCWQaM7SpSECp9FELz-cHzuQ" # Dreams of Code
+                  "UC04nROIJrY22Gl2aFqKcdqQ" # Sylivan Frank
+                  "UCUMwY9iS8oMyWDYIe6_RmoA" # No boilerplate
+                  "UCuGS5mN1_CpPzuOUAu2LluA" # Nixhero
+                  "UC_zBdZ0_H_jn41FDRG7q4Tw" # Vimjoyer
               ];
             }
             ];
