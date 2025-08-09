@@ -2,20 +2,14 @@
 
 
 {
-  users.groups.nfsimmich = {
-    members = [ "pinkfloyd" ];
-  };
-  users.groups.nfsphoto = {
-    members = [ "pinkfloyd" ];
-  };
-  users.groups.nfshomes = {
+  users.groups.nfsmusic = {
     members = [ "pinkfloyd" ];
   };
 
   users.users.pinkfloyd = {
     isNormalUser = true;
     description = "pinkfloyd";
-    extraGroups = [ "networkmanager" "wheel" "nfsimmich" "nfsphoto" "nfshomes" ];
+    extraGroups = [ "networkmanager" "wheel" "nfsmusic" ];
     packages = with pkgs; [
       firefox
     ];

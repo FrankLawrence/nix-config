@@ -7,9 +7,9 @@
 {
   imports = [
 	  ../../modules/glance.nix
-    ../../modules/reverse-proxy.nix
+    ../../modules/navidrome.nix
 	  ../../users/pinkfloyd.nix
-    ];
+  ];
 
   # Bootloader.
   boot.loader.grub.enable = true;
@@ -21,7 +21,7 @@
     networkmanager.enable = true;
     # Configure static IP for your local network
     interfaces.eth0.ipv4.addresses = [{
-      address = "192.168.178.60";  # Adjust to your network
+      address = "192.168.178.156";  # Adjust to your network
       prefixLength = 24;
     }];
     defaultGateway = "192.168.178.1";  # Your router IP
