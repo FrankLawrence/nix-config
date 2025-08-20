@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [
@@ -21,12 +21,13 @@
   networking = {
     hostName = "centauri";
     networkmanager.enable = true;
+
     # Configure static IP for your local network
     interfaces.eth0.ipv4.addresses = [{
-      address = "192.168.178.156";  # Adjust to your network
+      address = "192.168.178.156";
       prefixLength = 24;
     }];
-    defaultGateway = "192.168.178.1";  # Your router IP
+    defaultGateway = "192.168.178.1";
     nameservers = [ "1.1.1.1" "8.8.8.8" ];
     firewall = {
       enable = true;
@@ -40,6 +41,9 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_CTYPE = "en_US.UTF8";
+  };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -50,6 +54,7 @@
 
   environment.systemPackages = with pkgs; [
     neovim bash fzf eza ripgrep bat curl git
+    inputs.agenix.packages."${system}".default
   ];
 
   programs.bash.shellAliases = {
@@ -68,6 +73,9 @@
     "l." = "eza -a | egrep '^\\.'";
   };
 
+  # Set ssh key to decrypt for agenix
+  age.identityPaths = [ "/home/pinkfloyd/.ssh/id_ed25519" ];
+
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
@@ -78,4 +86,3 @@
 
   system.stateVersion = "24.11";
 }
-
