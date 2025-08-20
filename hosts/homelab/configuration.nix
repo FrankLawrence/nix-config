@@ -9,6 +9,7 @@
 	  ../../modules/glance.nix
     ../../modules/kavita.nix
     ../../modules/komga.nix
+    ../../modules/mealie.nix
     ../../modules/navidrome.nix
     ../../modules/nfs.nix
     ../../modules/immich.nix

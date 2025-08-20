@@ -7,4 +7,5 @@ let
 in
 {
   "kavita.age".publicKeys = [ local-terra homelab ];
+  "mealie.age".publicKeys = [ local-terra homelab ];
 }
