@@ -7,6 +7,8 @@
 {
   imports = [
 	  ../../modules/glance.nix
+    ../../modules/kavita.nix
+    ../../modules/komga.nix
     ../../modules/navidrome.nix
     ../../modules/nfs.nix
     ../../modules/immich.nix

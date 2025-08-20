@@ -6,4 +6,5 @@ let
   systems = [ homelab ];
 in
 {
+  "kavita.age".publicKeys = [ local-terra homelab ];
 }
