@@ -6,15 +6,16 @@
 
 {
   imports = [
-	  ../../modules/glance.nix
+    ../../modules/glance.nix
+    # ../../modules/immich.nix
     ../../modules/kavita.nix
     ../../modules/komga.nix
     ../../modules/mealie.nix
     ../../modules/navidrome.nix
     ../../modules/nfs.nix
-    ../../modules/immich.nix
-	  ../../users/pinkfloyd.nix
     ../../modules/stirling-pdf.nix
+    ../../users/pinkfloyd.nix
+    ./hardware-configuration.nix
   ];
 
   # Bootloader.
@@ -35,7 +36,14 @@
     nameservers = [ "1.1.1.1" "8.8.8.8" ];
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 80 443 ];
+      allowedTCPPorts = [
+        22   # ssh
+        5000 # kavita
+        8080 # glance
+        8081 # stirling-pdf
+        8082 # komga
+        9000 # mealie
+      ];
       # allowedDUPPorts = [ ... ];
     };
   };
@@ -57,7 +65,18 @@
   services.xserver.desktopManager.gnome.enable = true;
 
   environment.systemPackages = with pkgs; [
-    neovim bash fzf eza ripgrep bat curl git
+    neovim
+    bash
+    fzf
+    eza
+    ripgrep
+    bat
+    curl
+    git
+    gcc
+    clang
+    zig
+    lazygit
     inputs.agenix.packages."${system}".default
   ];
 
