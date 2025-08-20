@@ -14,6 +14,7 @@
     ../../modules/nfs.nix
     ../../modules/immich.nix
 	  ../../users/pinkfloyd.nix
+    ../../modules/stirling-pdf.nix
   ];
 
   # Bootloader.
