@@ -8,12 +8,18 @@
   imports = [
     ../../modules/glance.nix
     # ../../modules/immich.nix
+    ../../modules/karakeep.nix
     ../../modules/kavita.nix
     ../../modules/komga.nix
+    ../../modules/mazanoke.nix
     ../../modules/mealie.nix
+    ../../modules/metadata-remote.nix
     ../../modules/navidrome.nix
     ../../modules/nfs.nix
+    ../../modules/omni-tools.nix
+    ../../modules/pocket-id.nix
     ../../modules/stirling-pdf.nix
+    ../../modules/syncthing.nix
     ../../users/pinkfloyd.nix
     ./hardware-configuration.nix
   ];
@@ -38,11 +44,23 @@
       enable = true;
       allowedTCPPorts = [
         22   # ssh
+        80   # reverse-proxy
+        443  # reverse-proxy
+        1411 # pocket-id
+        2283 # immich
+        3004 # sparkyfitness
+        3474 # mazanoke
         5000 # kavita
-        8080 # glance
         8081 # stirling-pdf
         8082 # komga
+        8083 # omni-tools
+        8084 # glance
+        8338 # metadata-remote
+        8384 # syncthing webUI
+        22000 # synchting TCP and UDP sync traffic
+        21027 # syncthing UDP discovery
         9000 # mealie
+        9222 # karakeep
       ];
       # allowedDUPPorts = [ ... ];
     };
@@ -65,18 +83,19 @@
   services.xserver.desktopManager.gnome.enable = true;
 
   environment.systemPackages = with pkgs; [
-    neovim
     bash
-    fzf
-    eza
-    ripgrep
     bat
-    curl
-    git
-    gcc
     clang
-    zig
+    compose2nix
+    curl
+    eza
+    fzf
+    gcc
+    git
     lazygit
+    neovim
+    ripgrep
+    zig
     inputs.agenix.packages."${system}".default
   ];
 
@@ -95,6 +114,8 @@
     lt = "eza -aT --color=always --group-directories-first";
     "l." = "eza -a | egrep '^\\.'";
   };
+
+  programs.ssh.startAgent = true;
 
   # Set ssh key to decrypt for agenix
   age.identityPaths = [ "/home/pinkfloyd/.ssh/id_ed25519" ];
