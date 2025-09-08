@@ -92,6 +92,7 @@
     fzf
     gcc
     git
+    gh
     lazygit
     neovim
     ripgrep
@@ -117,6 +118,21 @@
 
   programs.ssh.startAgent = true;
 
+  programs.git = {
+    enable = true;
+    config = {
+      init.defaultBranch = "main";
+      pull.rebase = false;
+      user = {
+        name = "FrankLawrence";
+        email = "frankl.am.htg@icloud.com";
+      };
+      alias = {
+        hist = "log --oneline --graph --all";
+      };
+    };
+  };
+
   # Set ssh key to decrypt for agenix
   age.identityPaths = [ "/home/pinkfloyd/.ssh/id_ed25519" ];
 
@@ -127,6 +143,8 @@
     settings.PasswordAuthentication = false;
     settings.KbdInteractiveAuthentication = false;
   };
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   system.stateVersion = "24.11";
 }
