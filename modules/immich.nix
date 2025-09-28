@@ -1,10 +1,17 @@
 { config, pkgs, ... }:
 
 {
+  age.secrets.immich = {
+    file = ../secrets/immich.age;
+    owner = "immich";
+    group = "immich";
+  };
+
   services.immich = {
     enable = true;
-    openFirewall = true;
+    port = 2283;
     mediaLocation = "/mnt/nfs/immich";
+    secretsFile = config.age.secrets.immich.path;
 
     settings = {
       newVersionCheck.enabled = true;

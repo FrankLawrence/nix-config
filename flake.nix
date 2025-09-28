@@ -22,16 +22,22 @@
     nixosConfigurations = {
       hetzner = nixpkgs.lib.nixosSystem {
         inherit system;
+        specialArgs = {
+          inherit inputs;
+        };
         modules = [
           ./hosts/hetzner/configuration.nix
-            agenix.nixosModules.default
+          agenix.nixosModules.default
         ];
       };
       homelab = nixpkgs.lib.nixosSystem {
         inherit system;
+         specialArgs = {
+           inherit inputs;
+         };
         modules = [
           ./hosts/homelab/configuration.nix
-            agenix.nixosModules.default
+          agenix.nixosModules.default
         ];
       };
       jupiter = nixpkgs.lib.nixosSystem {
@@ -39,7 +45,7 @@
         inherit system;
         modules = [
           ./hosts/jupiter/configuration.nix
-            agenix.nixosModules.default
+          agenix.nixosModules.default
             # home-manager.nixosModules.home-manager {
             #   home-manager.useGlobalPkgs = true;
             #   home-manager.useUserPackages = true;
