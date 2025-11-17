@@ -17,4 +17,5 @@ in
   "adguard.age".publicKeys       = users ++ systems;
   "pocket-id.age".publicKeys     = users ++ systems;
   "syncthing.age".publicKeys     = users ++ systems;
+  "copyparty.age".publicKeys     = users;
 }

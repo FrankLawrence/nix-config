@@ -9,9 +9,13 @@
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    copyparty = {
+      url = "github:9001/copyparty";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, agenix, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, agenix, home-manager, copyparty, ... }@inputs:
   let
     system = "x86_64-linux";
     pkgs = import nixpkgs {
@@ -51,6 +55,7 @@
             #   home-manager.useUserPackages = true;
             #   home-manager.users.frank = ./home.nix;
             # }
+          copyparty.nixosModules.default
         ];
       };
     };
