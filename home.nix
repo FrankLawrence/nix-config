@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [
@@ -25,28 +25,38 @@
     discord
     dust
     emacs
+    fahclient
     feishin
     foliate
     ghidra
     gimp
     glow
     gnupg
+    go
     gpg-tui
     hyprshot
+    inetutils
     inkscape
     libreoffice
     librewolf
+    lima
     localsend
+    lolcat
     mindustry
     navi
+    nh
     obsidian
     ollama-rocm
     pinentry-curses
+    postman
+    python3
     qbittorrent
+    qemu
     signal-cli
     signal-desktop
     spotify
     steam
+    starship
     thunderbird
     tor-browser
     vlc
@@ -90,6 +100,7 @@
       background_opacity = 1.0;
       background_blue = 0.7;
       editor = "nvim";
+      font_size = 14.0;
     };
     themeFile = "rose-pine";
   };
