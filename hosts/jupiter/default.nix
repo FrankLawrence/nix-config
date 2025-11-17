@@ -2,28 +2,34 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, lib, ... }:
 
 {
-  imports = [
-    ./hardware-configuration.nix
-  ];
+  imports =
+    [ # Include the results of the hardware scan.
+      ./hardware-configuration.nix
+    ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelModules = [ "wol" ];
 
   networking = {
     hostName = "jupiter";
-    networkmanager.enable = true;
-    nameservers = [ "192.168.178.158" ]; # adguard
-    defaultGateway = "192.168.178.1";  # Your router IP
+    networkmanager = {
+      enable = true;
+      dns = "none";
+    };
+    nameservers = [ "1.1.1.1" "192.168.178.158" ]; # adguard
     search = [ "wurt.net" ];
-    # Open ports in the firewall.
-    # firewall.allowedTCPPorts = [ ... ];
-    # firewall.allowedUDPPorts = [ ... ];
-    # Or disable the firewall altogether.
-    # firewall.enable = false;
+    firewall.allowedTCPPorts = [ 
+      22   # sshd
+      8080 # open-webui
+    ];
+    interfaces.wlp7s0.wakeOnLan = {
+      enable = true;
+    };
   };
 
   # Set your time zone.
@@ -48,6 +54,13 @@
     };
   };
 
+  # Enable the wayland windowing system
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
+
+
   # Enable HIP libraries for GPU rendering
   systemd.tmpfiles.rules = [
     "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
@@ -58,7 +71,8 @@
     powerOnBoot = true;
     settings = {
       General = {
-        Experimental = true; # Show battery charge of Bluetooth devices
+        Experimental = true;
+	FastConnectable = true;
       };
     };
   };
@@ -88,102 +102,50 @@
   users.users.frank = {
     isNormalUser = true;
     description = "Frank";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "shared-media" ];
     packages = with pkgs; [
-      blender
+      blender-hip
       btop
-      burpsuite
       cmatrix
+      # davinci-resolve
       digikam
-      dmenu
       dust
       emacs
+      fira-code
+      foliate
       ghidra
       gimp
       glow
-      i3
+      hyprshot
       inkscape
       libreoffice
       librewolf
+      localsend
+      mindustry
       obsidian
+      pinentry
+      razergenie
       signal-cli
       signal-desktop
+      spotify
       tor-browser
       thunderbird
       vlc
       vscodium
+      winetricks
+      wineWowPackages.stable
       wireshark
       yt-dlp
     ];
   };
 
-  # Install firefox.
-  programs.firefox = {
-    enable = true;
-    package = pkgs.librewolf;
-    policies = {
-      DisableTelemetry = true;
-      DisableFirefoxStudies = true;
-      Preferences = {
-        "cookiebanners.service.mode.privateBrowsing" = 2; # Block cookie banners in private browsing
-        "cookiebanners.service.mode" = 2; # Block cookie banners
-        "privacy.donottrackheader.enabled" = true;
-        "privacy.fingerprintingProtection" = true;
-        "privacy.resistFingerprinting" = true;
-        "privacy.trackingprotection.emailtracking.enabled" = true;
-        "privacy.trackingprotection.enabled" = true;
-        "privacy.trackingprotection.fingerprinting.enabled" = true;
-        "privacy.trackingprotection.socialtracking.enabled" = true;
-      };
-      ExtensionSettings = {
-        "jid1-ZAdIEUB7XOzOJw@jetpack" = { # DuckDuckGo
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/duckduckgo-for-firefox/latest.xpi";
-          installation_mode = "force_installed";
-        };
-        "uBlock0@raymondhill.net" = { # uBlock Origin
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
-          installation_mode = "force_installed";
-        };
-        "keepassxc-browser@keepassxc.org" = { # KeePassXC
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/keepassxc-browser/latest.xpi";
-          installation_mode = "force_installed";
-        };
-        "snowflake@torproject.org" = { # Snowflake
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/snowflake/latest.xpi";
-          installation_mode = "force_installed";
-        };
-        "vimium@vimium.com" = { # Vimium
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/vimium/latest.xpi";
-          installation_mode = "force_installed";
-        };
-        "darkreader@darkreader.org" = { # Dark Reader
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi";
-          installation_mode = "force_installed";
-        };
-      };
-    };
-  };
-
-  environment.etc."firefox/policies/policies.json".target = "librewolf/policies/policies.json";
-
-  programs.bash.shellAliases = {
-    ".." = "z ..";
-    "..." = "z ../..";
-    "...." = "z ../../..";
-    ".3" = "z ../../..";
-    ".4" = "z ../../../..";
-    cp = "cp -i";
-    rm = "rm -i";
-    mv = "mv -i";
-    ls = "eza -al --color=always --group-directories-first";
-    la = "eza -a --color=always --group-directories-first";
-    ll = "eza -l --color=always --group-directories-first";
-    lt = "eza -aT --color=always --group-directories-first";
-    "l." = "eza -a | egrep '^\\.'";
-  };
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "python2"
+    ];
+  nixpkgs.overlays = [ inputs.copyparty.overlays.default ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -191,8 +153,8 @@
     bat
     clinfo
     eza
-    ffmpeg
     fd
+    ffmpeg
     fish
     fselect
     fzf
@@ -202,7 +164,6 @@
     git
     htop
     keepassxc
-    kitty
     lazygit
     nb
     neofetch
@@ -210,10 +171,26 @@
     tldr
     tor
     typst
-    tmux
+    ripgrep
     yazi
     zoxide
+    inputs.agenix.packages."${system}".default
   ];
+
+  virtualisation = {
+    docker = {
+      enable = true;
+      storageDriver = "overlay2";
+      daemon.settings.data-root = "/var/lib/docker";
+    };
+    virtualbox.host = {
+      enable = true;
+      enableKvm = true;
+      addNetworkInterface = false;
+    };
+  };
+
+  age.identityPaths = [ "/home/frank/.ssh/id_ed25519" ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -222,6 +199,85 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
+
+  services.pcscd.enable = true;
+  
+  services.syncthing = {
+    enable = true;
+    group = "users";
+    user = "frank";
+    dataDir = "/home/frank/";
+    configDir = "/home/frank/.config/syncthing/";
+    guiAddress = "127.0.0.1:8384";
+    settings = {
+      devices = {
+        terra = {
+          name = "macbook";
+          id = "QJXO57G-AJVI2DV-T3L4VTI-CTSKCVP-2NU5K3D-DZ5VEKY-ZPOPV5O-TU4YTAM";
+        };
+        centauri = {
+          name = "centauri";
+          id = "CKT27MM-CB52JEP-ZWXWWCT-N2K4IRE-PWJRLNT-D4EBMZE-ZUBKI3B-SDXXPQN";
+        };
+      };
+      folders = {
+        "nb" = {
+          path = "~/.nb/";
+          devices = [ "terra" ];
+          # versioning = {
+          #   type = "staggered";
+          #   params = {
+          #     cleanInterval = "3600";
+          #     maxAge = "15552000"; # 180 days in seconds
+          #   };
+          # };
+        };
+      };
+      folders = {
+        "default" = {
+          path = "~/Sync/";
+          devices = [ "terra" "centauri" ];
+          versioning = {
+            type = "staggered";
+            params = {
+              cleanInterval = "3600";
+              maxAge = "15552000"; # 180 days in seconds
+            };
+          };
+        };
+      };
+    };
+  };
+
+  services.openssh = {
+    enable = true;
+    ports = [ 22 ];
+    settings = {
+      PasswordAuthentication = false;
+    };
+  };
+
+  services.foldingathome.enable = true;
+
+  services.blueman.enable = true;
+
+  services.tailscale = {
+    enable = true;
+    port = 41641;
+    derper.port = 8010;
+    interfaceName = "tailscale0";
+    extraSetFlags = [ "--advertise-exit-node" "--accept-routes" ];
+    useRoutingFeatures = "both";
+  };
+
+  # wireshark permissions
+  services.udev = {
+    extraRules = ''
+      SUBSYSTEM=="usbmon", GROUP="wireshark", MODE="0640"
+    '';
+  };
+
+  users.extraGroups.vboxusers.members = [ "frank" ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -234,5 +290,5 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
-}
 
+}

@@ -20,27 +20,25 @@
     system = "x86_64-linux";
     pkgs = import nixpkgs {
       inherit system;
-      config = { allowUnfree = true; };
+      config = { 
+        allowUnfree = true; 
+      };
     };
   in {
     nixosConfigurations = {
       hetzner = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
         inherit system;
-        specialArgs = {
-          inherit inputs;
-        };
         modules = [
-          ./hosts/hetzner/configuration.nix
+          ./hosts/hetzner
           agenix.nixosModules.default
         ];
       };
       homelab = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
         inherit system;
-         specialArgs = {
-           inherit inputs;
-         };
         modules = [
-          ./hosts/homelab/configuration.nix
+          ./hosts/homelab
           agenix.nixosModules.default
         ];
       };
@@ -48,13 +46,8 @@
         specialArgs = { inherit inputs; };
         inherit system;
         modules = [
-          ./hosts/jupiter/configuration.nix
+          ./hosts/jupiter
           agenix.nixosModules.default
-            # home-manager.nixosModules.home-manager {
-            #   home-manager.useGlobalPkgs = true;
-            #   home-manager.useUserPackages = true;
-            #   home-manager.users.frank = ./home.nix;
-            # }
           copyparty.nixosModules.default
         ];
       };
