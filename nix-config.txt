@@ -1,0 +1,1817 @@
+=== modules/glance.nix ===
+{ config, pkgs, ... }:
+
+{
+  age.secrets.adguard = {
+    file = ../../../secrets/adguard.age;
+  };
+
+  services.glance = {
+    enable = true;
+    settings = {
+      server = {
+        port = 8084;
+        host = "0.0.0.0";
+      };
+      pages = [
+      {
+        name = "Home";
+        center-vertically = true;
+        columns = [
+        {
+          size = "small";
+          widgets = [
+          {
+            type = "calendar";
+          }
+          {
+            type = "rss";
+            limit = 10;
+            collapse-after = 3;
+            cache = "3h";
+            feeds = [
+            { url = https://ciechanow.ski/atom.xml; }
+            {
+              url = https://www.joshwcomeau.com/rss.xml;
+              title = "Josh Comeau";
+            }
+            { url = https://samwho.dev/rss.xml; }
+            { url = https://awesomekling.github.io/feed.xml; }
+            {
+              url = https://isadeed.com/feed.xml;
+              title = "Ahmad Shadeed";
+            }
+            { url = https://weekly.nixos.org/feeds/all.rss.xml; }
+            ];
+          }
+          ];
+        }
+        {
+          size = "full";
+          widgets = [
+          {
+            type = "search";
+            autofocus = true;
+            bangs = [
+            {
+              title = "Youtube";
+              shortcut = "!yt";
+              url = "https://www.youtube.com/results?search_query={QUERY}";
+            }
+            {
+              title = "Urban Dictionary";
+              shortcut = "!urb";
+              url = "https://www.urbandictionary.com/define.php?term={QUERY}";
+            }
+            {
+              title = "Image Search";
+              shortcut = "!i";
+              url = "https://duckduckgo.com/?iar=images?q={QUERY}";
+            }
+            {
+              title = "Searx";
+              shortcut = "!s";
+              url = "https://searxng.site/searxng/search?q={QUERY}";
+            }
+            ];
+          }
+          {
+            type = "group";
+            widgets = [
+            { type = "hacker-news"; }
+            {
+              type = "videos";
+              style = "grid-cards";
+              video-url-template = "https://yewtu.be/watch?v={VIDEO-ID}";
+              channels = [
+                "UCXuqSBlHAE6Xw-yeJA0Tunw" # Linus Tech Tips
+                  "UCdBK94H6oZT2Q7l0-b0xmMg" # Short circuit
+                  "UCeeFfhMcJa1kjtfZAGskOCA" # TechLinked
+
+                  # Homelab
+                  "UCR-DXc1voovS8nhAvccRZhg" # Jeff Geerling
+                  "UCsnGwSIHyoYN0kiINAGUKxg" # Wolfgang Channel
+                  "UCZNhwA1B5YqiY1nLzmM0ZRg" # Christian Lempa
+                  "UCgdTVe88YVSrOZ9qKumhULQ" # Hardware Haven
+
+                  # 3D Print and Homelab
+                  "UCmlzNHg8QiWVutUyFOV2UdQ" # Thestockpot
+
+                  "UC7YOGHUfC1Tb6E4pudI9STA" # Mental Outlaw
+                  "UC9x0AN7BWHpCDHSm9NiJFJQ" # Networkchuck
+
+                  "UCWQaM7SpSECp9FELz-cHzuQ" # Dreams of Code
+                  "UC04nROIJrY22Gl2aFqKcdqQ" # Sylivan Frank
+                  "UCUMwY9iS8oMyWDYIe6_RmoA" # No boilerplate
+                  "UCuGS5mN1_CpPzuOUAu2LluA" # Nixhero
+                  "UC_zBdZ0_H_jn41FDRG7q4Tw" # Vimjoyer
+                  ];
+            }
+            ];
+          }
+          ];
+        }
+        {
+          size = "small";
+          widgets = [
+          {
+            type = "weather";
+            location = "Zurich";
+          }
+          ];
+        }
+        ];
+      }
+      {
+        name = "Self Hosting";
+        center-vertically = true;
+        columns = [
+        {
+          size = "small";
+          widgets = [
+            {
+              type = "dns-stats";
+              service = "adguard";
+              url = "https://adguard.wurt.net/";
+              username = "pinkfloyd";
+              password = config.age.secrets.adguard.path;
+            }
+            {
+              type = "rss";
+              limit = 10;
+              collapse-after = 3;
+              cache = "3h";
+              feeds = [
+              {
+                url = "https://selfh.st/rss/";
+                title = "This Week in Self-Hosted";
+              }
+              ];
+            }
+            # {
+            #   type = "releases";
+            #   show-source-icon = true;
+            #   respositories = [
+            #     "jellyfin/jellyfin"
+            #     "glanceapp/glance"
+            #   ];
+            # }
+          ];
+        }
+        {
+          size = "full";
+          widgets = [
+          {
+            type = "monitor";
+            cache = "1m";
+            title = "Services";
+            sites = [
+            {
+              title = "Nginx Proxy Manager";
+              url = "https://wurt.net";
+              check-url = "http://192.168.178.154:81";
+              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/nginx-proxy-manager.svg";
+            }
+            {
+              title = "Jellyfin";
+              url = "https://jellyfin.wurt.net";
+              check-url = "http://localhost:8096";
+              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/jellyfin.svg";
+            }
+            {
+              title = "Immich";
+              url = "https://immich.wurt.net";
+              check-url = "http://localhost:2283";
+              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/immich.svg";
+            }
+            {
+              title = "AdGuard Home";
+              url = "https://adguard.wurt.net";
+              check-url = "http://192.168.178.158:80";
+              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/adguard-home.svg";
+            }
+            {
+              title = "Home Assistant";
+              url = "https://ha.wurt.net";
+              check-url = "http://192.168.178.207:8123";
+              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/home-assistant.svg";
+            }
+            {
+              title = "Wire Guard";
+              url = "https://wg.wurt.net";
+              check-url = "http://192.168.178.159:10086";
+              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/wireguard.svg";
+            }
+            {
+              title = "Linkwarden";
+              url = "https://linkwarden.wurt.net";
+              check-url = "http://192.168.178.161:3000";
+              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/linkwarden.png";
+            }
+            {
+              title = "Vikunja";
+              url = "https://vikunja.wurt.net";
+              check-url = "http://192.168.178.164:3456";
+              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/vikunja.png";
+            }
+            {
+              title = "Navidrome";
+              url = "https://navidrome.wurt.net";
+              check-url = "http://localhost:4533";
+              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/navidrome.svg";
+            }
+            {
+              title = "komga";
+              url = "https://komga.wurt.net";
+              check-url = "http://localhost:8082";
+              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/komga.svg";
+            }
+            {
+              title = "Kavita";
+              url = "https://kavita.wurt.net";
+              check-url = "http://localhost:5000";
+              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/kavita.svg";
+            }
+            {
+              title = "Stirling PDF";
+              url = "https://stirling-pdf.wurt.net";
+              check-url = "http://localhost:8080";
+              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/stirling-pdf.svg";
+            }
+            {
+              title = "Synology NAS";
+              url = "https://synology.wurt.net";
+              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/synology.svg";
+            }
+            {
+              title = "Paperless NGX";
+              url = "https://paperless.wurt.net";
+              check-url = "http://192.168.178.163:8000";
+              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/paperless-ngx.svg";
+            }
+            {
+              title = "Mealie";
+              url = "https://mealie.wurt.net";
+              check-url = "http://localhost:9000";
+              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/mealie.svg";
+            }
+            {
+              title = "Omni-tools";
+              url = "https://omni-tools.wurt.net";
+              check-url = "http://localhost:8083";
+              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/omni-tools.webp";
+            }
+            {
+              title = "Mazanoke";
+              url = "https://mazanoke.wurt.net";
+              check-url = "http://localhost:3474";
+              icon = "https://cdn.jsdelivr.net/gh/selfhst/icons/svg/mazanoke.svg";
+            }
+            ];
+          }
+          ];
+        }
+        {
+          size = "small";
+          widgets = [
+          {
+            type = "group";
+            widgets = [
+            {
+              type = "reddit";
+              show-thumbnails = true;
+              subreddit = "centauri";
+              style = "vertical-cards";
+              show-flairs = true;
+              limit = 5;
+            }
+            {
+              type = "reddit";
+              show-thumbnails = true;
+              subreddit = "selfhosted";
+              style = "vertical-cards";
+              show-flairs = true;
+              limit = 5;
+            }
+            ];
+          }
+          ];
+        }
+        ];
+      }
+      ];
+# Theme configuration
+      theme = {
+        background-color = "249 22 12";
+        contrast-multiplier = 1.2;
+        primary-color = "217 92 83";
+        positive-color = "115 54 76";
+        negative-color = "347 70 65";
+      };
+    };
+  };
+}
+=== modules/immich.nix ===
+{ config, pkgs, ... }:
+
+{
+  age.secrets.immich = {
+    file = ../../../secrets/immich.age;
+    owner = "immich";
+    group = "immich";
+  };
+
+  services.immich = {
+    enable = true;
+    port = 2283;
+    mediaLocation = "/mnt/nfs/immich";
+    secretsFile = config.age.secrets.immich.path;
+
+    settings = {
+      newVersionCheck.enabled = true;
+      server.externalDomain = "https://immich.wurt.net";
+    };
+
+    environment = {
+      UPLOAD_LOCATION = "/mnt/photo/";
+    };
+
+    host = "0.0.0.0";
+  };
+}
+=== modules/karakeep.nix ===
+{ config, pkgs, ... }:
+
+{
+  age.secrets.karakeep = {
+    file = ../../../secrets/karakeep.age;
+  };
+
+  services.karakeep = {
+    enable = true;
+    meilisearch.enable = true;
+    browser = {
+     enable = true;
+     port = 9222;
+   };
+   extraEnvironment = {
+     NEXTAUTH_URL = "https://karakeep.wurt.net";
+     OAUTH_PROVIDER_NAME = "Pocket-ID";
+   };
+   environmentFile = config.age.secrets.karakeep.path;
+  };
+}
+=== modules/kavita.nix ===
+{ config, pkgs, ... }:
+
+{
+  age.secrets.kavita = {
+    file = ../../../secrets/kavita.age;
+    owner = "kavita";
+    group = "kavita";
+  };
+
+  services.kavita = {
+    enable = true;
+    dataDir = "/mnt/nfs/kavita/";
+    tokenKeyFile = config.age.secrets.kavita.path;
+    settings.Port = 5000;
+  };
+}
+=== modules/komga.nix ===
+{
+  services.komga = {
+    enable = true;
+    settings = {
+      server.port = 8082;
+      komga.oauth2-account-creation = true;
+    };
+  };
+}
+=== modules/mazanoke.nix ===
+# Auto-generated using compose2nix v0.3.1.
+{ pkgs, lib, ... }:
+
+{
+  # Runtime
+  virtualisation.podman = {
+    enable = true;
+    autoPrune.enable = true;
+    dockerCompat = true;
+    defaultNetwork.settings = {
+      # Required for container networking to be able to use names.
+      dns_enabled = true;
+    };
+  };
+
+  # Enable container name DNS for non-default Podman networks.
+  # https://github.com/NixOS/nixpkgs/issues/226365
+  networking.firewall.interfaces."podman+".allowedUDPPorts = [ 53 ];
+
+  virtualisation.oci-containers.backend = "podman";
+
+  # Containers
+  virtualisation.oci-containers.containers."mazanoke" = {
+    image = "ghcr.io/civilblur/mazanoke:latest";
+    ports = [
+      "3474:80/tcp"
+    ];
+    log-driver = "journald";
+    extraOptions = [
+      "--network-alias=mazanoke"
+      "--network=mazanoke_default"
+    ];
+  };
+  systemd.services."podman-mazanoke" = {
+    serviceConfig = {
+      Restart = lib.mkOverride 90 "no";
+    };
+    after = [
+      "podman-network-mazanoke_default.service"
+    ];
+    requires = [
+      "podman-network-mazanoke_default.service"
+    ];
+    partOf = [
+      "podman-compose-mazanoke-root.target"
+    ];
+    wantedBy = [
+      "podman-compose-mazanoke-root.target"
+    ];
+  };
+
+  # Networks
+  systemd.services."podman-network-mazanoke_default" = {
+    path = [ pkgs.podman ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStop = "podman network rm -f mazanoke_default";
+    };
+    script = ''
+      podman network inspect mazanoke_default || podman network create mazanoke_default
+    '';
+    partOf = [ "podman-compose-mazanoke-root.target" ];
+    wantedBy = [ "podman-compose-mazanoke-root.target" ];
+  };
+
+  # Root service
+  # When started, this will automatically create all resources and start
+  # the containers. When stopped, this will teardown all resources.
+  systemd.targets."podman-compose-mazanoke-root" = {
+    unitConfig = {
+      Description = "Root target generated by compose2nix.";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
+}
+=== modules/mealie.nix ===
+{ config, pkgs, ...}:
+
+{
+  age.secrets.mealie = {
+    file = ../../../secrets/mealie.age;
+    owner = "mealie";
+    group = "mealie";
+  };
+
+  services.mealie = {
+    enable = true;
+    port = 9000;
+    listenAddress = "0.0.0.0";
+    credentialsFile = config.age.secrets.mealie.path;
+  };
+}
+=== modules/metadata-remote.nix ===
+# Auto-generated using compose2nix v0.3.1.
+{ pkgs, lib, ... }:
+
+{
+  # Runtime
+  virtualisation.podman = {
+    enable = true;
+    autoPrune.enable = true;
+    dockerCompat = true;
+    defaultNetwork.settings = {
+      # Required for container networking to be able to use names.
+      dns_enabled = true;
+    };
+  };
+
+  # Enable container name DNS for non-default Podman networks.
+  # https://github.com/NixOS/nixpkgs/issues/226365
+  networking.firewall.interfaces."podman+".allowedUDPPorts = [ 53 ];
+
+  virtualisation.oci-containers.backend = "podman";
+
+  # Containers
+  virtualisation.oci-containers.containers."metadata-remote" = {
+    image = "ghcr.io/wow-signal-dev/metadata-remote:latest";
+    environment = {
+      "PGID" = "1000";
+      "PUID" = "1000";
+    };
+    volumes = [
+      "/mnt/nfs/music/:/music:rw"
+    ];
+    ports = [
+      "8338:8338/tcp"
+    ];
+    log-driver = "journald";
+    extraOptions = [
+      "--network-alias=metadata-remote"
+      "--network=metadata-remote_default"
+    ];
+  };
+  systemd.services."podman-metadata-remote" = {
+    serviceConfig = {
+      Restart = lib.mkOverride 90 "always";
+    };
+    after = [
+      "podman-network-metadata-remote_default.service"
+    ];
+    requires = [
+      "podman-network-metadata-remote_default.service"
+    ];
+    partOf = [
+      "podman-compose-metadata-remote-root.target"
+    ];
+    wantedBy = [
+      "podman-compose-metadata-remote-root.target"
+    ];
+    unitConfig.RequiresMountsFor = [
+      "/mnt/nfs/music/"
+    ];
+  };
+
+  # Networks
+  systemd.services."podman-network-metadata-remote_default" = {
+    path = [ pkgs.podman ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStop = "podman network rm -f metadata-remote_default";
+    };
+    script = ''
+      podman network inspect metadata-remote_default || podman network create metadata-remote_default
+    '';
+    partOf = [ "podman-compose-metadata-remote-root.target" ];
+    wantedBy = [ "podman-compose-metadata-remote-root.target" ];
+  };
+
+  # Root service
+  # When started, this will automatically create all resources and start
+  # the containers. When stopped, this will teardown all resources.
+  systemd.targets."podman-compose-metadata-remote-root" = {
+    unitConfig = {
+      Description = "Root target generated by compose2nix.";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
+}
+=== modules/navidrome.nix ===
+{ config, pkgs, ...}:
+
+{
+  services.navidrome = {
+    enable = true;
+    settings = {
+      MusicFolder = "/mnt/nfs/music/";
+      Port = 4533;
+      ScanSchedule = "@every 1h";
+      Address = "0.0.0.0";
+      DataFolder = "/var/lib/navidrome";
+      CacheFolder = "/var/cache/navidrome";
+      LogLevel = "debug";
+      BaseUrl = "https://navidrome.wurt.net";
+    };
+    openFirewall = true;
+  };
+}
+=== modules/nfs.nix ===
+{ config, pkgs, ... }:
+
+{
+  # NFS mounts
+  boot.initrd =
+  {
+    supportedFilesystems = [ "nfs" ];
+    kernelModules = [ "nfs" ];
+  };
+
+  fileSystems."/mnt/nfs" = {
+    device = "192.168.178.40:/volume1/nfs/";
+    fsType = "nfs";
+    options = [ "x-systemd automount" "noauto" ];
+  };
+  fileSystems."/mnt/photo" = {
+    device = "192.168.178.40:/volume1/photo/";
+    fsType = "nfs";
+    options = [ "x-systemd automount" "noauto" ];
+  };
+
+}
+=== modules/omni-tools.nix ===
+# Auto-generated using compose2nix v0.3.1.
+{ pkgs, lib, ... }:
+
+{
+  # Runtime
+  virtualisation.podman = {
+    enable = true;
+    autoPrune.enable = true;
+    dockerCompat = true;
+    defaultNetwork.settings = {
+      # Required for container networking to be able to use names.
+      dns_enabled = true;
+    };
+  };
+
+  # Enable container name DNS for non-default Podman networks.
+  # https://github.com/NixOS/nixpkgs/issues/226365
+  networking.firewall.interfaces."podman+".allowedUDPPorts = [ 53 ];
+
+  virtualisation.oci-containers.backend = "podman";
+
+  # Containers
+  virtualisation.oci-containers.containers."omni-tools" = {
+    image = "iib0011/omni-tools:latest";
+    ports = [
+      "8083:80/tcp"
+    ];
+    log-driver = "journald";
+    extraOptions = [
+      "--network-alias=omni-tools"
+      "--network=omni-tools_default"
+    ];
+  };
+  systemd.services."podman-omni-tools" = {
+    serviceConfig = {
+      Restart = lib.mkOverride 90 "always";
+    };
+    after = [
+      "podman-network-omni-tools_default.service"
+    ];
+    requires = [
+      "podman-network-omni-tools_default.service"
+    ];
+    partOf = [
+      "podman-compose-omni-tools-root.target"
+    ];
+    wantedBy = [
+      "podman-compose-omni-tools-root.target"
+    ];
+  };
+
+  # Networks
+  systemd.services."podman-network-omni-tools_default" = {
+    path = [ pkgs.podman ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStop = "podman network rm -f omni-tools_default";
+    };
+    script = ''
+      podman network inspect omni-tools_default || podman network create omni-tools_default
+    '';
+    partOf = [ "podman-compose-omni-tools-root.target" ];
+    wantedBy = [ "podman-compose-omni-tools-root.target" ];
+  };
+
+  # Root service
+  # When started, this will automatically create all resources and start
+  # the containers. When stopped, this will teardown all resources.
+  systemd.targets."podman-compose-omni-tools-root" = {
+    unitConfig = {
+      Description = "Root target generated by compose2nix.";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
+}
+=== modules/pocket-id.nix ===
+# Auto-generated using compose2nix v0.3.1.
+{ config, pkgs, lib, ... }:
+
+{
+  age.secrets.pocket-id = {
+    file = ../../../secrets/pocket-id.age;
+  };
+  # Runtime
+  virtualisation.podman = {
+    enable = true;
+    autoPrune.enable = true;
+    dockerCompat = true;
+    defaultNetwork.settings = {
+      # Required for container networking to be able to use names.
+      dns_enabled = true;
+    };
+  };
+
+  # Enable container name DNS for non-default Podman networks.
+  # https://github.com/NixOS/nixpkgs/issues/226365
+  networking.firewall.interfaces."podman+".allowedUDPPorts = [ 53 ];
+
+  virtualisation.oci-containers.backend = "podman";
+
+  # Containers
+  virtualisation.oci-containers.containers."pocket-id-pocket-id" = {
+    image = "ghcr.io/pocket-id/pocket-id:v1";
+    environment = {
+      "APP_URL" = "https://pocket.wurt.net";
+      "PGID" = "1001";
+      "PUID" = "1001";
+      "TRUST_PROXY" = "true";
+      "ANALYTICS_DISABLED" = "true";
+    };
+    environmentFiles = [
+      config.age.secrets.pocket-id.path
+      "/home/pinkfloyd/pocket-id/.env"
+      # "/run/agenix/pocket-id"
+    ];
+    volumes = [
+      "/var/lib/pocket-id/:/app/data:rw"
+    ];
+    ports = [
+      "1411:1411/tcp"
+    ];
+    log-driver = "journald";
+    extraOptions = [
+      "--health-cmd=[\"/app/pocket-id\", \"healthcheck\"]"
+      "--health-interval=1m30s"
+      "--health-retries=2"
+      "--health-start-period=10s"
+      "--health-timeout=5s"
+      "--network-alias=pocket-id"
+      "--network=pocket-id_default"
+    ];
+  };
+  systemd.services."podman-pocket-id-pocket-id" = {
+    serviceConfig = {
+      Restart = lib.mkOverride 90 "always";
+    };
+    after = [
+      "podman-network-pocket-id_default.service"
+    ];
+    requires = [
+      "podman-network-pocket-id_default.service"
+    ];
+    partOf = [
+      "podman-compose-pocket-id-root.target"
+    ];
+    wantedBy = [
+      "podman-compose-pocket-id-root.target"
+    ];
+  };
+
+  # Networks
+  systemd.services."podman-network-pocket-id_default" = {
+    path = [ pkgs.podman ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStop = "podman network rm -f pocket-id_default";
+    };
+    script = ''
+      podman network inspect pocket-id_default || podman network create pocket-id_default
+    '';
+    partOf = [ "podman-compose-pocket-id-root.target" ];
+    wantedBy = [ "podman-compose-pocket-id-root.target" ];
+  };
+
+  # Root service
+  # When started, this will automatically create all resources and start
+  # the containers. When stopped, this will teardown all resources.
+  systemd.targets."podman-compose-pocket-id-root" = {
+    unitConfig = {
+      Description = "Root target generated by compose2nix.";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
+}
+=== modules/reverse-proxy.nix ===
+{ pkgs, ... }
+
+{
+  services.caddy = {
+    enable = true;
+    virtualHosts = {
+      "wurt.net" =-{
+        extraConfig = ''
+          respond "hello, world"
+        '';
+      };
+    };
+  }
+}
+=== modules/stirling-pdf.nix ===
+{ config, pkgs, ... }: 
+
+{
+  services.stirling-pdf = {
+    enable = true;
+    environment = {
+      SERVER_PORT = 8081;
+    };
+  };
+}
+=== modules/syncthing.nix ===
+{ config, ... }:
+{
+  age.secrets.syncthing = {
+    file = ../../../secrets/syncthing.age;
+    owner = "syncthing";
+    group = "syncthing";
+  };
+  services.syncthing = {
+    enable = true;
+    group = "users";
+    user = "pinkfloyd";
+    dataDir = "/home/pinkfloyd/";
+    configDir = "/home/pinkfloyd/.config/syncthing";
+    guiAddress = "0.0.0.0:8384";
+    settings.devices = {
+      jupiter = {
+        name = "jupiter";
+        id = config.age.secrets.syncthing.path;
+      };
+    };
+  };
+}
+=== modules/webui.nix ===
+{ pkgs, ... }:
+{
+  services.open-webui = {
+    enable = true;
+    port = 3000;
+    host = "0.0.0.0";
+    environment = {
+      ANONYMIZED_TELEMETRY = "False";
+      DO_NOT_TRACK = "True";
+      SCARF_NO_ANALYTICS = "True";
+      OLLAMA_API_BASE_URL = "http://localhost:11434";
+      WEBUI_URL = "http://localhost:3000";
+      ENABLE_SIGNUP = "True";
+    };
+  };
+}
+=== programs/bash.nix ===
+{ config, lib, ...};
+{
+  programs.bash.shellAliases = {
+    ".." = "z ..";
+    "ls" = "eza -al --color=always --group-directories-first";
+  };
+}
+=== programs/hyprland.nix ===
+{ config, pkgs, ... }:
+{
+  wayland.windowManager.hyprland = {
+    enable = true;
+    package = pkgs.hyprland;
+    xwayland.enable = true;
+    settings = {
+      decoration = {
+        shadow_offset = "0 5";
+	"col.shadow" = "rgba(00000099)";
+      };
+
+      "$mod" = "SUPER";
+    };
+  };
+}
+=== programs/tmux.nix ===
+{ pkgs, ... }:
+{
+  programs.tmux = {
+    enable = true;
+    shell = "${pkgs.bash}/bin/bash";
+    terminal = "tmux-256color";
+    historyLimit = 100000;
+    disableConfirmationPrompt = true;
+    baseIndex = 1;
+    mouse = true;
+    newSession = true;
+    prefix = "C-Space";
+    shortcut = "Space";
+    plugins = with pkgs;
+      [
+        tmuxPlugins.better-mouse-mode
+	tmuxPlugins.sensible
+	tmuxPlugins.yank
+	{
+	  plugin = tmuxPlugins.rose-pine;
+	  extraConfig = ''
+	  set -g @rose_pine_variant 'moon'                  # Options are 'main', 'moon' or 'dawn'
+	  set -g @rose_pine_date_time '%d.%m %H:%M'         # It accepts the date UNIX command format (man date for info)
+	  set -g @rose_pine_bar_bg_disable 'on'             # Disables background color, for transparent terminal emulators
+	  set -g @rose_pine_show_current_program 'on'       # Forces tmux to show the current running program as window name
+
+	  # set -g @rose_pine_directory 'on'                  # Turn on the current folder component in the statusbar
+	  set -g @rose_pine_field_separator ' | '           # Again, 1-space padding, it updates with prefix + I
+	  set -g @rose_pine_only_windows 'off'              # Leaves only the window module, for max focus and space
+	  set -g @rose_pine_disable_active_window_menu 'on' # Disables the menu that shows the active window on the left
+	  set -g @rose_pine_user 'on'                       # Turn on the username component in the statusbar
+	  '';
+	}
+	{
+	  plugin = tmuxPlugins.resurrect;
+	  extraConfig = ''
+	    set -g @resurrect-strategy-vim 'session'
+	    set -g @resurrect-strategy-nvim 'session'
+	    set -g @resurrect-capture-pane-contents 'on'
+	  '';
+	}
+	{
+	  plugin = tmuxPlugins.continuum;
+	  extraConfig = ''
+	    set -g @continuum-restore 'on'
+	    set -g @continuum-boot 'on'
+	    set -g @continuum-save-interval '10'
+	  '';
+	}
+	tmuxPlugins.pass
+	tmuxPlugins.vim-tmux-navigator
+      ];
+    extraConfig = ''
+    set -g status-style bg=default
+    set -g pane-border-style bg=default
+    set -g pane-active-border-style bg=default
+    set -g status-bg default
+
+    # yazi image preview
+    set -g allow-passthrough all
+    set -ga update-environment TERM
+    set -ga update-environment TERM_PROGRAM
+
+    # Vim keys for navigating panes
+    bind h select-pane -L
+    bind j select-pane -D
+    bind k select-pane -U
+    bind l select-pane -R
+    '';
+  };
+}
+=== secrets/secrets.nix ===
+let
+  local-terra = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDLxYWRdvzd01GebtUTxUgLO6F5z/ricceiy6Gs6IU/H";
+  jupiter = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKc+QGEfGE7T+NcAN8EkDDx3bg5z2ucrecMwbkBve2RY frank@jupiter";
+
+  users = [ local-terra jupiter ];
+
+  centauri = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMFhP+/afrYUNByay3MeBzmBc9nZcH8bEnIQ7Z0MsURO";
+  systems = [ centauri ];
+in
+{
+  "sparkyfitness.age".publicKeys = users ++ systems;
+  "immich.age".publicKeys        = users ++ systems;
+  "karakeep.age".publicKeys      = users ++ systems;
+  "kavita.age".publicKeys        = users ++ systems;
+  "komga.age".publicKeys         = users ++ systems;
+  "mealie.age".publicKeys        = users ++ systems;
+  "adguard.age".publicKeys       = users ++ systems;
+  "pocket-id.age".publicKeys     = users ++ systems;
+  "syncthing.age".publicKeys     = users ++ systems;
+  "copyparty.age".publicKeys     = users;
+}
+=== users/pinkfloyd.nix ===
+{ config, pkgs, ... }:
+
+
+{
+  users.users.pinkfloyd = {
+    isNormalUser = true;
+    description = "pinkfloyd";
+    extraGroups = [ "networkmanager" "wheel" ];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDLxYWRdvzd01GebtUTxUgLO6F5z/ricceiy6Gs6IU/H pinkfloyd@terra.local"
+    ];
+  };
+
+}
+=== flake.nix ===
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    home-manager = {
+      url = "github:nix-community/home-manager/release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    copyparty = {
+      url = "github:9001/copyparty";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+
+  outputs = { self, nixpkgs, agenix, home-manager, copyparty, ... }@inputs:
+  let
+    system = "x86_64-linux";
+    pkgs = import nixpkgs {
+      inherit system;
+      config = { 
+        allowUnfree = true; 
+      };
+    };
+  in {
+    nixosConfigurations = {
+      andromeda = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+        inherit system;
+        modules = [
+          ./hosts/andromeda
+          agenix.nixosModules.default
+        ];
+      };
+      centauri = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+        inherit system;
+        modules = [
+          ./hosts/centauri
+          agenix.nixosModules.default
+        ];
+      };
+      jupiter = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+        inherit system;
+        modules = [
+          ./hosts/jupiter
+          agenix.nixosModules.default
+          copyparty.nixosModules.default
+        ];
+      };
+    };
+    homeConfigurations = {
+      "frank" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [ ./home.nix ];
+      };
+    };
+  };
+}
+=== home.nix ===
+{ config, pkgs, inputs, ... }:
+
+{
+  imports = [
+    ./programs/tmux.nix
+    ./programs/hyprland.nix
+  ];
+  home.username = "frank";
+  home.homeDirectory = "/home/frank";
+
+  # You should not change this value, even if you update Home Manager. If you do
+  # want to update the value, then make sure to first check the Home Manager
+  # release notes.
+  home.stateVersion = "25.05";
+
+  home.packages = with pkgs; [
+    # davinci-resolve
+    blender-hip
+    btop
+    burpsuite
+    cmatrix
+    cryfs
+    darktable
+    digikam
+    discord
+    dust
+    emacs
+    fahclient
+    feishin
+    foliate
+    ghidra
+    gimp
+    glow
+    gnupg
+    go
+    gpg-tui
+    hyprshot
+    inetutils
+    inkscape
+    libreoffice
+    librewolf
+    lima
+    localsend
+    lolcat
+    mindustry
+    navi
+    nh
+    obsidian
+    ollama-rocm
+    pinentry-curses
+    postman
+    python3
+    qbittorrent
+    qemu
+    signal-cli
+    signal-desktop
+    spotify
+    steam
+    starship
+    thunderbird
+    tor-browser
+    vlc
+    vscodium
+    wireshark
+    yt-dlp
+  ];
+
+  # Home Manager is pretty good at managing dotfiles. The primary way to manage
+  # plain files is through 'home.file'.
+  home.file = {
+    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
+    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
+    # # symlink to the Nix store copy.
+    # ".screenrc".source = dotfiles/screenrc;
+  };
+
+  services.ollama = {
+    enable = true;
+    port = 11434;
+    # loadModels = [ "phi4:14b" ];
+    acceleration = "rocm";
+    # rocmOverrideGfx = "10.3.6";
+  };
+
+  home.sessionVariables = {
+    EDITOR = "nvim";
+  };
+
+  programs.kitty = {
+    enable = true;
+    font = {
+      name = "Fira Code";
+      package = pkgs.fira-code;
+    };
+    shellIntegration.enableBashIntegration = true;
+    enableGitIntegration = true;
+    settings = {
+      window_padding_width = 10;
+      hide_window_decorations = true;
+      background_opacity = 1.0;
+      background_blue = 0.7;
+      editor = "nvim";
+      font_size = 14.0;
+    };
+    themeFile = "rose-pine";
+  };
+
+  programs.freetube.enable = true;
+
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
+}
+=== ./programs/gui/librewolf.nix ===
+{ config, pkgs, ...}:
+{
+  # Install firefox.
+  programs.firefox = {
+    enable = true;
+    package = pkgs.librewolf;
+    policies = {
+      DisableTelemetry = true;
+      DisableFirefoxStudies = true;
+      Preferences = {
+        "cookiebanners.service.mode.privateBrowsing" = 2; # Block cookie banners in private browsing
+        "cookiebanners.service.mode" = 2; # Block cookie banners
+        "privacy.donottrackheader.enabled" = true;
+        "privacy.fingerprintingProtection" = true;
+        "privacy.resistFingerprinting" = true;
+        "privacy.trackingprotection.emailtracking.enabled" = true;
+        "privacy.trackingprotection.enabled" = true;
+        "privacy.trackingprotection.fingerprinting.enabled" = true;
+        "privacy.trackingprotection.socialtracking.enabled" = true;
+      };
+      ExtensionSettings = {
+        "jid1-ZAdIEUB7XOzOJw@jetpack" = { # DuckDuckGo
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/duckduckgo-for-firefox/latest.xpi";
+          installation_mode = "force_installed";
+        };
+        "uBlock0@raymondhill.net" = { # uBlock Origin
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
+          installation_mode = "force_installed";
+        };
+        "keepassxc-browser@keepassxc.org" = { # KeePassXC
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/keepassxc-browser/latest.xpi";
+          installation_mode = "force_installed";
+        };
+        "snowflake@torproject.org" = { # Snowflake
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/snowflake/latest.xpi";
+          installation_mode = "force_installed";
+        };
+        "vimium@vimium.com" = { # Vimium
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/vimium/latest.xpi";
+          installation_mode = "force_installed";
+        };
+        "darkreader@darkreader.org" = { # Dark Reader
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi";
+          installation_mode = "force_installed";
+        };
+      };
+    };
+  };
+
+  environment.etc."firefox/policies/policies.json".target = "librewolf/policies/policies.json";
+}
+=== ./hosts/andromeda/default.nix ===
+{ pkgs, ... }:
+
+{
+  nix.settings = {
+    experimental-features = "nix-command flakes";
+  };
+
+  environment.systemPackages = with pkgs; [
+    neovim
+    git
+    age
+    frp
+  ];
+
+  fileSystems."/" = {
+    device = "/dev/disk/by-label/nixos";
+    fsType = "ext4";
+  };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-label/boot";
+    fsType = "ext4";
+  };
+  swapDevices = [
+  {
+    device = "/dev/disk/by-label/swap";
+  }
+  ];
+
+  systemd.network.enable = true;
+  systemd.network.networks."30-wan" = {
+    matchConfig.Name = "enp1s0";
+    networkConfig.DHCP = "ipv4";
+    address = [
+      "2a01:4f9:c012:d8e::1/64"
+    ];
+    routes = [
+    { Gateway = "fe80::1"; }
+    ];
+  };
+
+  time.timeZone = "Europe/Helsinki";
+  i18n.defaultLocale = "en_US.UTF-8";
+  console.keyMap = "us";
+
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/sda";
+  boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" "ext4" ];
+
+  users.users = {
+    root.hashedPassword = "!"; # Disable root login
+      pinkfloyd = {
+        isNormalUser = true;
+        extraGroups = [ "wheel" ];
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDLxYWRdvzd01GebtUTxUgLO6F5z/ricceiy6Gs6IU/H pinkfloyd@terra.local"
+        ];
+      };
+  };
+
+  programs.ssh.startAgent = true;
+
+  security.sudo = {
+    enable = true;
+    wheelNeedsPassword = false;
+  };
+
+  services.openssh = {
+    enable = true;
+    settings = {
+      PermitRootLogin = "no";
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+    };
+  };
+
+  networking.firewall.allowedTCPPorts = [ 22 6000 7000 ];
+
+  system.stateVersion = "24.11";
+}
+=== ./hosts/centauri/default.nix ===
+# Edit this configuration file to define what should be installed on
+# your system.  Help is available in the configuration.nix(5) man page
+# and in the NixOS manual (accessible by running ‘nixos-help’).
+
+{ config, pkgs, inputs, ... }:
+
+{
+  imports = [
+    ../../modules/glance.nix
+    # ../../modules/immich.nix
+    ../../modules/karakeep.nix
+    ../../modules/kavita.nix
+    ../../modules/komga.nix
+    ../../modules/mazanoke.nix
+    ../../modules/mealie.nix
+    ../../modules/metadata-remote.nix
+    ../../modules/navidrome.nix
+    ../../modules/nfs.nix
+    ../../modules/omni-tools.nix
+    ../../modules/pocket-id.nix
+    ../../modules/stirling-pdf.nix
+    ../../modules/syncthing.nix
+    ../../users/pinkfloyd.nix
+    ./hardware-configuration.nix
+  ];
+
+  # Bootloader.
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.useOSProber = true;
+
+  networking = {
+    hostName = "centauri";
+    networkmanager.enable = true;
+
+    # Configure static IP for your local network
+    interfaces.eth0.ipv4.addresses = [{
+      address = "192.168.178.156";
+      prefixLength = 24;
+    }];
+    defaultGateway = "192.168.178.1";
+    nameservers = [ "1.1.1.1" "8.8.8.8" ];
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [
+        22   # ssh
+        80   # reverse-proxy
+        443  # reverse-proxy
+        1411 # pocket-id
+        2283 # immich
+        3004 # sparkyfitness
+        3474 # mazanoke
+        5000 # kavita
+        8081 # stirling-pdf
+        8082 # komga
+        8083 # omni-tools
+        8084 # glance
+        8338 # metadata-remote
+        8384 # syncthing webUI
+        22000 # synchting TCP and UDP sync traffic
+        21027 # syncthing UDP discovery
+        9000 # mealie
+        9222 # karakeep
+      ];
+      # allowedDUPPorts = [ ... ];
+    };
+  };
+
+  # Set your time zone.
+  time.timeZone = "Europe/Berlin";
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_CTYPE = "en_US.UTF8";
+  };
+
+  # Enable the X11 windowing system.
+  services.xserver.enable = true;
+
+  # Enable the GNOME Desktop Environment.
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    bash
+    bat
+    clang
+    compose2nix
+    curl
+    eza
+    fzf
+    gcc
+    git
+    gh
+    lazygit
+    neovim
+    ripgrep
+    zig
+    inputs.agenix.packages."${system}".default
+  ];
+
+  programs.bash.shellAliases = {
+    ".." = "z ..";
+    "..." = "z ../..";
+    "...." = "z ../../..";
+    ".3" = "z ../../..";
+    ".4" = "z ../../../..";
+    cp = "cp -i";
+    rm = "rm -i";
+    mv = "mv -i";
+    ls = "eza -al --color=always --group-directories-first";
+    la = "eza -a --color=always --group-directories-first";
+    ll = "eza -l --color=always --group-directories-first";
+    lt = "eza -aT --color=always --group-directories-first";
+    "l." = "eza -a | egrep '^\\.'";
+  };
+
+  programs.ssh.startAgent = true;
+
+  programs.git = {
+    enable = true;
+    config = {
+      init.defaultBranch = "main";
+      pull.rebase = false;
+      user = {
+        name = "FrankLawrence";
+        email = "frankl.am.htg@icloud.com";
+      };
+      alias = {
+        hist = "log --oneline --graph --all";
+      };
+    };
+  };
+
+  # Set ssh key to decrypt for agenix
+  age.identityPaths = [ "/home/pinkfloyd/.ssh/id_ed25519" ];
+
+  # Enable the OpenSSH daemon.
+  services.openssh = {
+    enable = true;
+    # require public key authentication for better security
+    settings.PasswordAuthentication = false;
+    settings.KbdInteractiveAuthentication = false;
+  };
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  system.stateVersion = "24.11";
+}
+=== ./hosts/centauri/hardware-configuration.nix ===
+{ config, lib, pkgs, modulesPath, ... }:
+
+{
+  imports =
+    [ (modulesPath + "/profiles/qemu-guest.nix")
+    ];
+
+  boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ ];
+  boot.extraModulePackages = [ ];
+
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/ea99c27a-2e1c-4c8f-a8d5-9cb995a247db";
+      fsType = "ext4";
+    };
+
+  swapDevices = [ ];
+
+  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+  # (the default) this is the recommended approach. When using systemd-networkd it's
+  # still possible to use this option, but it's recommended to use it in conjunction
+  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
+  networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.ens18.useDHCP = lib.mkDefault true;
+
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+}
+
+=== ./hosts/jupiter/default.nix ===
+# Edit this configuration file to define what should be installed on
+# your system.  Help is available in the configuration.nix(5) man page
+# and in the NixOS manual (accessible by running ‘nixos-help’).
+
+{ config, pkgs, inputs, lib, ... }:
+
+{
+  imports =
+    [ # Include the results of the hardware scan.
+      ./hardware-configuration.nix
+    ];
+
+  # Bootloader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelModules = [ "wol" ];
+
+  networking = {
+    hostName = "jupiter";
+    networkmanager = {
+      enable = true;
+      dns = "none";
+    };
+    nameservers = [ "1.1.1.1" "192.168.178.158" ]; # adguard
+    search = [ "wurt.net" ];
+    firewall.allowedTCPPorts = [ 
+      22   # sshd
+      8080 # open-webui
+    ];
+    interfaces.wlp7s0.wakeOnLan = {
+      enable = true;
+    };
+  };
+
+  # Set your time zone.
+  time.timeZone = "Europe/Zurich";
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  # Enable the X11 windowing system.
+  services.xserver = {
+    enable = true;
+    videoDrivers = [ "amdgpu" ];
+
+    # Enable the GNOME Desktop Environment.
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
+
+    # Configure keymap in X11
+    xkb = {
+      layout = "us";
+      variant = "";
+    };
+  };
+
+  # Enable the wayland windowing system
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
+
+
+  # Enable HIP libraries for GPU rendering
+  systemd.tmpfiles.rules = [
+    "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
+  ];
+
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    settings = {
+      General = {
+        Experimental = true;
+	FastConnectable = true;
+      };
+    };
+  };
+
+  # Enable CUPS to print documents.
+  services.printing.enable = true;
+
+  # Enable sound with pipewire.
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # If you want to use JACK applications, uncomment this
+    #jack.enable = true;
+
+    # use the example session manager (no others are packaged yet so this is enabled by default,
+    # no need to redefine it in your config for now)
+    #media-session.enable = true;
+  };
+
+  # Enable touchpad support (enabled default in most desktopManager).
+  # services.xserver.libinput.enable = true;
+
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.frank = {
+    isNormalUser = true;
+    description = "Frank";
+    extraGroups = [ "networkmanager" "wheel" "docker" "shared-media" ];
+    packages = with pkgs; [
+      blender-hip
+      btop
+      cmatrix
+      # davinci-resolve
+      digikam
+      dust
+      emacs
+      fira-code
+      foliate
+      ghidra
+      gimp
+      glow
+      hyprshot
+      inkscape
+      libreoffice
+      librewolf
+      localsend
+      mindustry
+      obsidian
+      pinentry
+      razergenie
+      signal-cli
+      signal-desktop
+      spotify
+      tor-browser
+      thunderbird
+      vlc
+      vscodium
+      winetricks
+      wineWowPackages.stable
+      wireshark
+      yt-dlp
+    ];
+  };
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "python2"
+    ];
+  nixpkgs.overlays = [ inputs.copyparty.overlays.default ];
+
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
+  environment.systemPackages = with pkgs; [
+    bat
+    clinfo
+    eza
+    fd
+    ffmpeg
+    fish
+    fselect
+    fzf
+    gcc
+    gdb
+    gh
+    git
+    htop
+    keepassxc
+    lazygit
+    nb
+    neofetch
+    neovim
+    tldr
+    tor
+    typst
+    ripgrep
+    yazi
+    zoxide
+    inputs.agenix.packages."${system}".default
+  ];
+
+  virtualisation = {
+    docker = {
+      enable = true;
+      storageDriver = "overlay2";
+      daemon.settings.data-root = "/var/lib/docker";
+    };
+    virtualbox.host = {
+      enable = true;
+      enableKvm = true;
+      addNetworkInterface = false;
+    };
+  };
+
+  age.identityPaths = [ "/home/frank/.ssh/id_ed25519" ];
+
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  # programs.mtr.enable = true;
+  # programs.gnupg.agent = {
+  #   enable = true;
+  #   enableSSHSupport = true;
+  # };
+
+  services.pcscd.enable = true;
+  
+  services.syncthing = {
+    enable = true;
+    group = "users";
+    user = "frank";
+    dataDir = "/home/frank/";
+    configDir = "/home/frank/.config/syncthing/";
+    guiAddress = "127.0.0.1:8384";
+    settings = {
+      devices = {
+        terra = {
+          name = "macbook";
+          id = "REDACTED";
+        };
+        centauri = {
+          name = "centauri";
+          id = "REDACTED";
+        };
+      };
+      folders = {
+        "nb" = {
+          path = "~/.nb/";
+          devices = [ "terra" ];
+          # versioning = {
+          #   type = "staggered";
+          #   params = {
+          #     cleanInterval = "3600";
+          #     maxAge = "15552000"; # 180 days in seconds
+          #   };
+          # };
+        };
+      };
+      folders = {
+        "default" = {
+          path = "~/Sync/";
+          devices = [ "terra" "centauri" ];
+          versioning = {
+            type = "staggered";
+            params = {
+              cleanInterval = "3600";
+              maxAge = "15552000"; # 180 days in seconds
+            };
+          };
+        };
+      };
+    };
+  };
+
+  services.openssh = {
+    enable = true;
+    ports = [ 22 ];
+    settings = {
+      PasswordAuthentication = false;
+    };
+  };
+
+  services.foldingathome.enable = true;
+
+  services.blueman.enable = true;
+
+  services.tailscale = {
+    enable = true;
+    port = 41641;
+    derper.port = 8010;
+    interfaceName = "tailscale0";
+    extraSetFlags = [ "--advertise-exit-node" "--accept-routes" ];
+    useRoutingFeatures = "both";
+  };
+
+  # wireshark permissions
+  services.udev = {
+    extraRules = ''
+      SUBSYSTEM=="usbmon", GROUP="wireshark", MODE="0640"
+    '';
+  };
+
+  users.extraGroups.vboxusers.members = [ "frank" ];
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  # List services that you want to enable:
+
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  system.stateVersion = "25.05"; # Did you read the comment?
+
+}
+=== ./hosts/jupiter/hardware-configuration.nix ===
+# Do not modify this file!  It was generated by ‘nixos-generate-config’
+# and may be overwritten by future invocations.  Please make changes
+# to /etc/nixos/configuration.nix instead.
+{ config, lib, pkgs, modulesPath, ... }:
+
+{
+  imports =
+    [ (modulesPath + "/installer/scan/not-detected.nix")
+    ];
+
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.kernelModules = [ "amdgpu" ];
+  boot.kernelModules = [ "amdgpu" ];
+  boot.extraModulePackages = [ ];
+
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/34a3e95f-affc-408c-bc21-622e6e9afaf6";
+      fsType = "ext4";
+    };
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/B985-38EA";
+      fsType = "vfat";
+      options = [ "fmask=0077" "dmask=0077" ];
+    };
+
+  swapDevices = [ ];
+
+  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+  # (the default) this is the recommended approach. When using systemd-networkd it's
+  # still possible to use this option, but it's recommended to use it in conjunction
+  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
+  networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp8s0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlp7s0.useDHCP = lib.mkDefault true;
+
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.graphics.extraPackages = with pkgs; [
+    rocmPackages.clr.icd
+  ];
+}

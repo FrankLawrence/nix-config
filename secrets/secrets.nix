@@ -4,8 +4,8 @@ let
 
   users = [ local-terra jupiter ];
 
-  homelab = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMFhP+/afrYUNByay3MeBzmBc9nZcH8bEnIQ7Z0MsURO";
-  systems = [ homelab ];
+  centauri = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMFhP+/afrYUNByay3MeBzmBc9nZcH8bEnIQ7Z0MsURO";
+  systems = [ centauri ];
 in
 {
   "sparkyfitness.age".publicKeys = users ++ systems;
