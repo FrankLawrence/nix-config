@@ -8,10 +8,9 @@
   home.username = "frank";
   home.homeDirectory = "/home/frank";
   home.packages = with pkgs; [
-    # davinci-resolve
+    davinci-resolve
     blender-hip
     burpsuite
-    clang
     cmatrix
     cryfs
     darktable
@@ -25,19 +24,16 @@
     foliate
     freetube
     fselect
-    gcc
     gdb
     ghidra
     gimp
     glow
     gnupg
-    go
     gpg-tui
     hyprshot
     inetutils
     inkscape
     keepassxc
-    librewolf
     localsend
     lolcat
     mindustry

@@ -2,17 +2,16 @@
 {
   programs.git = {
     enable = true;
-    config = {
-      init.defaultBranch = "main";
-      pull.rebase = false;
-      user = {
-        name = "FrankLawrence";
-        email = "frankl.am.htg@icloud.com";
-      };
-      alias = {
+    userName = "FrankLawrence";
+    userEmail = "frankl.am.htg@icloud.com";
+    aliases = {
         st = "status --short";
         hist = "log --oneline --graph --all";
-      };
+    };
+    delta.enable = true;
+    extraConfig = {
+      init.defaultBranch = "main";
+      pull.rebase = false;
       core.editor = "nvim";
       merge.tool = "nvimdiff";
     };

@@ -51,7 +51,7 @@
         inherit system;
         config.allowUnfree = true;
       };
-      extraSpecialArgs = { inherit inputs lib; };
+      extraSpecialArgs = { inherit inputs; };
       modules = [
         ./home/profiles/${username}.nix
       ] ++ extraModules;
@@ -72,6 +72,7 @@
         ./modules/hardware/amd.nix
         ./modules/hardware/audio.nix
         ./modules/hardware/bluetooth.nix
+        ./modules/services/productivity/glance.nix
         copyparty.nixosModules.default
       ];
     };
@@ -79,7 +80,6 @@
     # Home Manager Configurations
     homeConfigurations = {
       frank = mkHome "frank" [ ];
-      # pinkfloyd = mkHome "pinkfloyd" [ ];
     };
     
     # Development shell
