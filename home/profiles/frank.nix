@@ -9,6 +9,8 @@
   home.homeDirectory = "/home/frank";
   home.packages = with pkgs; [
     davinci-resolve
+    drawio
+    gaphor
     blender-hip
     burpsuite
     cmatrix
@@ -52,7 +54,6 @@
     signal-desktop
     spotify
     starship
-    steam
     thunderbird
     tor
     tor-browser

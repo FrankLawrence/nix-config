@@ -2,7 +2,7 @@
 {
   programs.tmux = {
     enable = true;
-    shell = "${pkgs.bash}/bin/bash";
+    shell = "${pkgs.fish}/bin/fish";
     terminal = "tmux-256color";
     historyLimit = 100000;
     disableConfirmationPrompt = true;

@@ -73,6 +73,8 @@
         ./modules/hardware/audio.nix
         ./modules/hardware/bluetooth.nix
         ./modules/services/productivity/glance.nix
+        ./modules/services/productivity/mealie.nix
+        ./modules/services/productivity/actual.nix
         copyparty.nixosModules.default
       ];
     };
