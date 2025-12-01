@@ -2,18 +2,19 @@
 {
   programs.git = {
     enable = true;
-    userName = "FrankLawrence";
-    userEmail = "frankl.am.htg@icloud.com";
-    aliases = {
-        st = "status --short";
-        hist = "log --oneline --graph --all";
-    };
-    delta.enable = true;
-    extraConfig = {
+    settings = {
+      user = {
+        name = "FrankLawrence";
+        email = "frankl.am.htg@icloud.com";
+      };
       init.defaultBranch = "main";
       pull.rebase = false;
       core.editor = "nvim";
       merge.tool = "nvimdiff";
+      alias = {
+        st = "status --short";
+        hist = "log --oneline --graph --all";
+      };
     };
   };
 }

@@ -4,6 +4,7 @@
   imports = [
     ./programs/browsers/librewolf.nix
     ./programs/terminal/shells/bash.nix
+    ./programs/terminal/shells/fish.nix
     ./programs/terminal/kitty.nix
     ./programs/terminal/tmux.nix
     ./programs/terminal/btop.nix
