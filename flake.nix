@@ -1,14 +1,19 @@
 {
+  description = "Multi-host NixOS Configuration";
+
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    
     copyparty = {
       url = "github:9001/copyparty";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -18,45 +23,75 @@
   outputs = { self, nixpkgs, agenix, home-manager, copyparty, ... }@inputs:
   let
     system = "x86_64-linux";
-    pkgs = import nixpkgs {
+    
+    # Import custom library functions
+    lib = nixpkgs.lib.extend (final: prev: {
+      myLib = import ./lib { lib = final; };
+    });
+    
+    # Common module lists
+    commonModules = [
+      agenix.nixosModules.default
+      ./modules/core
+      ./hosts/default.nix
+    ];
+    
+    # Function to create a NixOS system configuration
+    mkSystem = hostname: extraModules: nixpkgs.lib.nixosSystem {
       inherit system;
-      config = { 
-        allowUnfree = true; 
-      };
+      specialArgs = { inherit inputs lib; };
+      modules = commonModules ++ extraModules ++ [
+        ./hosts/${hostname}
+      ];
     };
+    
+    # Function to create home-manager configuration
+    mkHome = username: extraModules: home-manager.lib.homeManagerConfiguration {
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+      extraSpecialArgs = { inherit inputs; };
+      modules = [
+        ./home/profiles/${username}.nix
+      ] ++ extraModules;
+    };
+    
   in {
+    # NixOS Configurations
     nixosConfigurations = {
-      hetzner = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
-        inherit system;
-        modules = [
-          ./hosts/hetzner
-          agenix.nixosModules.default
-        ];
-      };
-      homelab = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
-        inherit system;
-        modules = [
-          ./hosts/homelab
-          agenix.nixosModules.default
-        ];
-      };
-      jupiter = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
-        inherit system;
-        modules = [
-          ./hosts/jupiter
-          agenix.nixosModules.default
-          copyparty.nixosModules.default
-        ];
-      };
+      andromeda = mkSystem "andromeda" [ ];
+      
+      centauri = mkSystem "centauri" [
+        ./modules/services
+        ./modules/hardware/nfs.nix
+      ];
+      
+      jupiter = mkSystem "jupiter" [
+        ./modules/desktop
+        ./modules/hardware/amd.nix
+        ./modules/hardware/audio.nix
+        ./modules/hardware/bluetooth.nix
+        ./modules/services/productivity/glance.nix
+        ./modules/services/productivity/mealie.nix
+        ./modules/services/productivity/actual.nix
+        copyparty.nixosModules.default
+      ];
     };
+
+    # Home Manager Configurations
     homeConfigurations = {
-      "frank" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [ ./home.nix ];
-      };
+      frank = mkHome "frank" [ ];
+    };
+    
+    # Development shell
+    devShells.${system}.default = nixpkgs.legacyPackages.${system}.mkShell {
+      buildInputs = with nixpkgs.legacyPackages.${system}; [
+        git
+        agenix.packages.${system}.default
+        nixpkgs-fmt
+        nil
+      ];
     };
   };
 }
