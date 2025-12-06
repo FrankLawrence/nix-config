@@ -27,17 +27,21 @@
     };
   };
 
+  environment.systemPackages = with pkgs; [
+    fahclient
+    niri
+    xwayland-satellite
+  ];
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [
-      "python2"
-    ];
 
-  nixpkgs.overlays = [ inputs.copyparty.overlays.default ];
+  nixpkgs.overlays = [
+    inputs.copyparty.overlays.default
+  ];
 
   services.pcscd.enable = true;
   
@@ -87,8 +91,6 @@
       };
     };
   };
-
-  services.foldingathome.enable = true;
 
   services.blueman.enable = true;
 

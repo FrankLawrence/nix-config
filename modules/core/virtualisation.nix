@@ -11,5 +11,11 @@
       enableKvm = true;
       addNetworkInterface = false;
     };
+    vmVariant = {
+      virtualisation = {
+        memorySize = 8192;
+        cores = 4;
+      };
+    };
   };
 }

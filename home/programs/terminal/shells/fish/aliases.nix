@@ -95,5 +95,8 @@
     ":q" = "exit";
 
     vim = "NVIM_APPNAME=\"nvim_bak\" nvim";
+
+    # Folding@home
+    fah = "OCL_ICD_VENDORS=$(nix-build '<nixpkgs>' --no-out-link -A rocmPackages.clr.icd)/etc/OpenCL/vendors/ fah-client";
   };
 }
