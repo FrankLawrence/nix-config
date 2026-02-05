@@ -9,6 +9,10 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelModules = [ "wol" ];
+  # Try to keep processes in RAM than move to swap
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 10;
+  };
 
   networking = {
     hostName = "jupiter";
@@ -31,6 +35,7 @@
     fahclient
     niri
     xwayland-satellite
+    prismlauncher
   ];
 
   # Enable CUPS to print documents.
@@ -38,10 +43,6 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
-  nixpkgs.overlays = [
-    inputs.copyparty.overlays.default
-  ];
 
   services.pcscd.enable = true;
   
@@ -118,8 +119,8 @@
 
   swapDevices = [
     {
-      device = "/var/lib/swapfile";
-      size = 64 * 1024;
+      device = "/dev/by-partuuid/85d9b673-25b1-420f-9bad-7bc00b522ef9";
+      # size = 64 * 1024;
     }
   ];
 

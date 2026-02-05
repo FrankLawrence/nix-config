@@ -23,27 +23,6 @@
         "type": "github"
       }
     },
-    "copyparty": {
-      "inputs": {
-        "flake-utils": "flake-utils",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1764533216,
-        "narHash": "sha256-Z7lN8Doskk5vKM2y0AnNzjzyf3IL95NAPGSwRKM09Do=",
-        "owner": "9001",
-        "repo": "copyparty",
-        "rev": "cedfc444206d72d4ee68ccfaf202c2333465ace2",
-        "type": "github"
-      },
-      "original": {
-        "owner": "9001",
-        "repo": "copyparty",
-        "type": "github"
-      }
-    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -142,7 +121,6 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
-        "copyparty": "copyparty",
         "home-manager": "home-manager_2",
         "nixpkgs": "nixpkgs"
       }

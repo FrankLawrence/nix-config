@@ -19,5 +19,4 @@ in
   "pocket-id.age".publicKeys     = users ++ systems;
   "syncthing.age".publicKeys     = users ++ systems;
   "your_spotify.age".publicKeys  = users;
-  "copyparty.age".publicKeys     = users;
 }

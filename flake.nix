@@ -13,14 +13,10 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    
-    copyparty = {
-      url = "github:9001/copyparty";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, agenix, home-manager, copyparty, ... }@inputs:
   let
     system = "x86_64-linux";
     
@@ -72,10 +68,7 @@
         ./modules/hardware/amd.nix
         ./modules/hardware/audio.nix
         ./modules/hardware/bluetooth.nix
-        ./modules/services/productivity/glance.nix
-        ./modules/services/productivity/mealie.nix
         ./modules/services/productivity/actual.nix
-        copyparty.nixosModules.default
       ];
     };
 

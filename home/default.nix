@@ -10,5 +10,6 @@
     ./programs/terminal/tmux.nix
     ./programs/terminal/btop.nix
     ./programs/tools/git.nix
+    ./programs/tools/gh.nix
   ];
 }

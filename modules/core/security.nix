@@ -1,7 +1,7 @@
 { config, pkgs, input, lib, ... }:
 {
   # Set ssh key to decrypt for agenix
-  age.identityPaths = [ "/home/frank/.ssh/id_ed25519" ];
+  age.identityPaths = [ "/home/frank/.ssh/agenix" ];
 
   # Enable the OpenSSH daemon.
   services.openssh = {

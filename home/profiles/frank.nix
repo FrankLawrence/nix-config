@@ -32,6 +32,8 @@
     glow
     gnupg
     gpg-tui
+    heroic
+    hieroglyphic
     hyprshot
     inetutils
     inkscape
