@@ -13,10 +13,14 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    disko = {
+      url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
+  outputs = { self, nixpkgs, agenix, home-manager, disko, ... }@inputs:
   let
     system = "x86_64-linux";
     
@@ -56,7 +60,9 @@
   in {
     # NixOS Configurations
     nixosConfigurations = {
-      andromeda = mkSystem "andromeda" [ ];
+      andromeda = mkSystem "andromeda" [
+        disko.nixosModules.disko
+      ];
       
       centauri = mkSystem "centauri" [
         ./modules/services

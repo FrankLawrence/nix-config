@@ -2,8 +2,10 @@
 {
   environment.systemPackages = with pkgs; [
     bat
-    compose2nix
+    clang-tools
     clinfo
+    compose2nix
+    curl
     eza
     fd
     ffmpeg
@@ -11,14 +13,17 @@
     fzf
     gh
     git
+    gopls
     htop
     lazygit
     neovim
+    pyright
     ripgrep
+    stylua
     tldr
     yazi
     zoxide
-    curl
+    lua-language-server
     inputs.agenix.packages."${system}".default
   ];
 
