@@ -19,7 +19,7 @@
     yazi
     zoxide
     curl
-    inputs.agenix.packages."${system}".default
+    inputs.agenix.packages."${stdenv.hostPlatform.system}".default
   ];
 
   # Set your time zone.
