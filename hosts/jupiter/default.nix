@@ -21,10 +21,9 @@
       dns = "none";
     };
     nameservers = [ "1.1.1.1" "192.168.178.158" ]; # adguard
-    search = [ "wurt.net" ];
+    search = [ "world-connect.ch" ];
     firewall.allowedTCPPorts = [ 
       22   # sshd
-      8080 # open-webui
     ];
     interfaces.wlp7s0.wakeOnLan = {
       enable = true;
@@ -32,10 +31,14 @@
   };
 
   environment.systemPackages = with pkgs; [
+    anki
     fahclient
     niri
     xwayland-satellite
     prismlauncher
+    xclip
+    zathura
+    zotero
   ];
 
   # Enable CUPS to print documents.
@@ -95,6 +98,16 @@
 
   services.blueman.enable = true;
 
+  services.open-webui = {
+    enable = true;
+    port = 8080;
+    host = "127.0.0.1";
+    environment = {
+      OLLAMA_API_BASE_URL = "http://localhost:11434";
+        # WEBUI_AUTH = "False";
+    };
+  };
+
   services.tailscale = {
     enable = true;
     port = 41641;
@@ -113,13 +126,17 @@
 
   services.flatpak.enable = true;
 
+  # Disable for faster boot
+  # systemd.network.wait-online.enable = false;
+  # boot.initrd.systemd.network.wait-online.enable = false;
+
   users.extraGroups.vboxusers.members = [ "frank" ];
 
   age.identityPaths = [ "/home/frank/.ssh/agenix" ];
 
   swapDevices = [
     {
-      device = "/dev/by-partuuid/85d9b673-25b1-420f-9bad-7bc00b522ef9";
+      device = "/dev/disk/by-uuid/85d9b673-25b1-420f-9bad-7bc00b522ef9";
       # size = 64 * 1024;
     }
   ];

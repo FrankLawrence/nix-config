@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [
@@ -8,38 +8,50 @@
   home.username = "frank";
   home.homeDirectory = "/home/frank";
   home.packages = with pkgs; [
-    davinci-resolve
-    drawio
-    gaphor
     blender-hip
     burpsuite
+    caligula
     cmatrix
     cryfs
     darktable
+    davinci-resolve
+    delve
     digikam
     discord
+    drawio
+    duf
     dust
     emacs
     fahclient
     feishin
     fira-code
     foliate
-    freetube
     fselect
+    gaphor
     gdb
     ghidra
     gimp
     glow
     gnupg
     gpg-tui
+    grim
     heroic
     hieroglyphic
+    hl-log-viewer
+    hledger
+    hledger-fmt
+    hledger-ui
+    hledger-utils
     hyprshot
     inetutils
     inkscape
+    jujutsu
     keepassxc
+    lazyjournal
+    lnav
     localsend
     lolcat
+    lua-language-server
     mindustry
     navi
     nb
@@ -56,6 +68,7 @@
     signal-desktop
     spotify
     starship
+    superfile
     thunderbird
     tor
     tor-browser

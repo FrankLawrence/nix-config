@@ -3,13 +3,18 @@
  
   imports = [
     ./programs/browsers/librewolf.nix
+    ./programs/desktop/desktop.nix
+    ./programs/editors/zed.nix
+    ./programs/terminal/btop.nix
+    ./programs/terminal/kitty.nix
+    ./programs/terminal/nix-direnv.nix
     ./programs/terminal/shells/bash.nix
     ./programs/terminal/shells/fish
-    ./programs/terminal/kitty.nix
-    ./programs/terminal/yazi.nix
     ./programs/terminal/tmux.nix
-    ./programs/terminal/btop.nix
-    ./programs/tools/git.nix
+    ./programs/terminal/yazi.nix
     ./programs/tools/gh.nix
+    ./programs/tools/git.nix
+    ./programs/tools/rofi.nix
+    ./services/flameshot.nix
   ];
 }

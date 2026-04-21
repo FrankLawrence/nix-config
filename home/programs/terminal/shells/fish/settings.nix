@@ -26,7 +26,7 @@
         --color=pointer:#c4a7e7,marker:#eb6f92,prompt:#908caa"
       
       # Manpager settings (nvim)
-      set -x MANPAGER '/usr/bin/env bash -c "nvim -MRn -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" -c \"normal L\" -c \"nmap q :qa<CR>\"</dev/tty <(col -b)"'
+      set -x MANPAGER 'nvim +Man! -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" -c \"normal L\" -c \"nmap q :qa<CR>\"'
       
       # Theme settings
       fish_config theme choose "Rosé Pine"

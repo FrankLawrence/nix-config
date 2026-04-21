@@ -11,7 +11,6 @@
     ffmpeg
     fish
     fzf
-    gh
     git
     gopls
     htop
@@ -23,8 +22,8 @@
     tldr
     yazi
     zoxide
-    lua-language-server
-    inputs.agenix.packages."${system}".default
+    curl
+    inputs.agenix.packages."${stdenv.hostPlatform.system}".default
   ];
 
   # Set your time zone.
