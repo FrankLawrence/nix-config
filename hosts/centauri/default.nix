@@ -23,8 +23,8 @@
     nameservers = [ "1.1.1.1" "8.8.8.8" ];
     firewall.allowedTCPPorts = [
       22   # ssh
-      # 80   # reverse-proxy
-      # 443  # reverse-proxy
+      80   # reverse-proxy
+      443  # reverse-proxy
       # 1411 # pocket-id
       # 2283 # immich
       # 3004 # sparkyfitness
