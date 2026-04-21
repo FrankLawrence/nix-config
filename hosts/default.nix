@@ -9,7 +9,6 @@
     ffmpeg
     fish
     fzf
-    gh
     git
     htop
     lazygit

@@ -1,9 +1,8 @@
-{ config, pkgs, inputs, ... }:
-
+{ ... }:
 {
-
   imports = [
-    ./x11.nix
     ./ani-cli.nix
+    ./virtualisation.nix
+    ./x11.nix
   ];
 }
