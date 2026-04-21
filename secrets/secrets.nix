@@ -17,7 +17,7 @@ in
   # "kavita.age".publicKeys        = users ++ systems;
   # "komga.age".publicKeys         = users ++ systems;
   # "mealie.age".publicKeys        = users ++ systems;
-  # "pocket-id.age".publicKeys     = users ++ systems;
+  "pocket-id.age".publicKeys     = users ++ systems;
   # "sparkyfitness.age".publicKeys = users ++ systems;
   # "syncthing.age".publicKeys     = users ++ systems;
   # "your_spotify.age".publicKeys  = users;

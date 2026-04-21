@@ -17,20 +17,30 @@ in
     package = caddyWithPlugins;
     
     globalConfig = ''
-      acme_dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+    acme_dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+    dns cloudflare {env.CLOUDFLARE_API_TOKEN}
     '';
     
     virtualHosts = {
       "proxmox.wurt.net" = {
         extraConfig = ''
           reverse_proxy beelink.tailc21299.ts.net:8006
+	  tls {
+            dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+	    resolvers 1.1.1.1
+	  }
         '';
+	serverAliases = [
+	  "beelink.wurt.net"
+	];
       };
-      # "service2.yourdomain.com" = {
-      #   extraConfig = ''
-      #     reverse_proxy localhost:9090
-      #   '';
-      # };
+      "pocket-id.wurt.net".extraConfig = ''
+          reverse_proxy localhost:1411
+	  tls {
+            dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+	    resolvers 1.1.1.1
+	  }
+        '';
     };
     environmentFile = config.age.secrets.caddy.path;
   };

@@ -2,7 +2,7 @@
 
 {
   imports = [
-    # ./pocket-id.nix
+    ./pocket-id.nix
     # ./reverse-proxy.nix
     # ./syncthing.nix
     # ./immich.nix
