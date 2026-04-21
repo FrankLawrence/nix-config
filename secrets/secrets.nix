@@ -5,18 +5,21 @@ let
 
   users = [ local-terra jupiter-agenix ];
 
-  centauri = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMFhP+/afrYUNByay3MeBzmBc9nZcH8bEnIQ7Z0MsURO";
+  centauri = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKoMROjV6+nWOiYkgOTC6MUMxVusLvp5IV8yYnG0eo6v frank@centauri";
   systems = [ centauri ];
 in
 {
-  "sparkyfitness.age".publicKeys = users ++ systems;
-  "immich.age".publicKeys        = users ++ systems;
-  "karakeep.age".publicKeys      = users ++ systems;
-  "kavita.age".publicKeys        = users ++ systems;
-  "komga.age".publicKeys         = users ++ systems;
-  "mealie.age".publicKeys        = users ++ systems;
-  "adguard.age".publicKeys       = users ++ systems;
-  "pocket-id.age".publicKeys     = users ++ systems;
-  "syncthing.age".publicKeys     = users ++ systems;
-  "your_spotify.age".publicKeys  = users;
+  # "adguard.age".publicKeys       = users ++ systems;
+  "caddy.age".publicKeys         = users ++ systems;
+  "reverse-proxy.age".publicKeys = users ++ systems;
+  # "immich.age".publicKeys        = users ++ systems;
+  # "karakeep.age".publicKeys      = users ++ systems;
+  # "kavita.age".publicKeys        = users ++ systems;
+  # "komga.age".publicKeys         = users ++ systems;
+  # "mealie.age".publicKeys        = users ++ systems;
+  # "pocket-id.age".publicKeys     = users ++ systems;
+  # "sparkyfitness.age".publicKeys = users ++ systems;
+  # "syncthing.age".publicKeys     = users ++ systems;
+  # "your_spotify.age".publicKeys  = users;
 }
+

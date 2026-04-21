@@ -92,7 +92,7 @@
         andromeda = mkSystem "andromeda" [ ];
 
         centauri = mkSystem "centauri" [
-          # ./modules/services
+          ./modules/services
           # ./modules/hardware/nfs.nix
         ];
 

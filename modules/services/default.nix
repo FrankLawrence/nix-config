@@ -3,8 +3,8 @@
 {
   imports = [
     ./infrastructure
-    ./media
-    ./productivity
-    ./containers
+    # ./media
+    # ./productivity
+    # ./containers
   ];
 }
