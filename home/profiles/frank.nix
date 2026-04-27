@@ -59,6 +59,7 @@
     nh
     obsidian
     ollama-rocm
+    picard
     pinentry-curses
     postman
     python3

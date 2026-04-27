@@ -3,7 +3,7 @@
 {
   imports = [
     ./infrastructure
-    # ./media
+    ./media
     # ./productivity
     # ./containers
   ];

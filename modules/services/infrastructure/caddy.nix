@@ -25,21 +25,28 @@ in
       "proxmox.wurt.net" = {
         extraConfig = ''
           reverse_proxy beelink.tailc21299.ts.net:8006
-	  tls {
+          tls {
             dns cloudflare {env.CLOUDFLARE_API_TOKEN}
-	    resolvers 1.1.1.1
-	  }
+            resolvers 1.1.1.1
+          }
         '';
-	serverAliases = [
-	  "beelink.wurt.net"
-	];
+        serverAliases = [
+          "beelink.wurt.net"
+        ];
       };
       "pocket-id.wurt.net".extraConfig = ''
-          reverse_proxy localhost:1411
-	  tls {
-            dns cloudflare {env.CLOUDFLARE_API_TOKEN}
-	    resolvers 1.1.1.1
-	  }
+        reverse_proxy localhost:1411
+        tls {
+          dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+          resolvers 1.1.1.1
+        }
+        '';
+      "navidrome.wurt.net".extraConfig = ''
+        reverse_proxy localhost:5001
+        tls {
+          dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+          resolvers 1.1.1.1
+        }
         '';
     };
     environmentFile = config.age.secrets.caddy.path;
