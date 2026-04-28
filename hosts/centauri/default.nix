@@ -27,6 +27,7 @@
       443  # reverse-proxy
       1411 # pocket-id
       # 2283 # immich
+      3000 # dawarich
       # 3004 # sparkyfitness
       # 3474 # mazanoke
       # 5000 # kavita

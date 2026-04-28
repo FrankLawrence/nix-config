@@ -17,6 +17,7 @@ in
     package = caddyWithPlugins;
     
     globalConfig = ''
+    debug
     acme_dns cloudflare {env.CLOUDFLARE_API_TOKEN}
     dns cloudflare {env.CLOUDFLARE_API_TOKEN}
     '';
@@ -24,7 +25,13 @@ in
     virtualHosts = {
       "proxmox.wurt.net" = {
         extraConfig = ''
-          reverse_proxy beelink.tailc21299.ts.net:8006
+          reverse_proxy https://beelink.tailc21299.ts.net:8006 {
+            transport http {
+              tls_insecure_skip_verify
+            }
+          
+            header_up Host {upstream_hostport}
+          }
           tls {
             dns cloudflare {env.CLOUDFLARE_API_TOKEN}
             resolvers 1.1.1.1
@@ -34,20 +41,27 @@ in
           "beelink.wurt.net"
         ];
       };
-      "pocket-id.wurt.net".extraConfig = ''
-        reverse_proxy localhost:1411
-        tls {
-          dns cloudflare {env.CLOUDFLARE_API_TOKEN}
-          resolvers 1.1.1.1
-        }
-        '';
-      "navidrome.wurt.net".extraConfig = ''
-        reverse_proxy localhost:5001
-        tls {
-          dns cloudflare {env.CLOUDFLARE_API_TOKEN}
-          resolvers 1.1.1.1
-        }
-        '';
+    "pocket-id.wurt.net".extraConfig = ''
+      reverse_proxy localhost:1411
+      tls {
+        dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+        resolvers 1.1.1.1
+      }
+      '';
+    "navidrome.wurt.net".extraConfig = ''
+      reverse_proxy localhost:5001
+      tls {
+        dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+        resolvers 1.1.1.1
+      }
+      '';
+    "darawich.wurt.net".extraConfig = ''
+      reverse_proxy 127.0.0.1:3000
+      tls {
+        dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+        resolvers 1.1.1.1
+      }
+      '';
     };
     environmentFile = config.age.secrets.caddy.path;
   };
