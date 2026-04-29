@@ -62,6 +62,31 @@ in
         resolvers 1.1.1.1
       }
       '';
+    "glance.wurt.net" = {
+      extraConfig = ''
+        reverse_proxy 127.0.0.1:8084
+        tls {
+          dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+          resolvers 1.1.1.1
+        }
+        '';
+        serverAliases = [
+          "home.wurt.net"
+        ];
+      };
+    "stirling-pdf.wurt.net" = {
+      extraConfig = ''
+        reverse_proxy 127.0.0.1:8081
+        tls {
+          dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+          resolvers 1.1.1.1
+        }
+        '';
+        serverAliases = [
+          "pdf.wurt.net"
+          "stirling.wurt.net"
+        ];
+      };
     };
     environmentFile = config.age.secrets.caddy.path;
   };

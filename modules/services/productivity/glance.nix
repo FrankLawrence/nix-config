@@ -1,9 +1,9 @@
 { config, pkgs, ... }:
 
 {
-  age.secrets.adguard = {
-    file = ../../../secrets/adguard.age;
-  };
+  # age.secrets.adguard = {
+  #   file = ../../../secrets/adguard.age;
+  # };
 
   services.glance = {
     enable = true;
@@ -22,26 +22,6 @@
           widgets = [
           {
             type = "calendar";
-          }
-          {
-            type = "rss";
-            limit = 10;
-            collapse-after = 3;
-            cache = "3h";
-            feeds = [
-            { url = https://ciechanow.ski/atom.xml; }
-            {
-              url = https://www.joshwcomeau.com/rss.xml;
-              title = "Josh Comeau";
-            }
-            { url = https://samwho.dev/rss.xml; }
-            { url = https://awesomekling.github.io/feed.xml; }
-            {
-              url = https://isadeed.com/feed.xml;
-              title = "Ahmad Shadeed";
-            }
-            { url = https://weekly.nixos.org/feeds/all.rss.xml; }
-            ];
           }
           ];
         }
@@ -133,7 +113,7 @@
               service = "adguard";
               url = "https://adguard.wurt.net/";
               username = "pinkfloyd";
-              password = config.age.secrets.adguard.path;
+              # password = config.age.secrets.adguard.path;
             }
             {
               type = "rss";
@@ -268,6 +248,70 @@
             }
             ];
           }
+          {
+            type = "group";
+            widgets = [
+              {
+                type = "rss";
+                limit = 10;
+                collapse-after = 3;
+                cache = "3h";
+                feeds = [
+                { url = https://ciechanow.ski/atom.xml; }
+                {
+                  url = https://www.joshwcomeau.com/rss.xml;
+                  title = "Josh Comeau";
+                }
+                { url = https://samwho.dev/rss.xml; }
+                { url = https://awesomekling.github.io/feed.xml; }
+                {
+                  url = https://isadeed.com/feed.xml;
+                  title = "Ahmad Shadeed";
+                }
+                { url = https://weekly.nixos.org/feeds/all.rss.xml; }
+                ];
+              }
+              {
+                type = "rss";
+                title = "Blogs";
+                limit = 50;
+                style = "detailed-list";
+                collapse-after = 3;
+                cache = "24h";
+                feeds = [
+                  { url = https://www.leftfold.tech/feed.xml; }
+                  { url = https://dixken.de/feed.xml; }
+                  { url = https://tratt.net/laurie/blog/blog.rss ; }
+                  { url = https://www.terrygodier.com/feed.xml ; }
+                  { url = https://blog.terrygodier.com/feed.xml ; } 
+                  { url = https://jakelazaroff.com/rss.xml ; }
+                  { url = https://ploum.net/atom_en.xml ; }
+                  { url = https://excaliburheath.com/feed.xml ; }
+                  { url = https://ericmigi.com/rss.xml ; }
+                  { url = https://stanislas.blog/feed.xml ; }
+                  { url = https://brainbaking.com/index.xml ; }
+                  { url = https://jvns.ca/atom.xml ; }
+                  { url = https://untested.sonnet.io/feed.xml ; }
+                  { url = https://arne.me/blog/atom.xml ; }
+                  { url = https://davi.sh/rss.xml ; }
+                  { url = https://martinheinz.dev/rss ; }
+                  { url = https://haseebmajid.dev/posts/index.xml ; }
+                  { url = https://paulgraham.com/rss.html ; }
+                  { url = https://maggieappleton.com/rss.xml ; }
+                  { url = https://xeiaso.net/blog.rss ; }
+                  { url = https://aboutfeeds.com/ ; }
+                  { url = https://www.danielcorin.com/rss.xml ; }
+                  { url = https://bg.raindrop.io/rss/public/48340159 ; }
+                  { url = https://growingswe.com/feed.xml ; }
+                  { url = https://ellanew.com/feed.rss ; }
+                  { url = https://rss.beehiiv.com/feeds/1erpUYd0Eq.xml ; }
+                  { url = https://www.inkandswitch.com/index.xml; }
+                  { url = https://xkcd.com/rss.xml; }
+                  # { url = ; } Floor796
+                ];
+              }
+            ];
+          }
           ];
         }
         {
@@ -299,7 +343,7 @@
         ];
       }
       ];
-# Theme configuration
+      # Theme configuration
       theme = {
         background-color = "249 22 12";
         contrast-multiplier = 1.2;

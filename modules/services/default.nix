@@ -5,7 +5,7 @@
     ./infrastructure
     ./media
     ./utility
-    # ./productivity
+    ./productivity
     # ./containers
   ];
 }

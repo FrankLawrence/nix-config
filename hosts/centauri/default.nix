@@ -32,10 +32,10 @@
       # 3474 # mazanoke
       # 5000 # kavita
       5001 # navidrome
-      # 8081 # stirling-pdf
+      8081 # stirling-pdf
       # 8082 # komga
       # 8083 # omni-tools
-      # 8084 # glance
+      8084 # glance
       # 8338 # metadata-remote
       # 8384 # syncthing webUI
       # 22000 # synchting TCP and UDP sync traffic
