@@ -11,7 +11,6 @@
     };
 
     services.postgresql = {
-        enable = true;
         ensureDatabases = [ "dawarich" ];
         ensureUsers = [
             {

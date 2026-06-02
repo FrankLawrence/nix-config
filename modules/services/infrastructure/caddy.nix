@@ -87,6 +87,34 @@ in
           "stirling.wurt.net"
         ];
       };
+    "adguard.wurt.net".extraConfig = ''
+      reverse_proxy http://192.168.178.158:80
+      tls {
+        dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+        resolvers 1.1.1.1
+      }
+      '';
+    "paperless.wurt.net".extraConfig = ''
+      reverse_proxy 127.0.0.1:28981
+      tls {
+        dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+        resolvers 1.1.1.1
+      }
+      '';
+    "vikunja.wurt.net".extraConfig = ''
+      reverse_proxy 127.0.0.1:3456
+      tls {
+        dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+        resolvers 1.1.1.1
+      }
+      '';
+    "forgejo.wurt.net".extraConfig = ''
+      reverse_proxy 127.0.0.1:3001
+      tls {
+        dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+        resolvers 1.1.1.1
+      }
+      '';
     };
     environmentFile = config.age.secrets.caddy.path;
   };

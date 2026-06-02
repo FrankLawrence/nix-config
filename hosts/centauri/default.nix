@@ -26,6 +26,7 @@
       80   # reverse-proxy
       443  # reverse-proxy
       1411 # pocket-id
+      # 2222 # forgejo ssh
       # 2283 # immich
       3000 # dawarich
       # 3004 # sparkyfitness

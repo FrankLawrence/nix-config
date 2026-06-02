@@ -7,7 +7,6 @@
   };
 
   services.postgresql = {
-    enable = true;
     ensureDatabases = [ "pocket-id" ];
     ensureUsers = [{
       name = "pocket-id";

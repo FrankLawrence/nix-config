@@ -6,6 +6,8 @@
     ./glance.nix
     # ./karakeep.nix
     # ./mealie.nix
+    # ./paperless.nix
     ./stirling-pdf.nix
+    # ./vikunja.nix
   ];
 }
