@@ -15,9 +15,28 @@
     frontendHostname = "vikunja.wurt.net";
     database = {
       type = "postgres";
-      host = "127.0.0.1";
+      host = "/run/postgresql";
       user = "vikunja";
       database = "vikunja";
+    };
+    settings = {
+    	auth = {
+        openid = {
+        	enabled = true;
+          redirecturl = "https://vikunja.wurt.net/auth/openid/pocketid";
+          providers = {
+            PocketID = {
+	            name = "PocketID";
+							usernamefallback = true;
+			        emailfallback = true;
+              authurl = "https://pocket-id.wurt.net";
+              clientID = "f4e6ada2-a852-4dbe-b45c-d4c28faf9731";
+              clientsecret = "l7BqDa9O8xLMWoGQltMGtBSIW85UqSzM";
+              scope = "openid profile email";
+            };
+          };
+        };
+      };
     };
   };
 }

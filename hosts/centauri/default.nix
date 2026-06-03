@@ -36,6 +36,7 @@
       3030 # vikunja
 
       4000 # adguard
+      4010 # dawarich
 
       5000 # auth
       5010 # pocket-id

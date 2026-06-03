@@ -13,6 +13,7 @@ in
   "paperless-admin.age".publicKeys = users ++ systems;
   "dawarich-db-pass.age".publicKeys    = users ++ systems;
   "dawarich-secret-key.age".publicKeys = users ++ systems;
+  "dawarich.age".publicKeys = users ++ systems;
   "reverse-proxy.age".publicKeys   = users ++ systems;
   "tinyauth.age".publicKeys   = users ++ systems;
   # "immich.age".publicKeys        = users ++ systems;
@@ -25,4 +26,3 @@ in
   # "syncthing.age".publicKeys     = users ++ systems;
   # "your_spotify.age".publicKeys  = users;
 }
-
