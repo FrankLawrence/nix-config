@@ -76,7 +76,7 @@ in
         serverAliases = [ "pdf.wurt.net" "stirling.wurt.net" ];
       };
       "paperless.wurt.net".extraConfig = mkProxy          "127.0.0.1:3020";
-      "vikunja.wurt.net".extraConfig   = mkProxy          "127.0.0.1:3030";
+      "vikunja.wurt.net".extraConfig   = mkProtectedProxy "127.0.0.1:3030";
       "actual.wurt.net".extraConfig    = mkProxy          "127.0.0.1:3040";
       "karakeep.wurt.net".extraConfig  = mkProxy          "127.0.0.1:3050";
       "mealie.wurt.net".extraConfig    = mkProxy          "127.0.0.1:3060";

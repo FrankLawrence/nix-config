@@ -1,56 +1,56 @@
 { config, lib, ... }:
-{
-    age.secrets.dawarich-db-pass = {
-        file = ../../../secrets/dawarich-db-pass.age;
-        owner = "dawarich";
+lib.mkIf config.services.dawarich.enable {
+  age.secrets.dawarich = {
+    file = ../../../secrets/dawarich.age;
+    owner = "dawarich";
+  };
+
+  age.secrets.dawarich-secret-key = {
+    file = ../../../secrets/dawarich-secret-key.age;
+    owner = "dawarich";
+  };
+
+  services.postgresql = {
+    ensureDatabases = [ "dawarich" ];
+    ensureUsers = [{
+      name = "dawarich";
+      ensureDBOwnership = true;
+    }];
+  };
+
+  services.redis.servers."dawarich" = {
+    enable = true;
+    port = 4011;
+  };
+
+  services.dawarich = {
+    database = {
+      host = "/run/postgresql";
+      name = "dawarich";
+      user = "dawarich";
+    };
+    redis = {
+      host = "localhost";
+      port = 4011;
     };
 
-    age.secrets.dawarich-secret-key = {
-        file = ../../../secrets/dawarich-secret-key.age;
-        owner = "dawarich";
+    webPort = 4010;
+    localDomain = "dawarich.wurt.net";
+    environment = {
+      APPLICATION_HOSTS = "127.0.0.1,dawarich.wurt.net";
+      APPLICATION_PROTOCOL = "https";
+      DOMAIN = "dawarich.wurt.net";
+      OIDC_ISSUER = "https://pocket-id.wurt.net";
+      OIDC_REDIRECT_URI = "https://dawarich.wurt.net/users/auth/openid_connect/callback";
+      OIDC_PROVIDER_NAME = "Pocket-ID";
+      OIDC_AUTO_REGISTER = "true";
+      OIDC_PKCE_ENABLED = "true";
+      ALLOW_EMAIL_PASSWORD_REGISTRATION = "false";
+      SELF_HOSTED = "true";
     };
-
-    services.postgresql = {
-        ensureDatabases = [ "dawarich" ];
-        ensureUsers = [
-            {
-                name = "dawarich";
-                ensureDBOwnership = true;
-            }
-        ];
-    };
-
-    services.redis.servers."dawarich" = {
-        enable = true;
-        # port = 6379;
-        port = 4011;
-    };
-
-    services.dawarich = {
-        enable = true;
-        database = {
-            host = "/run/postgresql";
-            name = "dawarich";
-            user = "dawarich";
-            passwordFile = config.age.secrets.dawarich-db-pass.path;
-        };
-
-        redis = {
-            host = "localhost";
-            # port = 6379;
-            port = 4011;
-        };
-
-        secretKeyBaseFile = config.age.secrets.dawarich-secret-key.path;
-
-        # webPort = 3002;
-        webPort = 4010;
-
-        # localDomain = "centauri.tailc21299.ts.net";
-        localDomain = "dawarich.wurt.net";
-
-        environment = {
-            APPLICATION_HOSTS = "127.0.0.1,dawarich.wurt.net,centauri.tailc21299.ts.net";
-        };
-    };
+    extraEnvFiles = [
+    	config.age.secrets.dawarich.path
+    ];
+    secretKeyBaseFile = config.age.secrets.dawarich-secret-key.path;
+  };
 }
