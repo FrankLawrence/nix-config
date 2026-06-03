@@ -11,9 +11,9 @@
     settings = {
       spotifySecretFile = config.age.secrets.your_spotify.path;
       SPOTIFY_PUBLIC = "a0c372ab84174f4d9c690bdaa7fbce89";
-      API_ENDPOINT = "http://localhost:4000";
+      API_ENDPOINT = "http://localhost:2030";
       CLIENT_ENDPOINT = "https://spotify.wurt.net";
-      PORT = 4000;
+      PORT = 2030;
     };
   };
 }

@@ -9,6 +9,8 @@
   };
 
   services.vikunja = {
+    # port = 3456;
+    port = 3030;
     frontendScheme = "https";
     frontendHostname = "vikunja.wurt.net";
     database = {

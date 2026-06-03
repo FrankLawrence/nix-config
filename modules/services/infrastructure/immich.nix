@@ -1,17 +1,17 @@
 { config, pkgs, ... }:
 
 {
-  age.secrets.immich = {
-    file = ../../../secrets/immich.age;
-    owner = "immich";
-    group = "immich";
-  };
+  # age.secrets.immich = {
+  #   file = ../../../secrets/immich.age;
+  #   owner = "immich";
+  #   group = "immich";
+  # };
 
   services.immich = {
-    enable = lib.mkDefault false;
-    port = 2283;
+    # port = 2283;
+    port = 1030;
     mediaLocation = "/mnt/nfs/immich";
-    secretsFile = config.age.secrets.immich.path;
+    # secretsFile = config.age.secrets.immich.path;
 
     settings = {
       newVersionCheck.enabled = true;
@@ -22,6 +22,6 @@
       UPLOAD_LOCATION = "/mnt/photo/";
     };
 
-    host = "0.0.0.0";
+    host = "127.0.0.1";
   };
 }

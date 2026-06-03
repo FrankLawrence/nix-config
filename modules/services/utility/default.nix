@@ -2,6 +2,7 @@
 
 {
   imports = [
-    # ./dawarich.nix
+    ./dawarich.nix
+    ./adguardhome.nix
   ];
 }

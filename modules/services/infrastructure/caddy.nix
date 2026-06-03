@@ -17,11 +17,9 @@ let
     ${tls}
   '';
 
-  # Reverse proxy protected by tinyauth forward_auth.
-  # Unauthenticated requests are redirected to Pocket ID via tinyauth.
   mkProtectedProxy = upstream: ''
-    forward_auth 127.0.0.1:7070 {
-      uri /api/auth
+    forward_auth 127.0.0.1:5000 {
+      uri /api/auth/caddy
       copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
     }
     reverse_proxy ${upstream}
@@ -58,35 +56,36 @@ in
         '';
         serverAliases = [ "beelink.wurt.net" ];
       };
-
       # ── Infrastructure ─────────────────────────────────────────────────────
-      "auth.wurt.net".extraConfig       = mkProxy "127.0.0.1:7070";
-      "pocket-id.wurt.net".extraConfig  = mkProxy "127.0.0.1:1411";
-      "adguard.wurt.net".extraConfig    = mkProxy "http://192.168.178.158:80";
-
+      "auth.wurt.net".extraConfig       = mkProxy "127.0.0.1:5000";
+      "pocket-id.wurt.net".extraConfig  = mkProxy "127.0.0.1:5010";
+      "forgejo.wurt.net".extraConfig    = mkProxy "127.0.0.1:5020";
+      "immich.wurt.net".extraConfig     = mkProxy "127.0.0.1:5030";
+      "syncthing.wurt.net".extraConfig  = mkProxy "127.0.0.1:5040";
       # ── Media ──────────────────────────────────────────────────────────────
-      "navidrome.wurt.net".extraConfig  = mkProxy "127.0.0.1:5001";
-
+      "navidrome.wurt.net".extraConfig  = mkProxy "127.0.0.1:2000";
+      "kavita.wurt.net".extraConfig     = mkProxy "127.0.0.1:2010";
+      "komga.wurt.net".extraConfig      = mkProxy "127.0.0.1:2020";
       # ── Productivity ───────────────────────────────────────────────────────
       "glance.wurt.net" = {
-        extraConfig   = mkProxy "127.0.0.1:8084";
+        extraConfig   = mkProxy "127.0.0.1:3000";
         serverAliases = [ "home.wurt.net" ];
       };
       "stirling-pdf.wurt.net" = {
-        extraConfig   = mkProxy "127.0.0.1:8081";
+        extraConfig   = mkProxy "127.0.0.1:3010";
         serverAliases = [ "pdf.wurt.net" "stirling.wurt.net" ];
       };
-      "paperless.wurt.net".extraConfig  = mkProtectedProxy "127.0.0.1:28981";
-      "vikunja.wurt.net".extraConfig    = mkProtectedProxy "127.0.0.1:3456";
-
+      "paperless.wurt.net".extraConfig = mkProxy          "127.0.0.1:3020";
+      "vikunja.wurt.net".extraConfig   = mkProxy          "127.0.0.1:3030";
+      "actual.wurt.net".extraConfig    = mkProxy          "127.0.0.1:3040";
+      "karakeep.wurt.net".extraConfig  = mkProxy          "127.0.0.1:3050";
+      "mealie.wurt.net".extraConfig    = mkProxy          "127.0.0.1:3060";
       # ── Utility ────────────────────────────────────────────────────────────
-      "darawich.wurt.net".extraConfig   = mkProtectedProxy "127.0.0.1:3000";
+      "adguard.wurt.net".extraConfig   = mkProxy          "127.0.0.1:4000";
+      "darawich.wurt.net".extraConfig  = mkProtectedProxy "127.0.0.1:4010";
 
-      # ── Infrastructure (optional) ──────────────────────────────────────────
-      "forgejo.wurt.net".extraConfig    = mkProxy "127.0.0.1:3001";
     };
 
     environmentFile = config.age.secrets.caddy.path;
   };
 }
-

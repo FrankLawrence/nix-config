@@ -5,7 +5,8 @@
     meilisearch.enable = true;
     browser = {
      enable = true;
-     port = 9222;
+     # port = 9222;
+     port = 3050;
    };
    extraEnvironment = {
      NEXTAUTH_URL = "https://karakeep.wurt.net";

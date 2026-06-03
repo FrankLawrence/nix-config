@@ -22,7 +22,8 @@
 
     services.redis.servers."dawarich" = {
         enable = true;
-        port = 6379;
+        # port = 6379;
+        port = 4011;
     };
 
     services.dawarich = {
@@ -36,12 +37,14 @@
 
         redis = {
             host = "localhost";
-            port = 6379;
+            # port = 6379;
+            port = 4011;
         };
 
         secretKeyBaseFile = config.age.secrets.dawarich-secret-key.path;
 
-        webPort = 3000;
+        # webPort = 3002;
+        webPort = 4010;
 
         # localDomain = "centauri.tailc21299.ts.net";
         localDomain = "dawarich.wurt.net";

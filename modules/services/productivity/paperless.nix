@@ -14,7 +14,8 @@
   };
 
   services.paperless = {
-    port = 28981;
+    # port = 28981;
+    port = 3020;
     address = "127.0.0.1";
     # passwordFile = config.age.secrets.paperless-admin.path;
     settings = {

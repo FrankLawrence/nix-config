@@ -16,8 +16,9 @@
   };
 
   services.mealie = {
-    port = 9000;
-    listenAddress = "0.0.0.0";
+    # port = 9000;
+    port = 3060;
+    listenAddress = "127.0.0.1";
     # credentialsFile = config.age.secrets.mealie.path;
     settings = {
       DB_ENGINE = "postgres";
