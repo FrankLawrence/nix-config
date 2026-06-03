@@ -9,7 +9,6 @@
   };
 
   services.vikunja = {
-    enable = true;
     frontendScheme = "https";
     frontendHostname = "vikunja.wurt.net";
     database = {

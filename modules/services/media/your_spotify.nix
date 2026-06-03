@@ -7,7 +7,6 @@
   };
 
   services.your_spotify = {
-    enable = true;
     enableLocalDB = true;
     settings = {
       spotifySecretFile = config.age.secrets.your_spotify.path;

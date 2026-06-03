@@ -2,12 +2,12 @@
 
 {
   imports = [
-    # ./actual.nix
+    ./actual.nix
     ./glance.nix
-    # ./karakeep.nix
-    # ./mealie.nix
-    # ./paperless.nix
+    ./karakeep.nix
+    ./mealie.nix
+    ./paperless.nix
     ./stirling-pdf.nix
-    # ./vikunja.nix
+    ./vikunja.nix
   ];
 }

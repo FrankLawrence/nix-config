@@ -28,7 +28,7 @@
       1411 # pocket-id
       # 2222 # forgejo ssh
       # 2283 # immich
-      3000 # dawarich
+      # 3000 # dawarich
       # 3004 # sparkyfitness
       # 3474 # mazanoke
       # 5000 # kavita
@@ -47,9 +47,35 @@
   };
 
   services = {
-    qemuGuest.enable = true;
+    # Productivity
+    glance.enable       = true;
+    stirling-pdf.enable = true;
+    actual.enable       = false;
+    vikunja.enable      = false;
+    karakeep.enable     = false;
+    paperless.enable    = false;
+    mealie.enable       = false;
+
+    # Media
+    navidrome.enable    = true;
+    kavita.enable       = false;
+    komga.enable        = false;
+
+    # Infrastructure
+    pocket-id.enable    = true;
+    caddy.enable        = true;
+    postgresql.enable   = true;
+    syncthing.enable    = false;
+    forgejo.enable      = false;
+    immich.enable       = false;
+
+    # Utility
+    dawarich.enable     = false;
+
+    # -- System Services --
+    qemuGuest.enable          = true;
     cloud-init.network.enable = true;
-    tailscale.enable = true;
+    tailscale.enable          = true;
   };
 
   system.stateVersion = "24.11";
