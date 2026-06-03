@@ -10,7 +10,7 @@ let
 in
 {
   # "adguard.age".publicKeys        = users ++ systems;
-  "paperless-admin.age".publicKeys = users ++ systems;
+  "oauth2-proxy.age".publicKeys = users ++ systems;
   "dawarich-db-pass.age".publicKeys    = users ++ systems;
   "dawarich-secret-key.age".publicKeys = users ++ systems;
   "reverse-proxy.age".publicKeys   = users ++ systems;

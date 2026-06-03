@@ -41,6 +41,13 @@ in
           "beelink.wurt.net"
         ];
       };
+    "auth.wurt.net".extraConfig = ''
+      reverse_proxy 127.0.0.1:4180
+      tls {
+        dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+        resolvers 1.1.1.1
+      }
+      '';
     "pocket-id.wurt.net".extraConfig = ''
       reverse_proxy localhost:1411
       tls {
@@ -49,7 +56,7 @@ in
       }
       '';
     "navidrome.wurt.net".extraConfig = ''
-      reverse_proxy localhost:5001
+      reverse_proxy 127.0.0.1:5001
       tls {
         dns cloudflare {env.CLOUDFLARE_API_TOKEN}
         resolvers 1.1.1.1

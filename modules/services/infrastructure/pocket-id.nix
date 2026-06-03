@@ -21,7 +21,8 @@
       ANALYTICS_DISABLED = true;
       # APP_URL = "https://pocket-id.wurt.net";
       APP_URL = "http://centauri.tailc21299.ts.net:1411";
-      DB_CONNECTION_STRING = "postgresql://pocket-id@localhost:5432/pocket-id";
+      DB_PROVIDER = "postgres";
+      DB_CONNECTION_STRING = "postgresql://pocket-id@/pocket-id?host=/run/postgresql";
       TRUST_PROXY = false;
       PORT = 1411;
       HOST = "0.0.0.0";
