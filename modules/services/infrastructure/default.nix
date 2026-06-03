@@ -2,11 +2,12 @@
 
 {
   imports = [
-    ./postgresql.nix
-    ./pocket-id.nix
-    # ./forgejo.nix
-    # ./syncthing.nix
-    # ./immich.nix
     ./caddy.nix
+    ./tinyauth.nix
+    ./pocket-id.nix
+    ./forgejo.nix
+    ./syncthing.nix
+    ./immich.nix
+    ./postgresql.nix
   ];
 }

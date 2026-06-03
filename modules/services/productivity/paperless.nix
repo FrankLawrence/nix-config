@@ -1,9 +1,9 @@
 { config, ... }:
 {
-  age.secrets.paperless-admin = {
-    file = ../../../secrets/paperless-admin.age;
-    owner = "paperless";
-  };
+  # age.secrets.paperless-admin = {
+  #   file = ../../../secrets/paperless-admin.age;
+  #   owner = "paperless";
+  # };
 
   services.postgresql = {
     ensureDatabases = [ "paperless" ];
@@ -14,10 +14,10 @@
   };
 
   services.paperless = {
-    enable = true;
-    port = 28981;
+    # port = 28981;
+    port = 3020;
     address = "127.0.0.1";
-    passwordFile = config.age.secrets.paperless-admin.path;
+    # passwordFile = config.age.secrets.paperless-admin.path;
     settings = {
       PAPERLESS_URL = "https://paperless.wurt.net";
       PAPERLESS_ADMIN_USER = "admin";

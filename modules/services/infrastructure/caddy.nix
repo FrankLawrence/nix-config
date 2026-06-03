@@ -2,8 +2,29 @@
 let
   caddyWithPlugins = pkgs.caddy.withPlugins {
     plugins = [ "github.com/caddy-dns/cloudflare@v0.2.4" ];
-    hash = "sha256-8HpPZ/VoiV/k0ZYcnXHmkwuEYKNpURKTN19aYZRLPoM=";
+    hash = "sha256-vNSHU7txQLs0m0UChuszURXjEoMj4r1902+1ei0/DaI=";
   };
+
+  tls = ''
+    tls {
+      dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+      resolvers 1.1.1.1
+    }
+  '';
+
+  mkProxy = upstream: ''
+    reverse_proxy ${upstream}
+    ${tls}
+  '';
+
+  mkProtectedProxy = upstream: ''
+    forward_auth 127.0.0.1:5000 {
+      uri /api/auth/caddy
+      copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
+    }
+    reverse_proxy ${upstream}
+    ${tls}
+  '';
 in
 {
   age.secrets.caddy = {
@@ -13,15 +34,15 @@ in
   };
 
   services.caddy = {
-    enable = true;
+    enable  = true;
     package = caddyWithPlugins;
-    
+
     globalConfig = ''
-    debug
-    acme_dns cloudflare {env.CLOUDFLARE_API_TOKEN}
-    dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+      debug
+      acme_dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+      dns cloudflare {env.CLOUDFLARE_API_TOKEN}
     '';
-    
+
     virtualHosts = {
       "proxmox.wurt.net" = {
         extraConfig = ''
@@ -29,100 +50,42 @@ in
             transport http {
               tls_insecure_skip_verify
             }
-          
             header_up Host {upstream_hostport}
           }
-          tls {
-            dns cloudflare {env.CLOUDFLARE_API_TOKEN}
-            resolvers 1.1.1.1
-          }
+          ${tls}
         '';
-        serverAliases = [
-          "beelink.wurt.net"
-        ];
+        serverAliases = [ "beelink.wurt.net" ];
       };
-    "auth.wurt.net".extraConfig = ''
-      reverse_proxy 127.0.0.1:4180
-      tls {
-        dns cloudflare {env.CLOUDFLARE_API_TOKEN}
-        resolvers 1.1.1.1
-      }
-      '';
-    "pocket-id.wurt.net".extraConfig = ''
-      reverse_proxy localhost:1411
-      tls {
-        dns cloudflare {env.CLOUDFLARE_API_TOKEN}
-        resolvers 1.1.1.1
-      }
-      '';
-    "navidrome.wurt.net".extraConfig = ''
-      reverse_proxy 127.0.0.1:5001
-      tls {
-        dns cloudflare {env.CLOUDFLARE_API_TOKEN}
-        resolvers 1.1.1.1
-      }
-      '';
-    "darawich.wurt.net".extraConfig = ''
-      reverse_proxy 127.0.0.1:3000
-      tls {
-        dns cloudflare {env.CLOUDFLARE_API_TOKEN}
-        resolvers 1.1.1.1
-      }
-      '';
-    "glance.wurt.net" = {
-      extraConfig = ''
-        reverse_proxy 127.0.0.1:8084
-        tls {
-          dns cloudflare {env.CLOUDFLARE_API_TOKEN}
-          resolvers 1.1.1.1
-        }
-        '';
-        serverAliases = [
-          "home.wurt.net"
-        ];
+      # ── Infrastructure ─────────────────────────────────────────────────────
+      "auth.wurt.net".extraConfig       = mkProxy "127.0.0.1:5000";
+      "pocket-id.wurt.net".extraConfig  = mkProxy "127.0.0.1:5010";
+      "forgejo.wurt.net".extraConfig    = mkProxy "127.0.0.1:5020";
+      "immich.wurt.net".extraConfig     = mkProxy "127.0.0.1:5030";
+      "syncthing.wurt.net".extraConfig  = mkProxy "127.0.0.1:5040";
+      # ── Media ──────────────────────────────────────────────────────────────
+      "navidrome.wurt.net".extraConfig  = mkProxy "127.0.0.1:2000";
+      "kavita.wurt.net".extraConfig     = mkProxy "127.0.0.1:2010";
+      "komga.wurt.net".extraConfig      = mkProxy "127.0.0.1:2020";
+      # ── Productivity ───────────────────────────────────────────────────────
+      "glance.wurt.net" = {
+        extraConfig   = mkProxy "127.0.0.1:3000";
+        serverAliases = [ "home.wurt.net" ];
       };
-    "stirling-pdf.wurt.net" = {
-      extraConfig = ''
-        reverse_proxy 127.0.0.1:8081
-        tls {
-          dns cloudflare {env.CLOUDFLARE_API_TOKEN}
-          resolvers 1.1.1.1
-        }
-        '';
-        serverAliases = [
-          "pdf.wurt.net"
-          "stirling.wurt.net"
-        ];
+      "stirling-pdf.wurt.net" = {
+        extraConfig   = mkProxy "127.0.0.1:3010";
+        serverAliases = [ "pdf.wurt.net" "stirling.wurt.net" ];
       };
-    "adguard.wurt.net".extraConfig = ''
-      reverse_proxy http://192.168.178.158:80
-      tls {
-        dns cloudflare {env.CLOUDFLARE_API_TOKEN}
-        resolvers 1.1.1.1
-      }
-      '';
-    "paperless.wurt.net".extraConfig = ''
-      reverse_proxy 127.0.0.1:28981
-      tls {
-        dns cloudflare {env.CLOUDFLARE_API_TOKEN}
-        resolvers 1.1.1.1
-      }
-      '';
-    "vikunja.wurt.net".extraConfig = ''
-      reverse_proxy 127.0.0.1:3456
-      tls {
-        dns cloudflare {env.CLOUDFLARE_API_TOKEN}
-        resolvers 1.1.1.1
-      }
-      '';
-    "forgejo.wurt.net".extraConfig = ''
-      reverse_proxy 127.0.0.1:3001
-      tls {
-        dns cloudflare {env.CLOUDFLARE_API_TOKEN}
-        resolvers 1.1.1.1
-      }
-      '';
+      "paperless.wurt.net".extraConfig = mkProxy          "127.0.0.1:3020";
+      "vikunja.wurt.net".extraConfig   = mkProxy          "127.0.0.1:3030";
+      "actual.wurt.net".extraConfig    = mkProxy          "127.0.0.1:3040";
+      "karakeep.wurt.net".extraConfig  = mkProxy          "127.0.0.1:3050";
+      "mealie.wurt.net".extraConfig    = mkProxy          "127.0.0.1:3060";
+      # ── Utility ────────────────────────────────────────────────────────────
+      "adguard.wurt.net".extraConfig   = mkProxy          "127.0.0.1:4000";
+      "darawich.wurt.net".extraConfig  = mkProtectedProxy "127.0.0.1:4010";
+
     };
+
     environmentFile = config.age.secrets.caddy.path;
   };
 }

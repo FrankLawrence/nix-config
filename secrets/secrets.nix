@@ -14,6 +14,7 @@ in
   "dawarich-db-pass.age".publicKeys    = users ++ systems;
   "dawarich-secret-key.age".publicKeys = users ++ systems;
   "reverse-proxy.age".publicKeys   = users ++ systems;
+  "tinyauth.age".publicKeys   = users ++ systems;
   # "immich.age".publicKeys        = users ++ systems;
   # "karakeep.age".publicKeys      = users ++ systems;
   # "kavita.age".publicKeys        = users ++ systems;

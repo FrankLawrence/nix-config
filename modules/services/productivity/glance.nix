@@ -6,11 +6,11 @@
   # };
 
   services.glance = {
-    enable = true;
     settings = {
       server = {
-        port = 8084;
-        host = "0.0.0.0";
+        # port = 8084;
+        port = 3000;
+        host = "127.0.0.1";
       };
       pages = [
       {

@@ -1,7 +1,6 @@
 { config, ... }:
 {
   services.forgejo = {
-    enable = true;
     database = {
       type = "postgres";
       # createDatabase handles ensureDatabases + ensureUsers via NixOS PostgreSQL module
@@ -13,10 +12,12 @@
       };
       server = {
         DOMAIN = "forgejo.wurt.net";
-        HTTP_PORT = 3001;
+        # HTTP_PORT = 3001;
+        HTTP_PORT = 1020;
         ROOT_URL = "https://forgejo.wurt.net/";
         SSH_DOMAIN = "forgejo.wurt.net";
-        SSH_PORT = 2222;
+        # SSH_PORT = 2222;
+        SSH_PORT = 1021;
         START_SSH_SERVER = true;
       };
       service = {

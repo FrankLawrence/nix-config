@@ -25,31 +25,54 @@
       22   # ssh
       80   # reverse-proxy
       443  # reverse-proxy
-      1411 # pocket-id
-      # 2222 # forgejo ssh
-      # 2283 # immich
-      3000 # dawarich
-      # 3004 # sparkyfitness
-      # 3474 # mazanoke
-      # 5000 # kavita
-      5001 # navidrome
-      8081 # stirling-pdf
-      # 8082 # komga
-      # 8083 # omni-tools
-      8084 # glance
-      # 8338 # metadata-remote
-      # 8384 # syncthing webUI
+
       # 22000 # synchting TCP and UDP sync traffic
       # 21027 # syncthing UDP discovery
-      # 9000 # mealie
-      # 9222 # karakeep
+
+      2000 # navidrome
+
+      3000 # glance
+      3010 # stirling-pdf
+      3030 # vikunja
+
+      4000 # adguard
+
+      5000 # auth
+      5010 # pocket-id
     ];
   };
 
   services = {
-    qemuGuest.enable = true;
+    # Infrastructure
+    pocket-id.enable    = true;
+    forgejo.enable      = false;
+    caddy.enable        = true;
+    immich.enable       = false;
+    syncthing.enable    = false;
+    postgresql.enable   = true;
+
+    # Media
+    navidrome.enable    = true;
+    kavita.enable       = false;
+    komga.enable        = false;
+
+    # Productivity
+    glance.enable       = true;
+    stirling-pdf.enable = true;
+    paperless.enable    = false;
+    vikunja.enable      = true;
+    actual.enable       = false;
+    karakeep.enable     = false;
+    mealie.enable       = false;
+
+    # Utility
+    adguardhome.enable  = true;
+    dawarich.enable     = false;
+
+    # -- System Services --
+    qemuGuest.enable          = true;
     cloud-init.network.enable = true;
-    tailscale.enable = true;
+    tailscale.enable          = true;
   };
 
   system.stateVersion = "24.11";
