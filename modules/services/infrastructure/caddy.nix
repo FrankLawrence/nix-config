@@ -62,6 +62,7 @@ in
       "forgejo.wurt.net".extraConfig    = mkProxy "127.0.0.1:5020";
       "immich.wurt.net".extraConfig     = mkProxy "127.0.0.1:5030";
       "syncthing.wurt.net".extraConfig  = mkProxy "127.0.0.1:5040";
+      "lldap.wurt.net".extraConfig      = mkProxy "127.0.0.1:5050";
       # ── Media ──────────────────────────────────────────────────────────────
       "navidrome.wurt.net".extraConfig  = mkProxy "127.0.0.1:2000";
       "kavita.wurt.net".extraConfig     = mkProxy "127.0.0.1:2010";
@@ -79,7 +80,7 @@ in
       "vikunja.wurt.net".extraConfig   = mkProtectedProxy "127.0.0.1:3030";
       "actual.wurt.net".extraConfig    = mkProxy          "127.0.0.1:3040";
       "karakeep.wurt.net".extraConfig  = mkProxy          "127.0.0.1:3050";
-      "mealie.wurt.net".extraConfig    = mkProxy          "127.0.0.1:3060";
+      "mealie.wurt.net".extraConfig    = mkProtectedProxy "127.0.0.1:3060";
       # ── Utility ────────────────────────────────────────────────────────────
       "adguard.wurt.net".extraConfig   = mkProxy          "127.0.0.1:4000";
       "darawich.wurt.net".extraConfig  = mkProtectedProxy "127.0.0.1:4010";

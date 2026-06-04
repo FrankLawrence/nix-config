@@ -24,7 +24,7 @@
       };
       ExtAuth = {
         TrustedSources = "127.0.0.1/32";
-	UserHeader = "X-Auth-Request-User";
+				UserHeader = "X-Auth-Request-User";
       };
       DefaultTheme = "Dark";
     };

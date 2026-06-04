@@ -9,20 +9,19 @@ let
   systems = [ centauri ];
 in
 {
-  # "adguard.age".publicKeys        = users ++ systems;
-  "paperless-admin.age".publicKeys = users ++ systems;
-  "dawarich-db-pass.age".publicKeys    = users ++ systems;
-  "dawarich-secret-key.age".publicKeys = users ++ systems;
-  "dawarich.age".publicKeys = users ++ systems;
   "reverse-proxy.age".publicKeys   = users ++ systems;
-  "tinyauth.age".publicKeys   = users ++ systems;
+  "tinyauth.age".publicKeys        = users ++ systems;
+  "pocket-id.age".publicKeys       = users ++ systems;
+  "lldap.age".publicKeys           = users ++ systems;
   # "immich.age".publicKeys        = users ++ systems;
   # "karakeep.age".publicKeys      = users ++ systems;
   # "kavita.age".publicKeys        = users ++ systems;
   # "komga.age".publicKeys         = users ++ systems;
-  # "mealie.age".publicKeys        = users ++ systems;
-  "pocket-id.age".publicKeys       = users ++ systems;
+  "mealie.age".publicKeys          = users ++ systems;
   # "sparkyfitness.age".publicKeys = users ++ systems;
   # "syncthing.age".publicKeys     = users ++ systems;
   # "your_spotify.age".publicKeys  = users;
+  "paperless-admin.age".publicKeys = users ++ systems;
+  "dawarich-secret-key.age".publicKeys = users ++ systems;
+  "dawarich.age".publicKeys        = users ++ systems;
 }

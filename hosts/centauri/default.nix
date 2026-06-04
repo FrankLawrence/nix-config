@@ -34,12 +34,14 @@
       3000 # glance
       3010 # stirling-pdf
       3030 # vikunja
+      3060 # mealie
 
       4000 # adguard
       4010 # dawarich
 
       5000 # auth
       5010 # pocket-id
+      5050 # lldap
     ];
   };
 
@@ -51,6 +53,7 @@
     immich.enable       = false;
     syncthing.enable    = false;
     postgresql.enable   = true;
+    lldap.enable        = true;
 
     # Media
     navidrome.enable    = true;
@@ -64,7 +67,7 @@
     vikunja.enable      = true;
     actual.enable       = false;
     karakeep.enable     = false;
-    mealie.enable       = false;
+    mealie.enable       = true;
 
     # Utility
     adguardhome.enable  = true;

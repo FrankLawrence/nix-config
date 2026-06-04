@@ -9,5 +9,6 @@
     ./syncthing.nix
     ./immich.nix
     ./postgresql.nix
+    ./lldap.nix
   ];
 }
