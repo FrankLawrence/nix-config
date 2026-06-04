@@ -36,6 +36,7 @@ lib.mkIf config.services.dawarich.enable {
 
     webPort = 4010;
     localDomain = "dawarich.wurt.net";
+    configureNginx = false;
     environment = {
       APPLICATION_HOSTS = "127.0.0.1,dawarich.wurt.net";
       APPLICATION_PROTOCOL = "https";

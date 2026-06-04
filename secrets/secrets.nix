@@ -13,6 +13,8 @@ in
   "tinyauth.age".publicKeys        = users ++ systems;
   "pocket-id.age".publicKeys       = users ++ systems;
   "lldap.age".publicKeys           = users ++ systems;
+  "lldap-observer.age".publicKeys  = users ++ systems;
+  "pgadmin.age".publicKeys         = users ++ systems;
   # "immich.age".publicKeys        = users ++ systems;
   # "karakeep.age".publicKeys      = users ++ systems;
   # "kavita.age".publicKeys        = users ++ systems;

@@ -42,6 +42,7 @@
       5000 # auth
       5010 # pocket-id
       5050 # lldap
+      5060 # pgadmin
     ];
   };
 
@@ -54,6 +55,7 @@
     syncthing.enable    = false;
     postgresql.enable   = true;
     lldap.enable        = true;
+    pgadmin.enable      = true;
 
     # Media
     navidrome.enable    = true;

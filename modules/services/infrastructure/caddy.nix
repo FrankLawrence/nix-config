@@ -45,24 +45,23 @@ in
 
     virtualHosts = {
       "proxmox.wurt.net" = {
-        extraConfig = ''
-          reverse_proxy https://beelink.tailc21299.ts.net:8006 {
+        extraConfig = mkProxy ''
+          https://beelink.tailc21299.ts.net:8006 {
             transport http {
               tls_insecure_skip_verify
             }
             header_up Host {upstream_hostport}
-          }
-          ${tls}
-        '';
+          }'';
         serverAliases = [ "beelink.wurt.net" ];
       };
       # ── Infrastructure ─────────────────────────────────────────────────────
-      "auth.wurt.net".extraConfig       = mkProxy "127.0.0.1:5000";
-      "pocket-id.wurt.net".extraConfig  = mkProxy "127.0.0.1:5010";
-      "forgejo.wurt.net".extraConfig    = mkProxy "127.0.0.1:5020";
-      "immich.wurt.net".extraConfig     = mkProxy "127.0.0.1:5030";
-      "syncthing.wurt.net".extraConfig  = mkProxy "127.0.0.1:5040";
-      "lldap.wurt.net".extraConfig      = mkProxy "127.0.0.1:5050";
+      "auth.wurt.net".extraConfig       = mkProxy          "127.0.0.1:5000";
+      "pocket-id.wurt.net".extraConfig  = mkProxy          "127.0.0.1:5010";
+      "forgejo.wurt.net".extraConfig    = mkProxy          "127.0.0.1:5020";
+      "immich.wurt.net".extraConfig     = mkProxy          "127.0.0.1:5030";
+      "syncthing.wurt.net".extraConfig  = mkProxy          "127.0.0.1:5040";
+      "lldap.wurt.net".extraConfig      = mkProxy          "127.0.0.1:5050";
+      "pgadmin.wurt.net".extraConfig    = mkProtectedProxy "127.0.0.1:5060";
       # ── Media ──────────────────────────────────────────────────────────────
       "navidrome.wurt.net".extraConfig  = mkProxy "127.0.0.1:2000";
       "kavita.wurt.net".extraConfig     = mkProxy "127.0.0.1:2010";
