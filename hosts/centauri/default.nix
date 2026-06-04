@@ -35,6 +35,7 @@
       3010 # stirling-pdf
       3030 # vikunja
       3060 # mealie
+      3070 # freshrss
 
       4000 # adguard
       4010 # dawarich
@@ -70,10 +71,11 @@
     actual.enable       = false;
     karakeep.enable     = false;
     mealie.enable       = true;
+    freshrss.enable     = true;
 
     # Utility
     adguardhome.enable  = true;
-    dawarich.enable     = false;
+    dawarich.enable     = true;
 
     # -- System Services --
     qemuGuest.enable          = true;

@@ -20,6 +20,8 @@ in
   # "kavita.age".publicKeys        = users ++ systems;
   # "komga.age".publicKeys         = users ++ systems;
   "mealie.age".publicKeys          = users ++ systems;
+  "freshrss.age".publicKeys        = users ++ systems;
+  "freshrss-secret.age".publicKeys = users ++ systems;
   # "sparkyfitness.age".publicKeys = users ++ systems;
   # "syncthing.age".publicKeys     = users ++ systems;
   # "your_spotify.age".publicKeys  = users;
