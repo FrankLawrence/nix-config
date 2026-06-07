@@ -75,24 +75,19 @@ in
         extraConfig   = mkProxy "127.0.0.1:3010";
         serverAliases = [ "pdf.wurt.net" "stirling.wurt.net" ];
       };
-      "paperless.wurt.net".extraConfig = mkProxy          "127.0.0.1:3020";
+      "paperless.wurt.net".extraConfig = mkProtectedProxy "127.0.0.1:3020";
       "vikunja.wurt.net".extraConfig   = mkProtectedProxy "127.0.0.1:3030";
       "actual.wurt.net".extraConfig    = mkProxy          "127.0.0.1:3040";
-      "karakeep.wurt.net".extraConfig  = mkProxy          "127.0.0.1:3050";
+      "karakeep.wurt.net".extraConfig  = mkProtectedProxy "127.0.0.1:3050";
       "mealie.wurt.net".extraConfig    = mkProtectedProxy "127.0.0.1:3060";
       "freshrss.wurt.net" = {
-        extraConfig   = mkProtectedProxy "127.0.0.1:3070";
+        extraConfig   = mkProxy "127.0.0.1:3070";
         serverAliases = [ "rss.wurt.net" ];
       };
+      "bento.wurt.net".extraConfig     = mkProxy          "127.0.0.1:3080";
       # ── Utility ────────────────────────────────────────────────────────────
       "adguard.wurt.net".extraConfig   = mkProxy          "127.0.0.1:4000";
-      "darawich.wurt.net".extraConfig  = mkProxy ''127.0.0.1:4010 {
-		    encode brotli {
-					match {
-						content_type text/css text/plain text/xml text/x-component text/javascript application/x-javascript application/javascript application/json application/manifest+json application/vnd.api+json application/xml application/xhtml+xml application/rss+xml application/atom+xml application/vnd.ms-fontobject application/x-font-ttf application/x-font-opentype application/x-font-truetype image/svg+xml image/x-icon image/vnd.microsoft.icon font/ttf font/eot font/otf font/opentype
-					}
-				}'';
-
+      "darawich.wurt.net".extraConfig  = mkProxy          "127.0.0.1:4010";
     };
 
     environmentFile = config.age.secrets.caddy.path;

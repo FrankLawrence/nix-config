@@ -34,6 +34,11 @@ lib.mkIf config.services.mealie.enable {
       OIDC_SIGNUP_ENABLED = true;
       OAUTH_PROVIDER_NAME = "Pocket ID";
       OIDC_CONFIGURATION_URL = "https://pocket-id.wurt.net/.well-known/openid-configuration";
+      OIDC_USER_GROUP = "family";
+      OIDC_REMEMBER_ME = true;
+      OIDC_ADMIN_GROUP = "admin";
+      OIDC_AUTO_REDIRECT = true;
+      OIDC_PROVIDER_NAME = "Pocket-ID";
 
       LDAP_AUTH_ENABLED = true;
       LDAP_SERVER_URL = ldap://127.0.0.1:5051;

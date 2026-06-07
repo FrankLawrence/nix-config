@@ -26,14 +26,16 @@
       80   # reverse-proxy
       443  # reverse-proxy
 
-      # 22000 # synchting TCP and UDP sync traffic
-      # 21027 # syncthing UDP discovery
-
       2000 # navidrome
+      #2010 # kavita
+      #2020 # komga
 
       3000 # glance
       3010 # stirling-pdf
+      3020 # paperless
       3030 # vikunja
+      #3040 # actual
+      3050 # karakeep
       3060 # mealie
       3070 # freshrss
 
@@ -42,6 +44,11 @@
 
       5000 # auth
       5010 # pocket-id
+      #5020 # forgejo
+      #5030 # immich
+      #5040 # syncthing
+      #22000 # synchting TCP and UDP sync traffic
+      #21027 # syncthing UDP discovery
       5050 # lldap
       5060 # pgadmin
     ];
@@ -66,10 +73,10 @@
     # Productivity
     glance.enable       = true;
     stirling-pdf.enable = true;
-    paperless.enable    = false;
+    paperless.enable    = true;
     vikunja.enable      = true;
     actual.enable       = false;
-    karakeep.enable     = false;
+    karakeep.enable     = true;
     mealie.enable       = true;
     freshrss.enable     = true;
 

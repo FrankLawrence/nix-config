@@ -1,32 +1,37 @@
-{ config, ... }:
-{
-  # age.secrets.paperless-admin = {
-  #   file = ../../../secrets/paperless-admin.age;
-  #   owner = "paperless";
-  # };
-
-  services.postgresql = {
-    ensureDatabases = [ "paperless" ];
-    ensureUsers = [{
-      name = "paperless";
-      ensureDBOwnership = true;
-    }];
+{ config, lib, ... }:
+lib.mkIf config.services.paperless.enable {
+  age.secrets.paperless = {
+    file = ../../../secrets/paperless.age;
+    owner = "paperless";
+  };
+  age.secrets.paperless-oidc = {
+    file = ../../../secrets/paperless-oidc.age;
+    owner = "paperless";
   };
 
   services.paperless = {
-    # port = 28981;
     port = 3020;
     address = "127.0.0.1";
-    # passwordFile = config.age.secrets.paperless-admin.path;
+    # passwordFile = config.age.secrets.paperless.path;
+    database.createLocally = true;
+    environmentFile = config.age.secrets.paperless-oidc.path;
     settings = {
       PAPERLESS_URL = "https://paperless.wurt.net";
       PAPERLESS_ADMIN_USER = "admin";
-      PAPERLESS_DBENGINE = "postgresql";
-      PAPERLESS_DBHOST = "/run/postgresql";
-      PAPERLESS_DBNAME = "paperless";
-      PAPERLESS_DBUSER = "paperless";
-      PAPERLESS_OCR_LANGUAGE = "eng";
+      PAPERLESS_ACCOUNT_ALLOW_SIGNUPS = true;
+
+      PAPERLESS_OCR_LANGUAGE = "deu+eng";
       PAPERLESS_CONSUMER_POLLING = 60;
+      PAPERLESS_CONSUMER_IGNORE_PATTERN = [
+        ".DS_STORE/*"
+        "desktop.ini"
+      ];
+      PAPERLESS_OCR_USER_ARGS = {
+        optimize = 1;
+        pdfa_image_compression = "lossless";
+      };
+      PAPERLESS_DISABLE_REGULAR_LOGIN = false;
+      PAPERLESS_REDIRECT_LOGIN_TO_SSO = false;
     };
   };
 }
