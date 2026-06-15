@@ -27,6 +27,10 @@
 				UserHeader = "X-Auth-Request-User";
       };
       DefaultTheme = "Dark";
+      Prometheus = {
+        Enabled     = true;
+        MetricsPath = "/metrics_internal";
+      };
     };
     openFirewall = true;
   };

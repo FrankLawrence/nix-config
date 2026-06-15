@@ -51,6 +51,7 @@
       #21027 # syncthing UDP discovery
       5050 # lldap
       5060 # pgadmin
+      5070 # grafana
     ];
   };
 

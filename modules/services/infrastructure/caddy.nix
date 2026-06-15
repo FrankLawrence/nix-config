@@ -2,7 +2,7 @@
 let
   caddyWithPlugins = pkgs.caddy.withPlugins {
     plugins = [ "github.com/caddy-dns/cloudflare@v0.2.4" ];
-    hash = "sha256-vNSHU7txQLs0m0UChuszURXjEoMj4r1902+1ei0/DaI=";
+    hash = "sha256-Q0lgI8MY90u/5R/xXBVPQWCZBN7dUZ0kcuDxD0xd0fo=";
   };
 
   tls = ''
@@ -62,6 +62,7 @@ in
       "syncthing.wurt.net".extraConfig  = mkProxy          "127.0.0.1:5040";
       "lldap.wurt.net".extraConfig      = mkProxy          "127.0.0.1:5050";
       "pgadmin.wurt.net".extraConfig    = mkProtectedProxy "127.0.0.1:5060";
+      "grafana.wurt.net".extraConfig    = mkProtectedProxy "127.0.0.1:5070";
       # ── Media ──────────────────────────────────────────────────────────────
       "navidrome.wurt.net".extraConfig  = mkProxy "127.0.0.1:2000";
       "kavita.wurt.net".extraConfig     = mkProxy "127.0.0.1:2010";
