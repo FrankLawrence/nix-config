@@ -38,6 +38,7 @@
       3050 # karakeep
       3060 # mealie
       3070 # freshrss
+      3080 # bento
 
       4000 # adguard
       4010 # dawarich
@@ -73,13 +74,14 @@
 
     # Productivity
     glance.enable       = true;
-    stirling-pdf.enable = true;
+    stirling-pdf.enable = false;
     paperless.enable    = true;
     vikunja.enable      = true;
     actual.enable       = false;
     karakeep.enable     = true;
     mealie.enable       = true;
     freshrss.enable     = true;
+    bentopdf.enable     = true;
 
     # Utility
     adguardhome.enable  = true;
