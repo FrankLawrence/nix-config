@@ -1,8 +1,10 @@
 { config, pkgs, inputs, ... }:
 
+# Reference: https://www.joshuamlee.com/nixos-proxmox-vm-images/
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/profiles/qemu-guest.nix
   ];
 
   boot.loader.grub = {
@@ -10,6 +12,7 @@
     device = "/dev/sda";
     useOSProber = true;
   };
+  boot.growPartition = lib.mkDefault true;
 
   networking = {
     hostName = "centauri";
