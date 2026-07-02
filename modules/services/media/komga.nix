@@ -10,4 +10,11 @@ lib.mkIf config.services.komga.enable {
     stateDir = "/var/lib/komga";
     openFirewall = true;
   };
+
+  custom.glance.monitoredSites = lib.mkIf config.services.komga.enable [{
+    title = "Komga";
+    url = "https://komga.wurt.net";
+    check-url = "http://127.0.0.1:8082";
+    icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/komga.svg";
+  }];
 }

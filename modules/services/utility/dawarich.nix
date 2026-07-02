@@ -54,4 +54,11 @@ lib.mkIf config.services.dawarich.enable {
     ];
     secretKeyBaseFile = config.age.secrets.dawarich-secret-key.path;
   };
+
+  custom.glance.monitoredSites = [{
+    title = "Dawarich";
+    url = "https://darawich.wurt.net";
+    check-url = "http://127.0.0.1:3000";
+    icon = "https://cdn.jsdelivr.net/gh/selfhst/icons/svg/dawarich.svg";
+  }];
 }

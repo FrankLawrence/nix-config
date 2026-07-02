@@ -1,6 +1,5 @@
-{ config, pkgs, ... }:
-
-{
+{ config, lib, pkgs, ... }:
+lib.mkIf config.services.kavita.enable {
   age.secrets.kavita = {
     file = ../../../secrets/kavita.age;
     owner = "kavita";
@@ -13,4 +12,11 @@
     # settings.Port = 5000;
     settings.Port = 2010;
   };
+
+  custom.glance.monitoredSites = [{
+    title = "Kavita";
+    url = "https://kavita.wurt.net";
+    check-url = "http://127.0.0.1:5000";
+    icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/kavita.svg";
+  }];
 }

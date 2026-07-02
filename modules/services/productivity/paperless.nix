@@ -34,4 +34,11 @@ lib.mkIf config.services.paperless.enable {
       PAPERLESS_REDIRECT_LOGIN_TO_SSO = false;
     };
   };
+
+  custom.glance.monitoredSites = [{
+    title = "Paperless-NGX";
+    url = "https://paperless.wurt.net";
+    check-url = "http://127.0.0.1:28981";
+    icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/paperless-ngx.svg";
+  }];
 }

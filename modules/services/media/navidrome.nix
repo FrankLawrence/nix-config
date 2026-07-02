@@ -1,6 +1,5 @@
 { config, lib, pkgs, ... }:
 {
-
   users.users.navidrome = {
     extraGroups = [ "media" ];
   };
@@ -41,4 +40,11 @@
     };
     openFirewall = true;
   };
+
+  custom.glance.monitoredSites = lib.mkIf config.services.navidrome.enable [{
+    title = "Navidrome";
+    url = "https://navidrome.wurt.net";
+    check-url = "http://127.0.0.1:5001";
+    icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/navidrome.svg";
+  }];
 }

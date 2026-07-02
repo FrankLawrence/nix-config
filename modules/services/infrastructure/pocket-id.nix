@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
   age.secrets.pocket-id = {
     file = ../../../secrets/pocket-id.age;
@@ -30,4 +30,11 @@
       OTEL_EXPORTER_PROMETHEUS_PORT = 5073;
     };
   };
+
+  custom.glance.monitoredSites = lib.mkIf config.services.pocket-id.enable [{
+    title = "Pocket ID";
+    url = "https://pocket-id.wurt.net";
+    check-url = "http://127.0.0.1:1411";
+    icon = "https://cdn.jsdelivr.net/gh/selfhst/icons/svg/pocket-id.svg";
+  }];
 }

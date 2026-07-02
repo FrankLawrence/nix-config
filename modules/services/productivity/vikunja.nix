@@ -1,5 +1,5 @@
-{ config, ... }:
-{
+{ config, lib, ... }:
+lib.mkIf config.services.vikunja.enable {
   services.postgresql = {
     ensureDatabases = [ "vikunja" ];
     ensureUsers = [{
@@ -40,4 +40,11 @@
       };
     };
   };
+
+  custom.glance.monitoredSites = [{
+    title = "Vikunja";
+    url = "https://vikunja.wurt.net";
+    check-url = "http://127.0.0.1:3456";
+    icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/vikunja.png";
+  }];
 }

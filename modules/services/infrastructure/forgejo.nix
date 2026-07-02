@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 {
   services.forgejo = {
     database = {
@@ -29,4 +29,11 @@
       };
     };
   };
+
+  custom.glance.monitoredSites = lib.mkIf config.services.forgejo.enable [{
+    title = "Forgejo";
+    url = "https://forgejo.wurt.net";
+    check-url = "http://127.0.0.1:3001";
+    icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/forgejo.svg";
+  }];
 }

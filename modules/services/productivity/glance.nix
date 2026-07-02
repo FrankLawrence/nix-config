@@ -1,5 +1,26 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
+let
+  # Build a clean site attrset, omitting null optional fields.
+  mkSite = site:
+    { inherit (site) title url; }
+    // lib.optionalAttrs (site.check-url != null) { check-url = site.check-url; }
+    // lib.optionalAttrs (site.icon     != null) { inherit (site) icon; };
 
+  # Services running on external hosts (not managed by centauri modules).
+  externalSites = [
+    {
+      title = "Home Assistant";
+      url = "https://ha.wurt.net";
+      check-url = "http://192.168.178.207:8123";
+      icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/home-assistant.svg";
+    }
+    {
+      title = "Synology NAS";
+      url = "https://synology.wurt.net";
+      icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/synology.svg";
+    }
+  ];
+in
 {
   # age.secrets.adguard = {
   #   file = ../../../secrets/adguard.age;
@@ -127,14 +148,6 @@
               }
               ];
             }
-            # {
-            #   type = "releases";
-            #   show-source-icon = true;
-            #   respositories = [
-            #     "jellyfin/jellyfin"
-            #     "glanceapp/glance"
-            #   ];
-            # }
           ];
         }
         {
@@ -144,109 +157,11 @@
             type = "monitor";
             cache = "1m";
             title = "Services";
-            sites = [
-            {
-              title = "Nginx Proxy Manager";
-              url = "https://wurt.net";
-              check-url = "http://192.168.178.154:81";
-              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/nginx-proxy-manager.svg";
-            }
-            {
-              title = "Jellyfin";
-              url = "https://jellyfin.wurt.net";
-              check-url = "http://localhost:8096";
-              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/jellyfin.svg";
-            }
-            {
-              title = "Immich";
-              url = "https://immich.wurt.net";
-              check-url = "http://localhost:2283";
-              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/immich.svg";
-            }
-            {
-              title = "AdGuard Home";
-              url = "https://adguard.wurt.net";
-              check-url = "http://192.168.178.158:80";
-              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/adguard-home.svg";
-            }
-            {
-              title = "Home Assistant";
-              url = "https://ha.wurt.net";
-              check-url = "http://192.168.178.207:8123";
-              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/home-assistant.svg";
-            }
-            {
-              title = "Wire Guard";
-              url = "https://wg.wurt.net";
-              check-url = "http://192.168.178.159:10086";
-              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/wireguard.svg";
-            }
-            {
-              title = "Linkwarden";
-              url = "https://linkwarden.wurt.net";
-              check-url = "http://192.168.178.161:3000";
-              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/linkwarden.png";
-            }
-            {
-              title = "Vikunja";
-              url = "https://vikunja.wurt.net";
-              check-url = "http://192.168.178.164:3456";
-              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/vikunja.png";
-            }
-            {
-              title = "Navidrome";
-              url = "https://navidrome.wurt.net";
-              check-url = "http://localhost:4533";
-              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/navidrome.svg";
-            }
-            {
-              title = "komga";
-              url = "https://komga.wurt.net";
-              check-url = "http://localhost:8082";
-              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/komga.svg";
-            }
-            {
-              title = "Kavita";
-              url = "https://kavita.wurt.net";
-              check-url = "http://localhost:5000";
-              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/kavita.svg";
-            }
-            {
-              title = "Stirling PDF";
-              url = "https://stirling-pdf.wurt.net";
-              check-url = "http://localhost:8080";
-              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/stirling-pdf.svg";
-            }
-            {
-              title = "Synology NAS";
-              url = "https://synology.wurt.net";
-              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/synology.svg";
-            }
-            {
-              title = "Paperless NGX";
-              url = "https://paperless.wurt.net";
-              check-url = "http://192.168.178.163:8000";
-              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/paperless-ngx.svg";
-            }
-            {
-              title = "Mealie";
-              url = "https://mealie.wurt.net";
-              check-url = "http://localhost:9000";
-              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/mealie.svg";
-            }
-            {
-              title = "Omni-tools";
-              url = "https://omni-tools.wurt.net";
-              check-url = "http://localhost:8083";
-              icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/omni-tools.webp";
-            }
-            {
-              title = "Mazanoke";
-              url = "https://mazanoke.wurt.net";
-              check-url = "http://localhost:3474";
-              icon = "https://cdn.jsdelivr.net/gh/selfhst/icons/svg/mazanoke.svg";
-            }
-            ];
+            # Centauri-managed services register themselves via custom.glance.monitoredSites.
+            # External services (other hosts) are listed below.
+            sites =
+              (map mkSite config.custom.glance.monitoredSites)
+              ++ externalSites;
           }
           {
             type = "group";

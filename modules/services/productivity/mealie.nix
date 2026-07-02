@@ -51,4 +51,11 @@ lib.mkIf config.services.mealie.enable {
       LDAP_MAIL_ATTRIBUTE = "mail";
     };
   };
+
+  custom.glance.monitoredSites = [{
+    title = "Mealie";
+    url = "https://mealie.wurt.net";
+    check-url = "http://127.0.0.1:9000";
+    icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/mealie.svg";
+  }];
 }
