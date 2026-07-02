@@ -27,6 +27,7 @@ lib.mkIf config.services.lldap.enable {
 			ldap_user_dn = "admin";
 			ldap_user_email = "frank.wuerthner@proton.me";
 			ldap_user_pass = "39gM17eBhg0p1aeJGz0P1pUMRiyeQi6TkTQqLctXjec=";
+			force_ldap_user_pass_reset = "always";
 		};
 	};
 }

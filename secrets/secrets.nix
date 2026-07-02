@@ -14,11 +14,13 @@ in
   "freshrss-secret.age".publicKeys     = users ++ systems;
   "freshrss.age".publicKeys            = users ++ systems;
   "karakeep.age".publicKeys            = users ++ systems;
+  "kavita.age".publicKeys              = users ++ systems;
   "lldap-observer.age".publicKeys      = users ++ systems;
   "lldap.age".publicKeys               = users ++ systems;
   "mealie.age".publicKeys              = users ++ systems;
-  "paperless.age".publicKeys           = users ++ systems;
+  "navidrome.age".publicKeys           = users ++ systems;
   "paperless-oidc.age".publicKeys      = users ++ systems;
+  "paperless.age".publicKeys           = users ++ systems;
   "pgadmin.age".publicKeys             = users ++ systems;
   "pocket-id.age".publicKeys           = users ++ systems;
   "reverse-proxy.age".publicKeys       = users ++ systems;

@@ -27,8 +27,9 @@
       443  # reverse-proxy
 
       2000 # navidrome
-      #2010 # kavita
+      2010 # kavita
       #2020 # komga
+      2030 # audiobookshelf
 
       3000 # glance
       3010 # stirling-pdf
@@ -38,6 +39,7 @@
       3050 # karakeep
       3060 # mealie
       3070 # freshrss
+      3080 # bento
 
       4000 # adguard
       4010 # dawarich
@@ -51,6 +53,7 @@
       #21027 # syncthing UDP discovery
       5050 # lldap
       5060 # pgadmin
+      5070 # grafana
     ];
   };
 
@@ -66,23 +69,27 @@
     pgadmin.enable      = true;
 
     # Media
-    navidrome.enable    = true;
-    kavita.enable       = false;
-    komga.enable        = false;
+    navidrome.enable       = true;
+    kavita.enable          = true;
+    komga.enable           = false;
+    audiobookshelf.enable  = true;
+    music-assistant.enable = false;
+    calibre-web.enable     = false;
 
     # Productivity
     glance.enable       = true;
-    stirling-pdf.enable = true;
     paperless.enable    = true;
     vikunja.enable      = true;
     actual.enable       = false;
     karakeep.enable     = true;
     mealie.enable       = true;
     freshrss.enable     = true;
+    bentopdf.enable     = true;
 
     # Utility
     adguardhome.enable  = true;
     dawarich.enable     = true;
+    home-assistant.enable = true;
 
     # -- System Services --
     qemuGuest.enable          = true;

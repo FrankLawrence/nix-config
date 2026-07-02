@@ -2,7 +2,7 @@
 let
   caddyWithPlugins = pkgs.caddy.withPlugins {
     plugins = [ "github.com/caddy-dns/cloudflare@v0.2.4" ];
-    hash = "sha256-vNSHU7txQLs0m0UChuszURXjEoMj4r1902+1ei0/DaI=";
+    hash = "sha256-Q0lgI8MY90u/5R/xXBVPQWCZBN7dUZ0kcuDxD0xd0fo=";
   };
 
   tls = ''
@@ -25,6 +25,18 @@ let
     reverse_proxy ${upstream}
     ${tls}
   '';
+
+  mkProtectedProxyPublicPaths = publicPaths: upstream:
+  	let paths = builtins.concatStringsSep " " publicPaths;
+	  in ''
+			@protected not path ${paths}
+	    forward_auth @protected 127.0.0.1:5000 {
+	      uri /api/auth/caddy
+	      copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
+	    }
+	    reverse_proxy ${upstream}
+	    ${tls}
+	  '';
 in
 {
   age.secrets.caddy = {
@@ -62,10 +74,17 @@ in
       "syncthing.wurt.net".extraConfig  = mkProxy          "127.0.0.1:5040";
       "lldap.wurt.net".extraConfig      = mkProxy          "127.0.0.1:5050";
       "pgadmin.wurt.net".extraConfig    = mkProtectedProxy "127.0.0.1:5060";
+      "grafana.wurt.net".extraConfig    = mkProtectedProxy "127.0.0.1:5070";
       # ── Media ──────────────────────────────────────────────────────────────
       "navidrome.wurt.net".extraConfig  = mkProxy "127.0.0.1:2000";
       "kavita.wurt.net".extraConfig     = mkProxy "127.0.0.1:2010";
       "komga.wurt.net".extraConfig      = mkProxy "127.0.0.1:2020";
+      "audio.wurt.net".extraConfig      = ''
+	      encode gzip zstd
+				reverse_proxy 127.0.0.1:2030
+				${tls}
+      '';
+      "calibre.wurt.net".extraConfig    = mkProxy "[::1]:2040";
       # ── Productivity ───────────────────────────────────────────────────────
       "glance.wurt.net" = {
         extraConfig   = mkProxy "127.0.0.1:3000";
@@ -79,15 +98,13 @@ in
       "vikunja.wurt.net".extraConfig   = mkProtectedProxy "127.0.0.1:3030";
       "actual.wurt.net".extraConfig    = mkProxy          "127.0.0.1:3040";
       "karakeep.wurt.net".extraConfig  = mkProtectedProxy "127.0.0.1:3050";
-      "mealie.wurt.net".extraConfig    = mkProtectedProxy "127.0.0.1:3060";
-      "freshrss.wurt.net" = {
-        extraConfig   = mkProxy "127.0.0.1:3070";
-        serverAliases = [ "rss.wurt.net" ];
-      };
+      "mealie.wurt.net".extraConfig    = mkProtectedProxyPublicPaths [ "/g/*" "/api/public/" "/api/recipes/shared/*" ] "127.0.0.1:3060";
+      "freshrss.wurt.net".extraConfig  = mkProxy          "127.0.0.1:3070";
       "bento.wurt.net".extraConfig     = mkProxy          "127.0.0.1:3080";
       # ── Utility ────────────────────────────────────────────────────────────
       "adguard.wurt.net".extraConfig   = mkProxy          "127.0.0.1:4000";
-      "darawich.wurt.net".extraConfig  = mkProxy          "127.0.0.1:4010";
+      "dawarich.wurt.net".extraConfig  = mkProxy          "127.0.0.1:4010";
+      "home-assistant.wurt.net".extraConfig = mkProxy     "[::1]:4020";
     };
 
     environmentFile = config.age.secrets.caddy.path;

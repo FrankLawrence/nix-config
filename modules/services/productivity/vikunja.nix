@@ -20,6 +20,7 @@
       database = "vikunja";
     };
     settings = {
+    	metrics.enabled = true;
     	auth = {
         openid = {
         	enabled = true;

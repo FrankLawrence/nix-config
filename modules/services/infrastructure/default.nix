@@ -11,5 +11,6 @@
     ./syncthing.nix
     ./tinyauth.nix
     ./pgadmin.nix
+    ./monitoring.nix
   ];
 }
