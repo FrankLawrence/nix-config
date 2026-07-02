@@ -5,7 +5,14 @@
     extraGroups = [ "media" ];
   };
 
+  age.secrets.navidrome = {
+    file = ../../../secrets/navidrome.age;
+    owner = "navidrome";
+    group = "navidrome";
+  };
+
   services.navidrome = {
+    environmentFile = config.age.secrets.navidrome.path;
     settings = {
       MusicFolder = "/media/music/";
       # Port = 5001;

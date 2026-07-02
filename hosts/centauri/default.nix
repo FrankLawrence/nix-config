@@ -27,8 +27,9 @@
       443  # reverse-proxy
 
       2000 # navidrome
-      #2010 # kavita
+      2010 # kavita
       #2020 # komga
+      2030 # audiobookshelf
 
       3000 # glance
       3010 # stirling-pdf
@@ -68,13 +69,15 @@
     pgadmin.enable      = true;
 
     # Media
-    navidrome.enable    = true;
-    kavita.enable       = false;
-    komga.enable        = false;
+    navidrome.enable       = true;
+    kavita.enable          = true;
+    komga.enable           = false;
+    audiobookshelf.enable  = true;
+    music-assistant.enable = false;
+    calibre-web.enable     = false;
 
     # Productivity
     glance.enable       = true;
-    stirling-pdf.enable = false;
     paperless.enable    = true;
     vikunja.enable      = true;
     actual.enable       = false;
@@ -86,6 +89,7 @@
     # Utility
     adguardhome.enable  = true;
     dawarich.enable     = true;
+    home-assistant.enable = true;
 
     # -- System Services --
     qemuGuest.enable          = true;
