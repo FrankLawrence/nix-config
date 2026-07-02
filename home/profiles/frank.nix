@@ -3,6 +3,7 @@
 {
   imports = [
     ../default.nix
+    ../desktop.nix
   ];
 
   home.username = "frank";

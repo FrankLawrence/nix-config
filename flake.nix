@@ -99,6 +99,13 @@
         ];
 
         centauri = mkSystem "centauri" [
+          inputs.home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.users.frank = import ./home/profiles/frank-server.nix;
+          }
           ./modules/services
           # ./modules/hardware/nfs.nix
         ];
