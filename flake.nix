@@ -107,7 +107,7 @@
             home-manager.users.frank = import ./home/profiles/frank-server.nix;
           }
           ./modules/services
-          # ./modules/hardware/nfs.nix
+          ./modules/hardware/nfs.nix
         ];
 
         jupiter = mkSystem "jupiter" [
@@ -115,8 +115,6 @@
           ./modules/hardware/amd.nix
           ./modules/hardware/audio.nix
           ./modules/hardware/bluetooth.nix
-          ./modules/services/productivity/actual.nix
-          ./modules/services/media/navidrome.nix
         ];
       };
 
@@ -127,6 +125,7 @@
           inputs.dms.homeModules.niri
           inputs.niri.homeModules.niri
         ];
+        frank-server = mkHome "frank-server" [];
       };
 
       # Development shell

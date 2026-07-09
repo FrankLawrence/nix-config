@@ -7,14 +7,14 @@ lib.mkIf config.services.komga.enable {
       komga.oauth2-account-creation = true;
     };
 
-    stateDir = "/var/lib/komga";
+    stateDir = "/srv/komga";
     openFirewall = true;
   };
 
   custom.glance.monitoredSites = lib.mkIf config.services.komga.enable [{
     title = "Komga";
     url = "https://komga.wurt.net";
-    check-url = "http://127.0.0.1:8082";
+    check-url = "http://127.0.0.1:2020";
     icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/komga.svg";
   }];
 }

@@ -1,5 +1,5 @@
 { config, lib, pkgs, ... }:
-{
+lib.mkIf config.services.pocket-id.enable {
   age.secrets.pocket-id = {
     file = ../../../secrets/pocket-id.age;
     owner = "pocket-id";

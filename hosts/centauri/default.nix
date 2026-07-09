@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 # Reference: https://www.joshuamlee.com/nixos-proxmox-vm-images/
 {
@@ -26,37 +26,25 @@
     nameservers = [ "1.1.1.1" "8.8.8.8" ];
     firewall.allowedTCPPorts = [
       22   # ssh
-      80   # reverse-proxy
-      443  # reverse-proxy
+      80   # caddy
+      443  # caddy
 
-      2000 # navidrome
-      2010 # kavita
-      #2020 # komga
-      2030 # audiobookshelf
-
-      3000 # glance
-      3010 # stirling-pdf
       3020 # paperless
       3030 # vikunja
-      #3040 # actual
       3050 # karakeep
       3060 # mealie
       3070 # freshrss
       3080 # bento
 
-      4000 # adguard
       4010 # dawarich
 
       5000 # auth
       5010 # pocket-id
       #5020 # forgejo
-      #5030 # immich
       #5040 # syncthing
       #22000 # synchting TCP and UDP sync traffic
       #21027 # syncthing UDP discovery
       5050 # lldap
-      5060 # pgadmin
-      5070 # grafana
     ];
   };
 
@@ -73,11 +61,12 @@
 
     # Media
     navidrome.enable       = true;
-    kavita.enable          = true;
-    komga.enable           = false;
+    kavita.enable          = false;
+    komga.enable           = true;
     audiobookshelf.enable  = true;
     music-assistant.enable = false;
     calibre-web.enable     = false;
+    lidarr.enable          = true;
 
     # Productivity
     glance.enable       = true;
@@ -87,7 +76,7 @@
     karakeep.enable     = true;
     mealie.enable       = true;
     freshrss.enable     = true;
-    bentopdf.enable     = true;
+    # bentopdf.enable     = true;
 
     # Utility
     adguardhome.enable  = true;
@@ -98,6 +87,16 @@
     qemuGuest.enable          = true;
     cloud-init.network.enable = true;
     tailscale.enable          = true;
+  };
+
+  programs.bash = {
+    interactiveShellInit = ''
+      if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
+      then
+        shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
+        exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
+      fi
+    '';
   };
 
   system.stateVersion = "24.11";

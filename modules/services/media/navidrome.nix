@@ -1,5 +1,5 @@
 { config, lib, pkgs, ... }:
-{
+lib.mkIf config.services.navidrome.enable {
   users.users.navidrome = {
     extraGroups = [ "media" ];
   };
@@ -13,7 +13,7 @@
   services.navidrome = {
     environmentFile = config.age.secrets.navidrome.path;
     settings = {
-      MusicFolder = "/media/music/";
+      MusicFolder = "/mnt/nfs/music/";
       # Port = 5001;
       Port = 2000;
       ScanSchedule = "@every 1h";

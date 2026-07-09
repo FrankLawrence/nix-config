@@ -1,5 +1,5 @@
 { config, lib, ... }:
-{
+lib.mkIf config.services.forgejo.enable {
   services.forgejo = {
     database = {
       type = "postgres";

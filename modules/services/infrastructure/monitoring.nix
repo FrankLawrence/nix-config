@@ -35,6 +35,7 @@ in
   # ── Grafana ─────────────────────────────────────────────────────────────
   services.grafana = {
     enable = true;
+    openFirewall = true;
     settings = {
       server = {
         http_addr = "127.0.0.1";

@@ -12,5 +12,6 @@
     ./tinyauth.nix
     ./pgadmin.nix
     ./monitoring.nix
+    ./immich.nix
   ];
 }

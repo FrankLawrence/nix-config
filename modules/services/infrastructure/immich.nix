@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+lib.mkIf config.services.immich.enable {
   # age.secrets.immich = {
   #   file = ../../../secrets/immich.age;
   #   owner = "immich";
@@ -8,8 +8,8 @@
   # };
 
   services.immich = {
-    # port = 2283;
     port = 1030;
+    openFirewall = true;
     mediaLocation = "/mnt/nfs/immich";
     # secretsFile = config.age.secrets.immich.path;
 

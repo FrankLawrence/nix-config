@@ -2,6 +2,6 @@
 
 {
   imports = [
-    ./metadata-remote.nix
+  	./lidarr.nix
   ];
 }

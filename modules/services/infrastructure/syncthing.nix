@@ -1,5 +1,5 @@
-{ config, ... }:
-{
+{ config, lib, ... }:
+lib.mkIf config.services.syncthing.enable {
   # age.secrets.syncthing = {
   #   file = ../../../secrets/syncthing.age;
   #   owner = "syncthing";

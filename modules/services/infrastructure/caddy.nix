@@ -66,6 +66,13 @@ in
           }'';
         serverAliases = [ "beelink.wurt.net" ];
       };
+      "nas.wurt.net".extraConfig        = mkProxy ''
+        192.168.178.40:5001 {
+        	transport http {
+         		tls_insecure_skip_verify
+          }
+        }
+      '';
       # ── Infrastructure ─────────────────────────────────────────────────────
       "auth.wurt.net".extraConfig       = mkProxy          "127.0.0.1:5000";
       "pocket-id.wurt.net".extraConfig  = mkProxy          "127.0.0.1:5010";
@@ -85,6 +92,8 @@ in
 				${tls}
       '';
       "calibre.wurt.net".extraConfig    = mkProxy "[::1]:2040";
+
+      "lidarr.wurt.net".extraConfig     = mkProxy "127.0.0.1:2050";
       # ── Productivity ───────────────────────────────────────────────────────
       "glance.wurt.net" = {
         extraConfig   = mkProxy "127.0.0.1:3000";

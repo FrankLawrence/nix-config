@@ -22,6 +22,7 @@ lib.mkIf config.services.pgadmin.enable {
 		initialEmail = "admin@wurt.net";
 		initialPasswordFile = config.age.secrets.pgadmin.path;
 		port = 5060;
+		openFirewall = true;
 		settings = {
 			CONFIG_DATABASE_URI = "postgresql://pgadmin@/pgadmin?host=/run/postgresql";
 

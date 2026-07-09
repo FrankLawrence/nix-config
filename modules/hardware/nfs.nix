@@ -1,9 +1,8 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 
 {
   # NFS mounts
-  boot.initrd =
-  {
+  boot = {
     supportedFilesystems = [ "nfs" ];
     kernelModules = [ "nfs" ];
   };
@@ -19,4 +18,15 @@
     options = [ "x-systemd automount" "noauto" ];
   };
 
+  users.groups.nfs-shared = {
+	 	gid = 2000;
+	 	members = [
+		 	"frank"
+		  "kavita"
+		  "komga"
+		  "audiobookshelf"
+		  "immich"
+			"navidrome"
+	  ];
+  };
 }

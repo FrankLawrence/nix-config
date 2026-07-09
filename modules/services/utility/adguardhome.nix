@@ -11,8 +11,9 @@
         {
           name = "frank";
           password = "$2y$10$7rhIYZmrVXzNTIBdmRghRu8yoRXuj63gSweFXkVW2d3bacxryf2Ti";
-	}
+				}
       ];
     };
+    openFirewall = true;
   };
 }

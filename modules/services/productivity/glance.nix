@@ -21,12 +21,13 @@ let
     }
   ];
 in
-{
+lib.mkIf config.services.glance.enable {
   # age.secrets.adguard = {
   #   file = ../../../secrets/adguard.age;
   # };
 
   services.glance = {
+  	openFirewall = true;
     settings = {
       server = {
         # port = 8084;
@@ -198,7 +199,7 @@ in
                   { url = https://dixken.de/feed.xml; }
                   { url = https://tratt.net/laurie/blog/blog.rss ; }
                   { url = https://www.terrygodier.com/feed.xml ; }
-                  { url = https://blog.terrygodier.com/feed.xml ; } 
+                  { url = https://blog.terrygodier.com/feed.xml ; }
                   { url = https://jakelazaroff.com/rss.xml ; }
                   { url = https://ploum.net/atom_en.xml ; }
                   { url = https://excaliburheath.com/feed.xml ; }
