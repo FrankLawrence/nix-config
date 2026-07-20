@@ -45,6 +45,7 @@
       #22000 # synchting TCP and UDP sync traffic
       #21027 # syncthing UDP discovery
       5050 # lldap
+      # 8443 # unifi
     ];
   };
 
@@ -58,15 +59,20 @@
     postgresql.enable   = true;
     lldap.enable        = true;
     pgadmin.enable      = true;
+    unifi.enable        = false;
 
     # Media
     navidrome.enable       = true;
-    kavita.enable          = false;
-    komga.enable           = true;
+    kavita.enable          = true;
+    komga.enable           = false;
     audiobookshelf.enable  = true;
     music-assistant.enable = false;
     calibre-web.enable     = false;
     lidarr.enable          = true;
+    slskd.enable           = false;
+    qbittorrent.enable     = true;
+    jellyfin.enable        = false;
+    suwayomi-server.enable = true;
 
     # Productivity
     glance.enable       = true;
@@ -81,7 +87,7 @@
     # Utility
     adguardhome.enable  = true;
     dawarich.enable     = true;
-    home-assistant.enable = true;
+    home-assistant.enable = false;
 
     # -- System Services --
     qemuGuest.enable          = true;

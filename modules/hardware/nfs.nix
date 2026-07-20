@@ -22,11 +22,15 @@
 	 	gid = 2000;
 	 	members = [
 		 	"frank"
-		  "kavita"
-		  "komga"
+			# Services
+			"navidrome"
+			"qbittorrent"
+			"slskd"
 		  "audiobookshelf"
 		  "immich"
-			"navidrome"
+		  "kavita"
+		  "komga"
+		  "suwayomi"
 	  ];
   };
 }

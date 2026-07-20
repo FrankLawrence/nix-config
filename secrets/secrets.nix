@@ -24,5 +24,6 @@ in
   "pgadmin.age".publicKeys             = users ++ systems;
   "pocket-id.age".publicKeys           = users ++ systems;
   "reverse-proxy.age".publicKeys       = users ++ systems;
+  "slskd.age".publicKeys               = users ++ systems;
   "tinyauth.age".publicKeys            = users ++ systems;
 }

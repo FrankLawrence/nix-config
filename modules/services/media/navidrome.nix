@@ -17,7 +17,8 @@ lib.mkIf config.services.navidrome.enable {
       # Port = 5001;
       Port = 2000;
       ScanSchedule = "@every 1h";
-      Address = "127.0.0.1";
+      # Address = "127.0.0.1";
+      Address = "0.0.0.0";
       DataFolder = "/var/lib/navidrome";
       CacheFolder = "/var/cache/navidrome";
       LogLevel = "info";
@@ -30,7 +31,7 @@ lib.mkIf config.services.navidrome.enable {
       };
       ExtAuth = {
         TrustedSources = "127.0.0.1/32";
-				UserHeader = "X-Auth-Request-User";
+        UserHeader = "X-Auth-Request-User";
       };
       DefaultTheme = "Dark";
       Prometheus = {

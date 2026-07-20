@@ -4,11 +4,20 @@ lib.mkIf config.services.home-assistant.enable {
     config = {
       http = {
         server_host = [ "::1" "127.0.0.1" ];
-	server_port = 4020;
-	trusted_proxies = [ "::1" ];
+				server_port = 4020;
+				trusted_proxies = [ "::1" ];
         use_x_forwarded_for = true;
       };
     };
+    extraComponents = [
+      "analytics"
+      "default_config"
+      "esphome"
+      "my"
+      "shopping_list"
+      "wled"
+      "homekit"
+    ];
     openFirewall = true;
   };
 }

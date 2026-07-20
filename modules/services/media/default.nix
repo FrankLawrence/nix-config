@@ -7,6 +7,7 @@
     ./kavita.nix
     ./komga.nix
     ./navidrome.nix
+    ./suwayomi.nix
     ./arr
   ];
 

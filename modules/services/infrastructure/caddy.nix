@@ -83,17 +83,21 @@ in
       "pgadmin.wurt.net".extraConfig    = mkProtectedProxy "127.0.0.1:5060";
       "grafana.wurt.net".extraConfig    = mkProtectedProxy "127.0.0.1:5070";
       # ── Media ──────────────────────────────────────────────────────────────
-      "navidrome.wurt.net".extraConfig  = mkProxy "127.0.0.1:2000";
-      "kavita.wurt.net".extraConfig     = mkProxy "127.0.0.1:2010";
-      "komga.wurt.net".extraConfig      = mkProxy "127.0.0.1:2020";
-      "audio.wurt.net".extraConfig      = ''
+      "navidrome.wurt.net".extraConfig   = mkProxy "127.0.0.1:2000";
+      "kavita.wurt.net".extraConfig      = mkProxy "127.0.0.1:2010";
+      "komga.wurt.net".extraConfig       = mkProxy "127.0.0.1:2020";
+      "audio.wurt.net".extraConfig       = ''
 	      encode gzip zstd
 				reverse_proxy 127.0.0.1:2030
 				${tls}
       '';
-      "calibre.wurt.net".extraConfig    = mkProxy "[::1]:2040";
+      "calibre.wurt.net".extraConfig     = mkProxy "[::1]:2040";
 
-      "lidarr.wurt.net".extraConfig     = mkProxy "127.0.0.1:2050";
+      "lidarr.wurt.net".extraConfig      = mkProxy "127.0.0.1:2050";
+      "slskd.wurt.net".extraConfig       = mkProxy "127.0.0.1:2051";
+      "qbittorrent.wurt.net".extraConfig = mkProxy "127.0.0.1:2052";
+      "jellyfin.wurt.net".extraConfig    = mkProxy "192.168.178.180:8096";
+      "suwayomi.wurt.net".extraConfig    = mkProxy "127.0.0.1:2060";
       # ── Productivity ───────────────────────────────────────────────────────
       "glance.wurt.net" = {
         extraConfig   = mkProxy "127.0.0.1:3000";
@@ -113,7 +117,7 @@ in
       # ── Utility ────────────────────────────────────────────────────────────
       "adguard.wurt.net".extraConfig   = mkProxy          "127.0.0.1:4000";
       "dawarich.wurt.net".extraConfig  = mkProxy          "127.0.0.1:4010";
-      "home-assistant.wurt.net".extraConfig = mkProxy     "[::1]:4020";
+      "home-assistant.wurt.net".extraConfig = mkProxy     "192.168.178.160:8123";
     };
 
     environmentFile = config.age.secrets.caddy.path;

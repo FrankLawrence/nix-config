@@ -13,5 +13,6 @@
     ./pgadmin.nix
     ./monitoring.nix
     ./immich.nix
+    ./unifi.nix
   ];
 }
