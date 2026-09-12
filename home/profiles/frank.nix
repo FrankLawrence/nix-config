@@ -9,6 +9,9 @@
   home.username = "frank";
   home.homeDirectory = "/home/frank";
   home.packages = with pkgs; [
+    audacity
+    aria2
+    anytype
     blender-hip
     burpsuite
     caligula
@@ -63,7 +66,6 @@
     picard
     pinentry-curses
     postman
-    python3
     qbittorrent
     qemu
     signal-cli
@@ -74,12 +76,81 @@
     thunderbird
     tor
     tor-browser
-    typst
     vlc
     vscodium
     wireshark
     yt-dlp
+    zed-editor
+    halloy
+    ida-free
+
+    # MacOS
+    # aerospace
+    # amethyst
+    # anki
+    # blackhole
+    # colima
+    # cryptomator
+    # czkawka
+    # element-desktop
+    # freetube
+    # ghostty
+    # hexfiend
+    # hidden-bar
+    # iina
+    # karabiner-elements
+    # keepassxc
+    # lazydocker
+    # lima
+    # localsend
+    # logseq
+    # magic-wormhole
+    # makemkv
+    # monero-gui
+    # nethack
+    # nextcloud-client
+    # notesnook
+    # notion
+    # picard
+    # pureref
+    # raycast
+    # readest
+    # rectangle
+    # seanime
+    # shortcat
+    # shottr
+    # skimpdf
+    # spacedrive
+    # spotube
+    # syncthing-macos
+    # tailscale
+    # tailscale-gui
+    # the-unarchiver
+    # zed-editor
+    # zotero
+
+    # CLI
+    # superfile
   ];
+
+  # BREW
+  # Vorssaint
+  # capsomnia
+  # macs-fan-control
+  # clop
+  # tinkertool
+  # landrop
+  # appcleaner
+  # pearcleaner
+  # suspicous-package
+  # yubico-authenticator
+  # creality-print
+  # affinity-photo
+  # detext
+  # cryptomator
+  # superduper
+  # zen-editor
+  # hidden-bar
 
   home.stateVersion = "25.05";
   programs.home-manager.enable = true;
