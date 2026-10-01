@@ -2,7 +2,7 @@
   description = "Multi-host NixOS Configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     agenix = {
@@ -11,7 +11,7 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -33,15 +33,24 @@
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
     {
       self,
       nixpkgs,
+      nixpkgs-unstable,
       agenix,
       home-manager,
       disko,
+      niri,
+      dgop,
+      nix-darwin,
       ...
     }@inputs:
     let
@@ -116,6 +125,27 @@
           ./modules/hardware/audio.nix
           ./modules/hardware/bluetooth.nix
         ];
+
+      };
+
+      darwinConfigurations.Astra = nix-darwin.lib.darwinSystem {
+        specialArgs = { inherit inputs; };
+        modules = [
+          agenix.darwinModules.default
+          home-manager.darwinModules.home-manager
+          ./hosts/astra
+          {
+            nixpkgs.overlays = [
+              (final: prev: {
+                omniwm = inputs.nixpkgs-unstable.legacyPackages.${prev.stdenv.hostPlatform.system}.omniwm;
+              })
+            ];
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.users.frank = import ./home/profiles/astra.nix;
+          }
+        ];
       };
 
       # Home Manager Configurations
@@ -125,7 +155,6 @@
           inputs.dms.homeModules.niri
           inputs.niri.homeModules.niri
         ];
-        frank-server = mkHome "frank-server" [];
       };
 
       # Development shell

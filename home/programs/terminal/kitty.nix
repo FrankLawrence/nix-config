@@ -2,7 +2,7 @@
 let 
   kittyIcon = pkgs.fetchurl {
     url = "https://github.com/rose-pine/kitty/blob/main/icons/kitty.app.png";
-    sha256 = "sha256-wFqfXInSJKO0mP+gbLoAVCf0vCyMTTLlHK+ekXsvrqw=";
+    sha256 = "sha256-akLj0TBhx31SROzwmUrSflHtQ1ydhI+RzFB82yxzVpo=";
   };
 in
 {

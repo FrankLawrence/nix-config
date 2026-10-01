@@ -4,9 +4,6 @@
     shellInit = ''
       # Suppress fish's intro message
       set fish_greeting
-      
-      # Set locale archive for Nix
-      set LOCALE_ARCHIVE "$(nix-env --installed --no-name --out-path --query glibc-locales)/lib/locale/locale-archive"
     '';
 
     interactiveShellInit = ''
@@ -15,6 +12,7 @@
       set EDITOR nvim
       set VISUAL "emacsclient -c -a emacs"
       set BAT_THEME base16
+      set NH_DARWIN_FLAKE /Users/frank/nix-config/
       
       # FZF settings
       set FZF_CTRL_R_OPTS "--prompt 'Hist > '"

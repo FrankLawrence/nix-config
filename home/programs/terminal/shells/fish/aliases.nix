@@ -2,7 +2,7 @@
 {
   programs.fish.shellAliases = {
     # spark aliases
-    clear = "command clear; echo; echo; seq 1 (tput cols) | sort -R | spark | lolcat; echo; echo";
+    clear = "command clear; echo; echo; seq 1 (tput cols) | sort -R | spark | ${pkgs.lolcat}/bin/lolcat; echo; echo";
 
     # Navigation
     ".."   = "z ..";

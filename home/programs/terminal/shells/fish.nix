@@ -6,8 +6,6 @@
     shellInit = ''
       # Suppress fish's intro message
       set fish_greeting
-      # Set locale archive for Nix
-      set LOCALE_ARCHIVE "$(nix-env --installed --no-name --out-path --query glibc-locales)/lib/locale/locale-archive"
     '';
 
     interactiveShellInit = ''
