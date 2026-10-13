@@ -5,7 +5,6 @@
     desktopManager.gnome.enable = true;
     displayManager.gdm = {
       enable = true;
-      wayland = true;
     };
     gnome.gnome-keyring.enable = true;
   };

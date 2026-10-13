@@ -3,18 +3,20 @@
 {
   imports = [
     ../default.nix
+    ../programs/terminal/fetch.nix
     ../programs/terminal/kitty.nix
     ../programs/editors/zed.nix
-    ../programs/tools/omniwm.nix
+    # ../programs/tools/omniwm.nix
   ];
 
   home.username = "frank";
   home.homeDirectory = "/Users/frank";
   home.packages = with pkgs; [
-    # shottr
     alacritty
     bat
-    container
+    devenv
+    docker
+    docker-compose
     drawio
     dust
     eza
@@ -25,23 +27,32 @@
     fzf
     ghidra
     gnupg
+    halloy
     iina
     jujutsu
+    karabiner-elements
     keepassxc
     lazygit
+    lima-full
     nb
     neovim
     nh
+    nixd
+    nixfmt
     obsidian
-    omniwm
     qbittorrent
     raycast
     ripgrep
+    shottr
     signal-cli
+    skimpdf
     spotify
     starship
+    syncthing-macos
     thunderbird
     tldr
+    typst
+    whatcable
     wireshark
     yazi
     yt-dlp

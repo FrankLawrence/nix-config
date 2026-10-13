@@ -26,7 +26,7 @@
 
     # root privileges
     doas = "doas --";
-    
+
     # colorized grep output
     grep = "grep --color=auto";
     df   = "df -h";
@@ -71,7 +71,7 @@
     checkout = "git checkout";
     clone    = "git clone";
     commit   = "git commit -m";
-    fetch    = "git fetch";
+    # fetch    = "git fetch";
     pull     = "git pull origin";
     push     = "git push origin";
     tag      = "git tag";

@@ -38,6 +38,23 @@
       url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    areofyl-fetch = {
+      url = "github:areofyl/fetch";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    waterfox = {
+      url = "github:realitymolder/waterfox-flake";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
+    helium = {
+      url = "github:amaanq/helium-flake";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs =
@@ -51,6 +68,8 @@
       niri,
       dgop,
       nix-darwin,
+      waterfox,
+      helium,
       ...
     }@inputs:
     let
@@ -138,6 +157,7 @@
             nixpkgs.overlays = [
               (final: prev: {
                 omniwm = inputs.nixpkgs-unstable.legacyPackages.${prev.stdenv.hostPlatform.system}.omniwm;
+                whatcable = inputs.nixpkgs-unstable.legacyPackages.${prev.stdenv.hostPlatform.system}.whatcable;
               })
             ];
             home-manager.useGlobalPkgs = true;

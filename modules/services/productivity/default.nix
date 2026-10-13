@@ -9,6 +9,6 @@
     ./mealie.nix
     ./paperless.nix
     ./vikunja.nix
-    ./bento.nix
+    # ./bento.nix
   ];
 }
