@@ -5,6 +5,7 @@
     ../default.nix
     ../programs/terminal/fetch.nix
     ../programs/terminal/kitty.nix
+    ../programs/editors/neovim.nix
     ../programs/editors/zed.nix
     # ../programs/tools/omniwm.nix
   ];
