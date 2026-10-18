@@ -1,7 +1,5 @@
 {
   pkgs,
-  lib,
-  config,
   inputs,
   ...
 }:
@@ -101,6 +99,23 @@
     };
     aerospace = {
       enable = true;
+    };
+  };
+
+  launchd.user.agents.i2pd = {
+    serviceConfig = {
+      ProgramArguments = [
+        "${pkgs.i2pd}/bin/i2pd"
+        "--datadir=/Users/frank/.i2pd"
+        "--certsdir=${pkgs.i2pd}/share/i2pd/certificates"
+        "--http.address=127.0.0.1"
+        "--httpproxy.address=127.0.0.1"
+        "--socksproxy.address=127.0.0.1"
+      ];
+      RunAtLoad = true;
+      KeepAlive = true;
+      StandardOutPath = "/tmp/i2pd.log";
+      StandardErrorPath = "/tmp/i2pd.log";
     };
   };
 
