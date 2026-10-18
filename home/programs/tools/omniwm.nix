@@ -7,7 +7,7 @@
   xdg.configFile."omniwm/settings.toml".source = ./omniwm-settings.toml;
 
   launchd.agents.omniwm = {
-    enable = true;
+    enable = false;
     config = {
       ProgramArguments = [ "${pkgs.omniwm}/bin/OmniWM" ];
       RunAtLoad = true;

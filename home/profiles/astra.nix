@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   imports = [
@@ -7,7 +7,6 @@
     ../programs/terminal/kitty.nix
     ../programs/editors/neovim.nix
     ../programs/editors/zed.nix
-    # ../programs/tools/omniwm.nix
   ];
 
   home.username = "frank";
