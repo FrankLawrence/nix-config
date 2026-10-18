@@ -73,7 +73,13 @@
       ...
     }@inputs:
     let
-      system = "x86_64-linux";
+      # Systems the dev shell / packages should exist for
+      systems = [
+        "x86_64-linux"
+        "aarch64-darwin"
+      ];
+
+      forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f system);
 
       # Import custom library functions
       lib = nixpkgs.lib.extend (
@@ -93,22 +99,16 @@
       mkSystem =
         hostname: extraModules:
         nixpkgs.lib.nixosSystem {
-          inherit system;
+          system = "x86_64-linux";
           specialArgs = { inherit inputs lib; };
-          modules =
-            commonModules
-            ++ extraModules
-            ++ [
-              ./hosts/${hostname}
-            ];
+          modules = commonModules ++ extraModules ++ [ ./hosts/${hostname} ];
         };
 
-      # Function to create home-manager configuration
       mkHome =
         username: extraModules:
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
-            inherit system;
+            system = "x86_64-linux";
             config.allowUnfree = true;
           };
           extraSpecialArgs = { inherit inputs; };
@@ -177,14 +177,22 @@
         ];
       };
 
-      # Development shell
-      devShells.${system}.default = nixpkgs.legacyPackages.${system}.mkShell {
-        buildInputs = with nixpkgs.legacyPackages.${system}; [
-          git
-          agenix.packages.${system}.default
-          nixpkgs-fmt
-          nil
-        ];
-      };
+      devShells = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          default = pkgs.mkShell {
+            buildInputs = [
+              pkgs.git
+              agenix.packages.${system}.default
+              pkgs.nixfmt
+              pkgs.nil
+              pkgs.nixd
+            ];
+          };
+        }
+      );
     };
 }
