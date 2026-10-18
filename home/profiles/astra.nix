@@ -1,5 +1,37 @@
 { pkgs, inputs, ... }:
 
+let
+  system = pkgs.stdenv.hostPlatform.system;
+
+  # waterfox-flake is broken on aarch64-darwin: its hash is hex with an "sha256-"
+  # prefix (not valid SRI), the DMG is APFS (undmg can't unpack it), and the app
+  # now ships Contents/MacOS/waterfox itself, so the flake's symlinks collide.
+  waterfox = pkgs.wrapFirefox (inputs.waterfox.packages.${system}.waterfox-unwrapped.overrideAttrs
+    (old: {
+      src = pkgs.fetchurl {
+        inherit (old.src) url;
+        hash = "sha256-fq5PSCk3sjv6gyheYcLZ5Q1NjP1mLfqm6oMHKPw0Riw=";
+      };
+      nativeBuildInputs = [ pkgs._7zz ];
+      unpackPhase = ''
+        runHook preUnpack
+        7zz x -snld "$src"
+        runHook postUnpack
+      '';
+      installPhase =
+        builtins.replaceStrings
+          [
+            ''ln -s waterfox "$out/Applications/Waterfox.app/Contents/MacOS/waterfox"''
+            ''ln -s "$out/bin/waterfox" "$out/bin/waterfox"''
+          ]
+          [
+            ""
+            ""
+          ]
+          old.installPhase;
+    })
+  ) { };
+in
 {
   imports = [
     ../default.nix
@@ -12,6 +44,8 @@
   home.username = "frank";
   home.homeDirectory = "/Users/frank";
   home.packages = with pkgs; [
+    waterfox
+    inputs.helium.packages.${system}.helium
     alacritty
     bat
     devenv
