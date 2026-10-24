@@ -1,6 +1,7 @@
 {
   pkgs,
   inputs,
+  config,
   ...
 }:
 {
@@ -22,6 +23,42 @@
     "nix-command"
     "flakes"
   ];
+
+  age.identityPaths = [ "/Users/frank/.ssh/agenix" ];
+
+  age.secrets = {
+    wg-astra-private.file = ../../secrets/wg-astra-private.age;
+    wg-astra-preshare.file = ../../secrets/wg-astra-preshare.age;
+  };
+
+  networking = {
+    hostName = "Astra";
+    wg-quick.interfaces.wg0 = {
+      address = [ "192.168.178.206/24" ];
+      dns = [
+        "192.168.178.1"
+        "fritz.box"
+        "1.1.1.1"
+      ];
+      privateKeyFile = config.age.secrets.wg-astra-private.path;
+      # listenPort = 51820;                     # only needed if you accept inbound
+      # mtu = 1420;
+
+      peers = [
+        {
+          publicKey = "dpLkWTsks3cciSD4v3i8j0do+6PxV6+9FdthzliTsRI=";
+          presharedKeyFile = config.age.secrets.wg-astra-preshare.path;
+          allowedIPs = [
+            "192.168.178.0/24"
+            "0.0.0.0/0"
+            "::/0"
+          ];
+          endpoint = "d6hfqdbjfwyjurlm.myfritz.net:52424";
+          persistentKeepalive = 25;
+        }
+      ];
+    };
+  };
 
   homebrew = {
     enable = true;
@@ -92,7 +129,7 @@
 
   services = {
     jankyborders = {
-      enable = true;
+      enable = false;
       active_color = "#EB6F92";
       blur_radius = 5.0;
       width = 3.0;
