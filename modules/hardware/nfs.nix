@@ -1,5 +1,3 @@
-{ config, ... }:
-
 {
   # NFS mounts
   boot = {
@@ -10,27 +8,33 @@
   fileSystems."/mnt/nfs" = {
     device = "192.168.178.40:/volume1/nfs/";
     fsType = "nfs";
-    options = [ "x-systemd automount" "noauto" ];
+    options = [
+      "x-systemd.automount"
+      "noauto"
+    ];
   };
   fileSystems."/mnt/photo" = {
     device = "192.168.178.40:/volume1/photo/";
     fsType = "nfs";
-    options = [ "x-systemd automount" "noauto" ];
+    options = [
+      "x-systemd.automount"
+      "noauto"
+    ];
   };
 
   users.groups.nfs-shared = {
-	 	gid = 2000;
-	 	members = [
-		 	"frank"
-			# Services
-			"navidrome"
-			"qbittorrent"
-			"slskd"
-		  "audiobookshelf"
-		  "immich"
-		  "kavita"
-		  "komga"
-		  "suwayomi"
-	  ];
+    gid = 2000;
+    members = [
+      "frank"
+      # Services
+      "navidrome"
+      "qbittorrent"
+      "slskd"
+      "audiobookshelf"
+      "immich"
+      "kavita"
+      "komga"
+      "suwayomi"
+    ];
   };
 }

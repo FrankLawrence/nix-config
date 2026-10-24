@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 let
   # Build a clean site attrset, omitting null optional fields.
   mkSite = site:

@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ inputs, ... }:
 
 {
   imports = [ inputs.areofyl-fetch.homeManagerModules.default ];

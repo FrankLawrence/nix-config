@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, lib, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -59,7 +59,7 @@
     settings = {
       devices = {
         terra = {
-          name = "macbook";
+          name = "terra";
           id = "QJXO57G-AJVI2DV-T3L4VTI-CTSKCVP-2NU5K3D-DZ5VEKY-ZPOPV5O-TU4YTAM";
         };
         centauri = {
@@ -79,8 +79,6 @@
           #   };
           # };
         };
-      };
-      folders = {
         "default" = {
           path = "~/Sync/";
           devices = [ "terra" "centauri" ];

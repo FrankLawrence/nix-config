@@ -1,4 +1,3 @@
-{ config, pkgs, lib, ... }:
 let
   # Import individual function files
   spark = import ./functions/spark.nix;

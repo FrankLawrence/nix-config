@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, pkgs, ... }:
 let
   version = "5.0.7";
 
@@ -15,7 +15,7 @@ let
     buildInputs = [ pkgs.glibc ];
 
     dontUnpack = true;
-    dontBuild  = true;
+    dontBuild = true;
 
     installPhase = ''
       install -Dm755 $src $out/bin/tinyauth
@@ -32,32 +32,31 @@ in
     isSystemUser = true;
     group = "tinyauth";
   };
-  users.groups.tinyauth = {};
+  users.groups.tinyauth = { };
 
   systemd.services.tinyauth = {
     description = "Tinyauth forward-auth middleware";
-    after    = [ "network.target" ];
+    after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
 
     serviceConfig = {
-      ExecStart        = "${tinyauth}/bin/tinyauth";
-      User             = "tinyauth";
-      Group            = "tinyauth";
-      EnvironmentFile  = config.age.secrets.tinyauth.path;
+      ExecStart = "${tinyauth}/bin/tinyauth";
+      User = "tinyauth";
+      Group = "tinyauth";
+      EnvironmentFile = config.age.secrets.tinyauth.path;
       WorkingDirectory = "/var/lib/tinyauth";
-      StateDirectory   = "tinyauth";
-      Restart          = "on-failure";
-      RestartSec       = "5s";
+      StateDirectory = "tinyauth";
+      Restart = "on-failure";
+      RestartSec = "5s";
 
       # Hardening
-      NoNewPrivileges       = true;
-      ProtectSystem         = "strict";
-      ProtectHome           = true;
-      PrivateTmp            = true;
-      PrivateDevices        = true;
+      NoNewPrivileges = true;
+      ProtectSystem = "strict";
+      ProtectHome = true;
+      PrivateTmp = true;
+      PrivateDevices = true;
       CapabilityBoundingSet = "";
-      ReadWritePaths        = [ "/var/lib/tinyauth" ];
+      ReadWritePaths = [ "/var/lib/tinyauth" ];
     };
   };
 }
-

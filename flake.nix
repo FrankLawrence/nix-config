@@ -59,17 +59,10 @@
 
   outputs =
     {
-      self,
       nixpkgs,
-      nixpkgs-unstable,
       agenix,
       home-manager,
-      disko,
-      niri,
-      dgop,
       nix-darwin,
-      waterfox,
-      helium,
       ...
     }@inputs:
     let
@@ -81,18 +74,10 @@
 
       forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f system);
 
-      # Import custom library functions
-      lib = nixpkgs.lib.extend (
-        final: prev: {
-          myLib = import ./lib { lib = final; };
-        }
-      );
-
       # Common module lists
       commonModules = [
         agenix.nixosModules.default
         ./modules/core
-        ./hosts/default.nix
       ];
 
       # Function to create a NixOS system configuration
@@ -100,7 +85,7 @@
         hostname: extraModules:
         nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit inputs lib; };
+          specialArgs = { inherit inputs; };
           modules = commonModules ++ extraModules ++ [ ./hosts/${hostname} ];
         };
 
@@ -123,7 +108,7 @@
       # NixOS Configurations
       nixosConfigurations = {
         andromeda = mkSystem "andromeda" [
-          disko.nixosModules.disko
+          inputs.disko.nixosModules.disko
         ];
 
         centauri = mkSystem "centauri" [

@@ -1,4 +1,4 @@
-{ config, pkgs, input, lib, ... }:
+{ lib, ... }:
 {
   # Set ssh key to decrypt for agenix
   age.identityPaths = [ "/home/frank/.ssh/agenix" ];

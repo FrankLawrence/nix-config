@@ -1,5 +1,3 @@
-{ ... }:
-
 {
   imports = [
     ./metadata-remote.nix

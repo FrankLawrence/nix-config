@@ -6,7 +6,7 @@
       {
         name = "frank";
         ensureClauses = {
-	        superuser = true;
+          superuser = true;
         };
       }
     ];

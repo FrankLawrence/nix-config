@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 lib.mkIf config.services.kavita.enable {
   age.secrets.kavita = {
     file = ../../../secrets/kavita.age;

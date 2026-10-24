@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 lib.mkIf config.services.navidrome.enable {
   users.users.navidrome = {
     extraGroups = [ "media" ];
@@ -35,7 +35,7 @@ lib.mkIf config.services.navidrome.enable {
       };
       DefaultTheme = "Dark";
       Prometheus = {
-        Enabled     = true;
+        Enabled = true;
         MetricsPath = "/metrics_internal";
       };
     };
@@ -45,7 +45,7 @@ lib.mkIf config.services.navidrome.enable {
   custom.glance.monitoredSites = lib.mkIf config.services.navidrome.enable [{
     title = "Navidrome";
     url = "https://navidrome.wurt.net";
-    check-url = "http://127.0.0.1:5001";
+    check-url = "http://127.0.0.1:2000";
     icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/navidrome.svg";
   }];
 }

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 lib.mkIf config.services.mealie.enable {
   age.secrets.mealie = {
     file = ../../../secrets/mealie.age;
@@ -41,7 +41,7 @@ lib.mkIf config.services.mealie.enable {
       OIDC_PROVIDER_NAME = "Pocket-ID";
 
       LDAP_AUTH_ENABLED = true;
-      LDAP_SERVER_URL = ldap://127.0.0.1:5051;
+      LDAP_SERVER_URL = "ldap://127.0.0.1:5051";
       LDAP_BASE_DN = "ou=people,dc=wurt,dc=net";
       LDAP_USER_FILTER = "(memberof=cn=mealie,ou=groups,dc=wurt,dc=net)";
       LDAP_ADMIN_FILTER = "(memberof=cn=lldap_admin,ou=groups,dc=wurt,dc=net)";

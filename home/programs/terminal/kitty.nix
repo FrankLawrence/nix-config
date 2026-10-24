@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ pkgs, ... }:
 let
   kittyIcon = pkgs.fetchurl {
     url = "https://github.com/rose-pine/kitty/blob/main/icons/kitty.app.png";

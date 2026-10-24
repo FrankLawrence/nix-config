@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, lib, ... }:
+{ pkgs, lib, ... }:
 {
   # Enable HIP libraries for GPU rendering
   systemd.tmpfiles.rules = [

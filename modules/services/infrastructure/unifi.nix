@@ -4,7 +4,9 @@ lib.mkIf config.services.unifi.enable {
     openFirewall = true;
   };
 
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "unifi-controller"
-  ];
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
+    builtins.elem (lib.getName pkg) [
+      "unifi-controller"
+    ];
 }

@@ -1,4 +1,3 @@
-{ config, pkgs, inputs, ... }:
 {
   # Enable sound with pipewire.
   security.rtkit.enable = true;

@@ -1,8 +1,5 @@
 # Common configuration for virtual machines running under QEMU (using
 # virtio).
-
-{ ... }:
-
 {
   boot.initrd.availableKernelModules = [
     "virtio_net"

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 lib.mkIf config.services.adguardhome.enable {
   services.adguardhome = {
     # port = 3000;

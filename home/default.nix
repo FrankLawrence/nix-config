@@ -1,4 +1,3 @@
-{ config, pkgs, input, ... }:
 {
   imports = [
     ./programs/terminal/btop.nix

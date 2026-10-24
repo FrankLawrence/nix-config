@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 lib.mkIf config.services.actual.enable {
   services.actual = {
     settings = {

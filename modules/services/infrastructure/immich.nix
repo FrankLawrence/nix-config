@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 lib.mkIf config.services.immich.enable {
   # age.secrets.immich = {
@@ -25,10 +25,12 @@ lib.mkIf config.services.immich.enable {
     host = "127.0.0.1";
   };
 
-  custom.glance.monitoredSites = lib.mkIf config.services.immich.enable [{
-    title = "Immich";
-    url = "https://immich.wurt.net";
-    check-url = "http://127.0.0.1:2283";
-    icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/immich.svg";
-  }];
+  custom.glance.monitoredSites = lib.mkIf config.services.immich.enable [
+    {
+      title = "Immich";
+      url = "https://immich.wurt.net";
+      check-url = "http://127.0.0.1:2283";
+      icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/immich.svg";
+    }
+  ];
 }

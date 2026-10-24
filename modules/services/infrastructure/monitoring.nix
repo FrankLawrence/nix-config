@@ -33,6 +33,12 @@ let
 in
 {
   # ── Grafana ─────────────────────────────────────────────────────────────
+  # age.secrets.grafana = {
+  #   "file" = ../../../secrets/grafana.age;
+  #   owner = "grafana";
+  #   group = "grafana";
+  # };
+
   services.grafana = {
     enable = true;
     openFirewall = true;
@@ -40,25 +46,27 @@ in
       server = {
         http_addr = "127.0.0.1";
         http_port = 5070;
-        domain    = "grafana.wurt.net";
-        root_url  = "https://grafana.wurt.net";
+        domain = "grafana.wurt.net";
+        root_url = "https://grafana.wurt.net";
       };
       analytics.reporting_enabled = false;
       auth.oauth_allow_insecure_email_lookup = true;
+      # security.secret_key = config.age.secrets.grafana.path;
+      security.secret_key = "+4pD+S2kFxG8WOV1yDYRnRzPtZakjrfYeLaNWSfUJK8=";
     };
     provision = {
       enable = true;
       datasources.settings.datasources = [
         {
-          name      = "Prometheus";
-          type      = "prometheus";
-          url       = "http://127.0.0.1:5072";
+          name = "Prometheus";
+          type = "prometheus";
+          url = "http://127.0.0.1:5072";
           isDefault = true;
         }
         {
           name = "Loki";
           type = "loki";
-          url  = "http://127.0.0.1:5071";
+          url = "http://127.0.0.1:5071";
         }
       ];
     };
@@ -72,26 +80,28 @@ in
       server.http_listen_port = 5071;
       common = {
         instance_addr = "127.0.0.1";
-        path_prefix   = "/var/lib/loki";
+        path_prefix = "/var/lib/loki";
         storage.filesystem = {
           chunks_directory = "/var/lib/loki/chunks";
-          rules_directory  = "/var/lib/loki/rules";
+          rules_directory = "/var/lib/loki/rules";
         };
         replication_factor = 1;
         ring.kvstore.store = "inmemory";
       };
-      schema_config.configs = [{
-        from         = "2024-01-01";
-        store        = "tsdb";
-        object_store = "filesystem";
-        schema       = "v13";
-        index = {
-          prefix = "loki_";
-          period = "24h";
-        };
-      }];
+      schema_config.configs = [
+        {
+          from = "2024-01-01";
+          store = "tsdb";
+          object_store = "filesystem";
+          schema = "v13";
+          index = {
+            prefix = "loki_";
+            period = "24h";
+          };
+        }
+      ];
       limits_config = {
-        reject_old_samples         = true;
+        reject_old_samples = true;
         reject_old_samples_max_age = "168h";
       };
     };
@@ -99,7 +109,7 @@ in
 
   # ── Alloy (journald → Loki) ──────────────────────────────────────────────
   services.alloy = {
-    enable     = true;
+    enable = true;
     configPath = alloyConfig;
   };
 
@@ -109,20 +119,20 @@ in
 
   # ── Prometheus ───────────────────────────────────────────────────────────
   services.prometheus = {
-    enable        = true;
-    port          = 5072;
+    enable = true;
+    port = 5072;
     listenAddress = "127.0.0.1";
     retentionTime = "30d";
     scrapeConfigs = [
       {
-        job_name       = "vikunja";
-        metrics_path   = "/api/v1/metrics";
-        static_configs = [{ targets = [ "127.0.0.1:3030" ]; }];
+        job_name = "vikunja";
+        metrics_path = "/api/v1/metrics";
+        static_configs = [ { targets = [ "127.0.0.1:3030" ]; } ];
       }
       {
-        job_name       = "navidrome";
-        metrics_path   = "/metrics_internal";
-        static_configs = [{ targets = [ "127.0.0.1:2000" ]; }];
+        job_name = "navidrome";
+        metrics_path = "/metrics_internal";
+        static_configs = [ { targets = [ "127.0.0.1:2000" ]; } ];
       }
       # {
       #   job_name       = "karakeep";
@@ -135,9 +145,9 @@ in
       #   };
       # }
       {
-        job_name       = "pocket-id";
-        metrics_path   = "/metrics";
-        static_configs = [{ targets = [ "127.0.0.1:5073" ]; }];
+        job_name = "pocket-id";
+        metrics_path = "/metrics";
+        static_configs = [ { targets = [ "127.0.0.1:5073" ]; } ];
       }
     ];
   };

@@ -1,51 +1,19 @@
 { pkgs, ... }:
-
 {
-
-  imports = [
-    ./disk-config.nix
-  ];
+  imports = [ ];
 
   environment.systemPackages = with pkgs; [
     frp
   ];
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-label/nixos";
-    fsType = "ext4";
-  };
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-label/boot";
-    fsType = "ext4";
-  };
-  swapDevices = [
-  {
-    device = "/dev/disk/by-label/swap";
-  }
-  ];
-
-  systemd.network.enable = true;
-  # systemd.network.networks."30-wan" = {
-  #   matchConfig.Name = "enp1s0";
-  #   networkConfig.DHCP = "ipv4";
-  #   address = [
-  #     "2a01:4f9:c012:d8e::1/64"
-  #   ];
-  #   routes = [
-  #   { Gateway = "fe80::1"; }
-  #   ];
-  # };
-
-  time.timeZone = "Europe/Zurich";
-  i18n.defaultLocale = "en_US.UTF-8";
   console.keyMap = "us";
 
   boot.loader.grub = {
     enable = true;
     efiSupport = true;
     efiInstallAsRemovable = true;
+    device = "/dev/sda";
   };
-  # boot.loader.grub.device = "/dev/sda";
 
   programs.ssh.startAgent = true;
 
@@ -54,16 +22,15 @@
     wheelNeedsPassword = false;
   };
 
-  services.openssh = {
-    enable = true;
-    settings = {
-      PermitRootLogin = "no";
-      PasswordAuthentication = false;
-      KbdInteractiveAuthentication = false;
-    };
+  networking = {
+    hostName = "andromeda";
+    networkmanager.enable = true;
+    firewall.allowedTCPPorts = [
+      22
+      6000
+      7000
+    ];
   };
-
-  networking.firewall.allowedTCPPorts = [ 22 6000 7000 ];
 
   system.stateVersion = "24.11";
 }

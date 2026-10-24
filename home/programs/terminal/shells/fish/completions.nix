@@ -1,4 +1,3 @@
-{ config, pkgs, lib, ... }:
 {
   # Spark completions
   home.file.".config/fish/completions/spark.fish".text = ''

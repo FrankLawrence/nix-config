@@ -110,7 +110,7 @@ in
       "paperless.wurt.net".extraConfig = mkProtectedProxy "127.0.0.1:3020";
       "vikunja.wurt.net".extraConfig   = mkProtectedProxy "127.0.0.1:3030";
       "actual.wurt.net".extraConfig    = mkProxy          "127.0.0.1:3040";
-      "karakeep.wurt.net".extraConfig  = mkProtectedProxy "127.0.0.1:3050";
+      # "karakeep.wurt.net".extraConfig  = mkProtectedProxy "127.0.0.1:3050";
       "mealie.wurt.net".extraConfig    = mkProtectedProxyPublicPaths [ "/g/*" "/api/public/" "/api/recipes/shared/*" ] "127.0.0.1:3060";
       "freshrss.wurt.net".extraConfig  = mkProxy          "127.0.0.1:3070";
       "bento.wurt.net".extraConfig     = mkProxy          "127.0.0.1:3080";

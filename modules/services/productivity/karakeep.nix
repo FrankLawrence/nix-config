@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 lib.mkIf config.services.karakeep.enable {
   age.secrets.karakeep = {
     file = ../../../secrets/karakeep.age;

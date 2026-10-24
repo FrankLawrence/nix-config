@@ -6,17 +6,18 @@ let
 
   users = [ local-terra jupiter-agenix ];
 
-  centauri = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKoMROjV6+nWOiYkgOTC6MUMxVusLvp5IV8yYnG0eo6v frank@centauri";
-  systems = [ centauri ];
+  systems = [ ];
 in
 {
   "dawarich-secret-key.age".publicKeys = users ++ systems;
   "dawarich.age".publicKeys            = users ++ systems;
   "freshrss-secret.age".publicKeys     = users ++ systems;
   "freshrss.age".publicKeys            = users ++ systems;
+  "grafana.age".publicKeys             = users ++ systems;
   "karakeep.age".publicKeys            = users ++ systems;
   "kavita.age".publicKeys              = users ++ systems;
   "lldap-observer.age".publicKeys      = users ++ systems;
+  "lldap-user.age".publicKeys          = users ++ systems;
   "lldap.age".publicKeys               = users ++ systems;
   "mealie.age".publicKeys              = users ++ systems;
   "navidrome.age".publicKeys           = users ++ systems;

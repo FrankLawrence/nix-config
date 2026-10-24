@@ -1,33 +1,35 @@
-{ config, pkgs, lib, inputs, ... }:
+{ pkgs, lib, ... }:
 
 # Reference: https://www.joshuamlee.com/nixos-proxmox-vm-images/
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/profiles/qemu-guest.nix
   ];
 
-  boot.loader.grub = {
+  boot.loader.systemd-boot = {
     enable = true;
-    device = "/dev/sda";
-    useOSProber = true;
+    editor = false;
   };
-  boot.growPartition = lib.mkDefault true;
 
   networking = {
     hostName = "centauri";
     networkmanager.enable = true;
 
-    interfaces.eth0.ipv4.addresses = [{
-      address = "192.168.178.171";
-      prefixLength = 24;
-    }];
+    # interfaces.enp3s0.ipv4.addresses = [
+    #   {
+    #     address = "192.168.178.100";
+    #     prefixLength = 24;
+    #   }
+    # ];
     defaultGateway = "192.168.178.1";
-    nameservers = [ "1.1.1.1" "8.8.8.8" ];
+    nameservers = [
+      "1.1.1.1"
+      "8.8.8.8"
+    ];
     firewall.allowedTCPPorts = [
-      22   # ssh
-      80   # caddy
-      443  # caddy
+      22 # ssh
+      80 # caddy
+      443 # caddy
 
       3020 # paperless
       3030 # vikunja
@@ -51,48 +53,46 @@
 
   services = {
     # Infrastructure
-    pocket-id.enable    = true;
-    forgejo.enable      = false;
-    caddy.enable        = true;
-    immich.enable       = false;
-    syncthing.enable    = false;
-    postgresql.enable   = true;
-    lldap.enable        = true;
-    pgadmin.enable      = true;
-    unifi.enable        = false;
+    pocket-id.enable = true;
+    forgejo.enable = false;
+    caddy.enable = true;
+    immich.enable = false;
+    syncthing.enable = false;
+    postgresql.enable = true;
+    lldap.enable = true;
+    pgadmin.enable = true;
+    unifi.enable = false;
 
     # Media
-    navidrome.enable       = true;
-    kavita.enable          = true;
-    komga.enable           = false;
-    audiobookshelf.enable  = true;
+    navidrome.enable = true;
+    kavita.enable = true;
+    komga.enable = false;
+    audiobookshelf.enable = true;
     music-assistant.enable = false;
-    calibre-web.enable     = false;
-    lidarr.enable          = true;
-    slskd.enable           = false;
-    qbittorrent.enable     = true;
-    jellyfin.enable        = false;
+    calibre-web.enable = false;
+    lidarr.enable = true;
+    slskd.enable = false;
+    qbittorrent.enable = true;
+    jellyfin.enable = false;
     suwayomi-server.enable = true;
 
     # Productivity
-    glance.enable       = true;
-    paperless.enable    = true;
-    vikunja.enable      = true;
-    actual.enable       = false;
-    karakeep.enable     = true;
-    mealie.enable       = true;
-    freshrss.enable     = true;
+    glance.enable = true;
+    paperless.enable = true;
+    vikunja.enable = true;
+    actual.enable = false;
+    karakeep.enable = false;
+    mealie.enable = true;
+    freshrss.enable = true;
     # bentopdf.enable     = true;
 
     # Utility
-    adguardhome.enable  = true;
-    dawarich.enable     = true;
+    adguardhome.enable = true;
+    dawarich.enable = true;
     home-assistant.enable = false;
 
     # -- System Services --
-    qemuGuest.enable          = true;
-    cloud-init.network.enable = true;
-    tailscale.enable          = true;
+    tailscale.enable = true;
   };
 
   programs.bash = {

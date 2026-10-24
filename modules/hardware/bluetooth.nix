@@ -1,4 +1,3 @@
-{ config, pkgs, inputs, ... }:
 {
   hardware.bluetooth = {
     enable = true;
@@ -6,7 +5,7 @@
     settings = {
       General = {
         Experimental = true;
-	FastConnectable = true;
+        FastConnectable = true;
       };
     };
   };

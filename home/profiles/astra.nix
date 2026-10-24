@@ -48,6 +48,7 @@ in
     inputs.helium.packages.${system}.helium
     alacritty
     bat
+    colima
     devenv
     docker
     docker-compose
@@ -71,8 +72,6 @@ in
     nb
     neovim
     nh
-    nixd
-    nixfmt
     obsidian
     qbittorrent
     raycast
@@ -91,6 +90,12 @@ in
     yazi
     yt-dlp
     zoxide
+    
+    # langauge support
+    nixd
+    nixfmt
+    pyright
+    nodejs_26
   ];
 
   home.stateVersion = "25.05";

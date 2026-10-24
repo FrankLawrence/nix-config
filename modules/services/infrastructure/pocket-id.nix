@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 lib.mkIf config.services.pocket-id.enable {
   age.secrets.pocket-id = {
     file = ../../../secrets/pocket-id.age;
@@ -19,7 +19,6 @@ lib.mkIf config.services.pocket-id.enable {
     settings = {
       ANALYTICS_DISABLED = true;
       APP_URL = "https://pocket-id.wurt.net";
-      DB_PROVIDER = "postgres";
       DB_CONNECTION_STRING = "postgresql://pocket-id@pocket-id?host=/run/postgresql";
       TRUST_PROXY = false;
       # PORT = 1411;

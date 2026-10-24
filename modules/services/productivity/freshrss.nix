@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 lib.mkIf config.services.freshrss.enable {
 	services.postgresql = {
     ensureDatabases = [ "freshrss" ];
