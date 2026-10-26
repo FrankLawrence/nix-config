@@ -40,6 +40,7 @@
     VISUAL = "emacsclient -c -a emacs";
     BAT_THEME = "base16";
     NH_DARWIN_FLAKE = "/Users/frank/nix-config/";
+    NH_OS_FLAKE = "/home/frank/nix-config/";
     FZF_CTRL_R_OPTS = "--prompt 'Hist > '";
     # FZF_DEFAULT_OPTS = ''
     #   --color=fg:#908caa,bg:-1,hl:#ebbcba

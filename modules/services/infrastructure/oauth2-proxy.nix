@@ -11,14 +11,14 @@
     clientID = "homelab";
     keyFile = config.age.secrets.oauth2-proxy.path;
     upstream = "static://202";
-    oidcIssuerUrl = "https://pocket-id.wurt.net";
+    oidcIssuerUrl = "https://id.wurt.net";
     httpAddress = "127.0.0.1:4180";
     email.domains = [ "*" ];
     cookie.domain = ".wurt.net";
     redirectUrl = "https://auth.wurt.net/oauth2/callback";
     reverseProxy = true;
     setXauthrequest = true;
-    loginUrl = "https://pocket-id.wurt.net";
+    loginUrl = "https://id.wurt.net";
 
     cookie.secure = true;
     cookie.name = "__Host-oauth2-proxy";

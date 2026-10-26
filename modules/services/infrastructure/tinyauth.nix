@@ -39,6 +39,22 @@ in
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
 
+    environment = {
+      TINYAUTH_APPURL = "https://auth.wurt.net";
+      TINYAUTH_SERVER_ADDRESS = "127.0.0.1";
+      TINYAUTH_SERVER_PORT = "5000";
+      TINYAUTH_DATABASE_PATH = "/var/lib/tinyauth/tinyauth.db";
+      TINYAUTH_AUTH_SECURECOOKIE = "true";
+      TINYAUTH_OAUTH_AUTOREDIRECT = "pocketid";
+      TINYAUTH_OAUTH_PROVIDERS_POCKETID_NAME = "Pocket-ID";
+      TINYAUTH_OAUTH_PROVIDERS_POCKETID_AUTHURL = "https://pocket-id.wurt.net/authorize";
+      TINYAUTH_OAUTH_PROVIDERS_POCKETID_TOKENURL = "https://pocket-id.wurt.net/api/oidc/token";
+      TINYAUTH_OAUTH_PROVIDERS_POCKETID_USERINFOURL = "https://pocket-id.wurt.net/api/oidc/userinfo";
+      TINYAUTH_OAUTH_PROVIDERS_POCKETID_REDIRECTURL = "https://auth.wurt.net/api/oauth/callback/pocketid";
+      TINYAUTH_OAUTH_PROVIDERS_POCKETID_SCOPES = "openid email profile groups";
+    };
+
+
     serviceConfig = {
       ExecStart = "${tinyauth}/bin/tinyauth";
       User = "tinyauth";

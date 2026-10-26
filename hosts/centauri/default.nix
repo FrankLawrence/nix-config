@@ -25,9 +25,17 @@
     nameservers = [ "1.1.1.1" ];
     firewall.allowedTCPPorts = [
       22 # ssh
-      # 80 # caddy
-      # 443 # caddy
+      80 # caddy
+      443 # caddy
 
+      # 2000 # navidrome
+      # 2010 # kavita
+      # 2020 # komga
+      # 2060 # suwayomi
+      # 8096 # jellyfin
+
+      # 3000 # glance
+      # 3010 # stirling-pdf
       # 3020 # paperless
       # 3030 # vikunja
       # 3050 # karakeep
@@ -38,24 +46,26 @@
       # 4010 # dawarich
 
       # 5000 # auth
-      # 5010 # pocket-id
+      5010 # pocket-id
       # 5020 # forgejo
+      # 5030 # immich
       # 5040 # syncthing
       # 22000 # synchting TCP and UDP sync traffic
       # 21027 # syncthing UDP discovery
-      # 5050 # lldap
+      5050 # lldap
+      # 5070 # grafana
     ];
   };
 
   services = {
     # Infrastructure
-    pocket-id.enable = false;
+    pocket-id.enable = true;
     forgejo.enable = false;
-    caddy.enable = false;
-    immich.enable = false;
+    caddy.enable = true;
+    immich.enable = true;
     syncthing.enable = false;
     postgresql.enable = true;
-    lldap.enable = false;
+    lldap.enable = true;
 
     # Media
     navidrome.enable = true;
@@ -71,7 +81,7 @@
 
     # Productivity
     glance.enable = true;
-    paperless.enable = false;
+    paperless.enable = true;
     vikunja.enable = false;
     actual.enable = false;
     karakeep.enable = false;

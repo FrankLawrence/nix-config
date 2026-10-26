@@ -13,6 +13,13 @@ lib.mkIf config.services.lldap.enable {
     };
   };
 
+  users.users.lldap = {
+    isSystemUser = true;
+    group = "lldap";
+  };
+  users.groups.lldap = { };
+  systemd.services.lldap.serviceConfig.DynamicUser = lib.mkForce false;
+
   services.postgresql = {
     ensureDatabases = [ "lldap" ];
     ensureUsers = [
@@ -33,7 +40,7 @@ lib.mkIf config.services.lldap.enable {
       ldap_host = "127.0.0.1";
       ldap_port = 5051;
       ldap_user_dn = "admin";
-      ldap_user_email = "frank.wuerthner@proton.me";
+      ldap_user_email = "admin@wurt.net";
       ldap_user_pass_file = config.age.secrets.lldap-user.path;
       force_ldap_user_pass_reset = "always";
     };

@@ -33,7 +33,7 @@ lib.mkIf config.services.mealie.enable {
       OIDC_AUTH_ENABLED = true;
       OIDC_SIGNUP_ENABLED = true;
       OAUTH_PROVIDER_NAME = "Pocket ID";
-      OIDC_CONFIGURATION_URL = "https://pocket-id.wurt.net/.well-known/openid-configuration";
+      OIDC_CONFIGURATION_URL = "https://id.wurt.net/.well-known/openid-configuration";
       OIDC_USER_GROUP = "family";
       OIDC_REMEMBER_ME = true;
       OIDC_ADMIN_GROUP = "admin";

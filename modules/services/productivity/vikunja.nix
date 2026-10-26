@@ -30,7 +30,7 @@ lib.mkIf config.services.vikunja.enable {
 	            name = "PocketID";
 							usernamefallback = true;
 			        emailfallback = true;
-              authurl = "https://pocket-id.wurt.net";
+              authurl = "https://id.wurt.net";
               clientID = "f4e6ada2-a852-4dbe-b45c-d4c28faf9731";
               clientsecret = "l7BqDa9O8xLMWoGQltMGtBSIW85UqSzM";
               scope = "openid profile email";

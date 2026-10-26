@@ -36,7 +36,7 @@ lib.mkIf config.services.freshrss.enable {
   services.phpfpm.pools.freshrss = {
     phpEnv = {
       OIDC_ENABLED = "1";
-      OIDC_PROVIDER_METADATA_URL = "https://pocket-id.wurt.net/.well-known/openid-configuration";
+      OIDC_PROVIDER_METADATA_URL = "https://id.wurt.net/.well-known/openid-configuration";
       OIDC_SCOPES = "openid email profile";
       OIDC_X_FORWARDED_HEADERS = "X-Forwarded-Proto X-Forwarded-Host";
       OIDC_REMOTE_USER_CLAIM = "preferred_username";

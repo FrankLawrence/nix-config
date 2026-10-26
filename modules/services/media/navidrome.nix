@@ -30,7 +30,7 @@ lib.mkIf config.services.navidrome.enable {
       };
       ExtAuth = {
         TrustedSources = "127.0.0.1/32";
-        UserHeader = "X-Auth-Request-User";
+        UserHeader = "Remote-User";
       };
       DefaultTheme = "Dark";
       Prometheus = {

@@ -17,7 +17,7 @@ lib.mkIf config.services.karakeep.enable {
      NEXTAUTH_URL = "https://karakeep.wurt.net";
      DISABLE_PASSWORD_AUTH = "true";
      OAUTH_AUTO_REDIRECT = "true";
-     OAUTH_WELLKNOWN_URL = "https://pocket-id.wurt.net/.well-known/openid-configuration";
+     OAUTH_WELLKNOWN_URL = "https://id.wurt.net/.well-known/openid-configuration";
      OAUTH_PROVIDER_NAME = "Pocket-ID";
      OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING = "true";
      PORT = "3050";

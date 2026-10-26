@@ -41,7 +41,7 @@ lib.mkIf config.services.dawarich.enable {
       APPLICATION_HOSTS = "127.0.0.1,dawarich.wurt.net";
       APPLICATION_PROTOCOL = "https";
       DOMAIN = "dawarich.wurt.net";
-      OIDC_ISSUER = "https://pocket-id.wurt.net";
+      OIDC_ISSUER = "https://id.wurt.net";
       OIDC_REDIRECT_URI = "https://dawarich.wurt.net/users/auth/openid_connect/callback";
       OIDC_PROVIDER_NAME = "Pocket-ID";
       OIDC_AUTO_REGISTER = "true";
