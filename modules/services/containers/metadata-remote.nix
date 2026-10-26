@@ -27,7 +27,7 @@
       "PUID" = "1000";
     };
     volumes = [
-      "/mnt/nfs/music/:/music:rw"
+      "/mnt/music:/music:rw"
     ];
     ports = [
       "8338:8338/tcp"
@@ -55,7 +55,7 @@
       "podman-compose-metadata-remote-root.target"
     ];
     unitConfig.RequiresMountsFor = [
-      "/mnt/nfs/music/"
+      "/mnt/music"
     ];
   };
 

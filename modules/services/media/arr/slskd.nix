@@ -10,7 +10,7 @@ lib.mkIf config.services.slskd.enable {
     environmentFile = config.age.secrets.slskd.path;
   	domain = "slskd.wurt.net";
     settings = {
-    	shares.directories = [ "/mnt/nfs/music" ];
+    	shares.directories = [ "/mnt/music" ];
      	web = {
       	port = 2051;
         ip_address = "[::]";
