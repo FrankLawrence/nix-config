@@ -40,7 +40,6 @@ in
   # };
 
   services.grafana = {
-    enable = true;
     openFirewall = true;
     settings = {
       server = {
@@ -74,7 +73,6 @@ in
 
   # ── Loki ────────────────────────────────────────────────────────────────
   services.loki = {
-    enable = true;
     configuration = {
       auth_enabled = false;
       server.http_listen_port = 5071;
@@ -109,7 +107,6 @@ in
 
   # ── Alloy (journald → Loki) ──────────────────────────────────────────────
   services.alloy = {
-    enable = true;
     configPath = alloyConfig;
   };
 
@@ -119,7 +116,6 @@ in
 
   # ── Prometheus ───────────────────────────────────────────────────────────
   services.prometheus = {
-    enable = true;
     port = 5072;
     listenAddress = "127.0.0.1";
     retentionTime = "30d";

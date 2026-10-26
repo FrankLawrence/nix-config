@@ -15,6 +15,7 @@
     clinfo
     compose2nix
     curl
+    devenv
     eza
     fd
     ffmpeg

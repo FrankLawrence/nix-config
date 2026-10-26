@@ -23,8 +23,7 @@ lib.mkIf config.services.lldap.enable {
     ];
   };
   services.lldap = {
-    # database.type = "postgresql";
-    environmentFile = config.age.secrets.lldap.path;
+    environmentFile = config.age.secrets.lldap.path
     settings = {
       database_url = "postgresql:///lldap?host=/run/postgresql";
       http_host = "127.0.0.1";
@@ -35,7 +34,7 @@ lib.mkIf config.services.lldap.enable {
       ldap_port = 5051;
       ldap_user_dn = "admin";
       ldap_user_email = "frank.wuerthner@proton.me";
-      ldap_user_pass = config.age.secrets.lldap-user.path;
+      ldap_user_pass_file = config.age.secrets.lldap-user.path;
       force_ldap_user_pass_reset = "always";
     };
   };

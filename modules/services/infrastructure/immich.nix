@@ -1,17 +1,17 @@
 { config, lib, ... }:
 
 lib.mkIf config.services.immich.enable {
-  # age.secrets.immich = {
-  #   file = ../../../secrets/immich.age;
-  #   owner = "immich";
-  #   group = "immich";
-  # };
+  age.secrets.immich = {
+    file = ../../../secrets/immich.age;
+    owner = "immich";
+    group = "immich";
+  };
 
   services.immich = {
     port = 1030;
     openFirewall = true;
     mediaLocation = "/mnt/nfs/immich";
-    # secretsFile = config.age.secrets.immich.path;
+    secretsFile = config.age.secrets.immich.path;
 
     settings = {
       newVersionCheck.enabled = true;
@@ -22,14 +22,15 @@ lib.mkIf config.services.immich.enable {
       UPLOAD_LOCATION = "/mnt/photo/";
     };
 
-    host = "127.0.0.1";
+    # host = "127.0.0.1"; # Use when reverse proxy is setup
+    host = "0.0.0.0";
   };
 
   custom.glance.monitoredSites = lib.mkIf config.services.immich.enable [
     {
       title = "Immich";
       url = "https://immich.wurt.net";
-      check-url = "http://127.0.0.1:2283";
+      check-url = "http://127.0.0.1:1030";
       icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/immich.svg";
     }
   ];

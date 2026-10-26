@@ -7,7 +7,6 @@ lib.mkIf config.services.kavita.enable {
   };
 
   services.kavita = {
-    dataDir = "/srv/kavita/";
     tokenKeyFile = config.age.secrets.kavita.path;
     # settings.Port = 5000;
     settings.Port = 2010;

@@ -1,12 +1,11 @@
 let
-  local-terra = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDLxYWRdvzd01GebtUTxUgLO6F5z/ricceiy6Gs6IU/H";
-  jupiter = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKc+QGEfGE7T+NcAN8EkDDx3bg5z2ucrecMwbkBve2RY frank@jupiter";
-  jupiter-agenix = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGqo8Zt8cZd7HfI0KkPxDHGfUyAF7mFcottMa7YlLHuv frank@jupiter";
-  astra = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEYi2ARdQqa9UnHLT4KevormEqYspMEJn6UwhPsZ77BT frank@astra";
+  astra    = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEYi2ARdQqa9UnHLT4KevormEqYspMEJn6UwhPsZ77BT frank@astra";
+  centauri = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMlRx4b+zeii+dnPh+tjKviI7wMBhdAjp6uM3OHO9RzY frank@centauri";
+  jupiter  = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGqo8Zt8cZd7HfI0KkPxDHGfUyAF7mFcottMa7YlLHuv frank@jupiter";
+  terra    = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDLxYWRdvzd01GebtUTxUgLO6F5z/ricceiy6Gs6IU/H frank@terra";
 
-  users = [ local-terra jupiter-agenix ];
-
-  systems = [ ];
+  users = [ terra astra jupiter ];
+  systems = [ centauri ];
 in
 {
   "dawarich-secret-key.age".publicKeys = users ++ systems;
@@ -25,9 +24,10 @@ in
   "paperless.age".publicKeys           = users ++ systems;
   "pgadmin.age".publicKeys             = users ++ systems;
   "pocket-id.age".publicKeys           = users ++ systems;
+  "restic.age".publicKeys              = users ++ systems;
   "reverse-proxy.age".publicKeys       = users ++ systems;
   "slskd.age".publicKeys               = users ++ systems;
   "tinyauth.age".publicKeys            = users ++ systems;
-  "wg-astra-private.age".publicKeys  = [ astra local-terra ];
-  "wg-astra-preshare.age".publicKeys = [ astra local-terra ];
+  "wg-astra-private.age".publicKeys    = [ astra ];
+  "wg-astra-preshare.age".publicKeys   = [ astra ];
 }

@@ -3,7 +3,6 @@ lib.mkIf config.services.qbittorrent.enable {
   services.qbittorrent = {
     openFirewall = true;
     webuiPort = 2052;
-    profileDir = "/srv/qBittorrent/";
     serverConfig = {
 	    Preferences = {
 	      WebUI = {

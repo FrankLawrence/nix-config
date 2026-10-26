@@ -12,6 +12,6 @@
     ./tinyauth.nix
     ./pgadmin.nix
     ./monitoring.nix
-    ./unifi.nix
+    ./restic.nix
   ];
 }
