@@ -56,7 +56,6 @@
     syncthing.enable = false;
     postgresql.enable = true;
     lldap.enable = false;
-    pgadmin.enable = false;
 
     # Media
     navidrome.enable = true;
@@ -66,9 +65,8 @@
     music-assistant.enable = false;
     calibre-web.enable = false;
     lidarr.enable = false;
-    slskd.enable = false;
     qbittorrent.enable = false;
-    jellyfin.enable = false;
+    jellyfin.enable = true;
     suwayomi-server.enable = true;
 
     # Productivity

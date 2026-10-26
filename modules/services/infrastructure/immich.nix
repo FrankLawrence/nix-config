@@ -20,10 +20,6 @@ lib.mkIf config.services.immich.enable {
       server.externalDomain = "https://immich.wurt.net";
     };
 
-    environment = {
-      UPLOAD_LOCATION = "/mnt/photo/";
-    };
-
     # host = "127.0.0.1"; # Use when reverse proxy is setup
     host = "0.0.0.0";
   };

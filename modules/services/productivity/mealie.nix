@@ -20,7 +20,7 @@ lib.mkIf config.services.mealie.enable {
   services.mealie = {
     # port = 9000;
     port = 3060;
-    listenAddress = "127.0.0.1";
+    listenAddress = "0.0.0.0"; #TODO
     credentialsFile = config.age.secrets.mealie.path;
     settings = {
       DB_ENGINE = "postgres";

@@ -2,8 +2,7 @@
 
 {
   imports = [
-  	./lidarr.nix
-   	./slskd.nix
+    ./lidarr.nix
     ./qbittorrent.nix
   ];
 }

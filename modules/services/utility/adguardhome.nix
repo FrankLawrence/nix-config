@@ -4,7 +4,7 @@ lib.mkIf config.services.adguardhome.enable {
     # port = 3000;
     port = 4000;
     mutableSettings = true;
-    host = "127.0.0.1";
+    host = "0.0.0.0"; #TODO
     settings = {
       dhcp = {
         enabled = true;

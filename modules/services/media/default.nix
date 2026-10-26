@@ -8,6 +8,7 @@
     ./komga.nix
     ./navidrome.nix
     ./suwayomi.nix
+    ./jellyfin.nix
     ./arr
   ];
 

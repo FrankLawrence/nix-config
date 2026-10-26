@@ -27,12 +27,12 @@ lib.mkIf config.services.glance.enable {
   # };
 
   services.glance = {
-  	openFirewall = true;
+    openFirewall = true;
     settings = {
       server = {
         # port = 8084;
         port = 3000;
-        host = "127.0.0.1";
+        host = "0.0.0.0"; #TODO
       };
       pages = [
       {
@@ -239,15 +239,7 @@ lib.mkIf config.services.glance.enable {
             {
               type = "reddit";
               show-thumbnails = true;
-              subreddit = "centauri";
-              style = "vertical-cards";
-              show-flairs = true;
-              limit = 5;
-            }
-            {
-              type = "reddit";
-              show-thumbnails = true;
-              subreddit = "selfhosted";
+              subreddit = "homelab";
               style = "vertical-cards";
               show-flairs = true;
               limit = 5;

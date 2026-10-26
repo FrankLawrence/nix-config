@@ -17,8 +17,7 @@ lib.mkIf config.services.navidrome.enable {
       # Port = 5001;
       Port = 2000;
       ScanSchedule = "@every 1h";
-      # Address = "127.0.0.1";
-      Address = "0.0.0.0";
+      Address = "0.0.0.0"; #TODO
       DataFolder = "/var/lib/navidrome";
       CacheFolder = "/var/cache/navidrome";
       LogLevel = "info";

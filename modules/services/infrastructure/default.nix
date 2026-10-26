@@ -10,7 +10,6 @@
     ./postgresql.nix
     ./syncthing.nix
     ./tinyauth.nix
-    ./pgadmin.nix
     ./monitoring.nix
     ./restic.nix
   ];

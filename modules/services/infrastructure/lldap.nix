@@ -23,7 +23,7 @@ lib.mkIf config.services.lldap.enable {
     ];
   };
   services.lldap = {
-    environmentFile = config.age.secrets.lldap.path
+    environmentFile = config.age.secrets.lldap.path;
     settings = {
       database_url = "postgresql:///lldap?host=/run/postgresql";
       http_host = "127.0.0.1";

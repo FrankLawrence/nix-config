@@ -46,7 +46,6 @@ in
   };
 
   services.caddy = {
-    enable  = true;
     package = caddyWithPlugins;
 
     globalConfig = ''
@@ -96,7 +95,7 @@ in
       "lidarr.wurt.net".extraConfig      = mkProxy "127.0.0.1:2050";
       "slskd.wurt.net".extraConfig       = mkProxy "127.0.0.1:2051";
       "qbittorrent.wurt.net".extraConfig = mkProxy "127.0.0.1:2052";
-      "jellyfin.wurt.net".extraConfig    = mkProxy "192.168.178.180:8096";
+      "jellyfin.wurt.net".extraConfig    = mkProxy "127.0.0.1:8096";
       "suwayomi.wurt.net".extraConfig    = mkProxy "127.0.0.1:2060";
       # ── Productivity ───────────────────────────────────────────────────────
       "glance.wurt.net" = {

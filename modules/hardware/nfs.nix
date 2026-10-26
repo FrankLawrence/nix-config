@@ -4,7 +4,7 @@ let
     "x-systemd.automount"
     "noauto"
     "_netdev"
-    "nfsvers=4.1"
+    "nfsvers=4.0"
     "nosuid"
     "nodev"
     "noexec"
