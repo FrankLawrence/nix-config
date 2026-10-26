@@ -4,7 +4,7 @@ lib.mkIf config.services.adguardhome.enable {
     # port = 3000;
     port = 4000;
     mutableSettings = true;
-    host = "0.0.0.0"; #TODO
+    host = "127.0.0.1";
     settings = {
       dhcp = {
         enabled = true;
@@ -17,14 +17,9 @@ lib.mkIf config.services.adguardhome.enable {
           lease_duration = 86400;
         };
       };
-      users = [
-        {
-          name = "frank";
-          password = "$2y$10$7rhIYZmrVXzNTIBdmRghRu8yoRXuj63gSweFXkVW2d3bacxryf2Ti";
-        }
-      ];
+      # No users: the web UI only listens on localhost, tinyauth guards it through caddy
+      users = [ ];
     };
-    openFirewall = true;
   };
 
   networking.firewall.allowedUDPPorts = [ 53 ];

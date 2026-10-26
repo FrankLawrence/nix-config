@@ -29,6 +29,8 @@ lib.mkIf config.services.freshrss.enable {
 			# port = 5432;
 		};
 
+		# Must match the Pocket-ID username (OIDC_REMOTE_USER_CLAIM)
+		defaultUser = "frank";
 		passwordFile = config.age.secrets.freshrss-secret.path;
 		baseUrl = "https://freshrss.wurt.net";
 	};

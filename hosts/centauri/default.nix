@@ -39,59 +39,59 @@
       # 3020 # paperless
       # 3030 # vikunja
       # 3050 # karakeep
-      3060 # mealie
+      # 3060 # mealie
       # 3070 # freshrss
       # 3080 # bento
 
       # 4010 # dawarich
 
       # 5000 # auth
-      5010 # pocket-id
+      # 5010 # pocket-id
       # 5020 # forgejo
       # 5030 # immich
       # 5040 # syncthing
       # 22000 # synchting TCP and UDP sync traffic
       # 21027 # syncthing UDP discovery
-      5050 # lldap
+      # 5050 # lldap
       # 5070 # grafana
     ];
   };
 
   services = {
     # Infrastructure
-    pocket-id.enable = true;
-    forgejo.enable = false;
-    caddy.enable = true;
-    immich.enable = true;
-    syncthing.enable = false;
+    pocket-id.enable  = true;
+    forgejo.enable    = false;
+    caddy.enable      = true;
+    immich.enable     = true;
+    syncthing.enable  = false;
     postgresql.enable = true;
-    lldap.enable = true;
+    lldap.enable      = true;
 
     # Media
-    navidrome.enable = true;
-    kavita.enable = true;
-    komga.enable = false;
-    audiobookshelf.enable = false;
+    navidrome.enable       = true;
+    kavita.enable          = true;
+    komga.enable           = false;
+    audiobookshelf.enable  = false;
     music-assistant.enable = false;
-    calibre-web.enable = false;
-    lidarr.enable = false;
-    qbittorrent.enable = false;
-    jellyfin.enable = true;
+    calibre-web.enable     = false;
+    lidarr.enable          = false;
+    qbittorrent.enable     = false;
+    jellyfin.enable        = true;
     suwayomi-server.enable = true;
 
     # Productivity
-    glance.enable = true;
+    glance.enable    = true;
     paperless.enable = true;
-    vikunja.enable = false;
-    actual.enable = false;
-    karakeep.enable = false;
-    mealie.enable = true;
-    freshrss.enable = false;
+    vikunja.enable   = false;
+    actual.enable    = false;
+    karakeep.enable  = false;
+    mealie.enable    = true;
+    freshrss.enable  = false;
     # bentopdf.enable     = true;
 
     # Utility
-    adguardhome.enable = true;
-    dawarich.enable = false;
+    adguardhome.enable    = true;
+    dawarich.enable       = false;
     home-assistant.enable = false;
 
     # -- System Services --

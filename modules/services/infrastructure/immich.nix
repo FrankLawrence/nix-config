@@ -1,41 +1,48 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
+let
+  # Immich 2.x on 26.05 is EOL and marked insecure; use the 3.x package and module from unstable
+  unstable = inputs.nixpkgs-unstable;
+  unstablePkgs = unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+in
+{
+  disabledModules = [ "services/web-apps/immich.nix" ];
+  imports = [ "${unstable}/nixos/modules/services/web-apps/immich.nix" ];
 
-lib.mkIf config.services.immich.enable {
-  age.secrets.immich = {
-    file = ../../../secrets/immich.age;
-    owner = "immich";
-    group = "immich";
-  };
+  config = lib.mkIf config.services.immich.enable {
+    services.immich = {
+      package = unstablePkgs.immich;
+      port = 2070;
+      # Phone uploads stay on the local disk and are backed up to the NAS by restic.
+      # The NAS photo share is read-only, added in the UI as an external library at /mnt/photo
+      mediaLocation = "/var/lib/immich";
 
-  services.immich = {
-    port = 1030;
-    openFirewall = true;
-    # Phone uploads stay on the local disk and are backed up to the NAS by restic.
-    # The NAS photo share is read-only, added in the UI as an external library at /mnt/photo
-    mediaLocation = "/var/lib/immich";
-    secretsFile = config.age.secrets.immich.path;
+      settings = {
+        newVersionCheck.enabled = true;
+        server.externalDomain = "https://immich.wurt.net";
+      };
 
-    settings = {
-      newVersionCheck.enabled = true;
-      server.externalDomain = "https://immich.wurt.net";
+      host = "127.0.0.1";
     };
 
-    # host = "127.0.0.1"; # Use when reverse proxy is setup
-    host = "0.0.0.0";
-  };
+    # Wait for the NAS so the external library is readable
+    systemd.services.immich-server = {
+      after = [ "remote-fs.target" ];
+      wants = [ "remote-fs.target" ];
+    };
 
-  # Wait for the NAS so the external library is readable
-  systemd.services.immich-server = {
-    after = [ "remote-fs.target" ];
-    wants = [ "remote-fs.target" ];
+    custom.glance.monitoredSites = [
+      {
+        title = "Immich";
+        url = "https://immich.wurt.net";
+        check-url = "http://127.0.0.1:2070";
+        icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/immich.svg";
+      }
+    ];
   };
-
-  custom.glance.monitoredSites = lib.mkIf config.services.immich.enable [
-    {
-      title = "Immich";
-      url = "https://immich.wurt.net";
-      check-url = "http://127.0.0.1:1030";
-      icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/immich.svg";
-    }
-  ];
 }

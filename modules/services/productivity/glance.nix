@@ -27,12 +27,11 @@ lib.mkIf config.services.glance.enable {
   # };
 
   services.glance = {
-    openFirewall = true;
     settings = {
       server = {
         # port = 8084;
         port = 3000;
-        host = "0.0.0.0"; #TODO
+        host = "127.0.0.1";
       };
       pages = [
       {
@@ -133,9 +132,7 @@ lib.mkIf config.services.glance.enable {
             {
               type = "dns-stats";
               service = "adguard";
-              url = "https://adguard.wurt.net/";
-              username = "pinkfloyd";
-              # password = config.age.secrets.adguard.path;
+              url = "http://127.0.0.1:4000";
             }
             {
               type = "rss";

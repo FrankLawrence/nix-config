@@ -8,9 +8,8 @@
   };
 
   services.suwayomi-server = {
-    openFirewall = true;
     settings.server = {
-      ip = "0.0.0.0"; #TODO
+      ip = "127.0.0.1";
       port = 2060;
       localSourcePath = "/srv/library/manga";
       downloadAsCbz = true;

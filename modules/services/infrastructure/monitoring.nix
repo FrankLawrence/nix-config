@@ -40,7 +40,6 @@ in
   # };
 
   services.grafana = {
-    openFirewall = true;
     settings = {
       server = {
         http_addr = "127.0.0.1";
@@ -50,6 +49,17 @@ in
       };
       analytics.reporting_enabled = false;
       auth.oauth_allow_insecure_email_lookup = true;
+      # Log in as the user tinyauth passes through caddy (only the admins group gets that far)
+      auth.disable_login_form = true;
+      "auth.proxy" = {
+        enabled = true;
+        header_name = "Remote-User";
+        header_property = "username";
+        headers = "Email:Remote-Email Name:Remote-Name";
+        auto_sign_up = true;
+        whitelist = "127.0.0.1";
+      };
+      users.auto_assign_org_role = "Admin";
       # security.secret_key = config.age.secrets.grafana.path;
       security.secret_key = "+4pD+S2kFxG8WOV1yDYRnRzPtZakjrfYeLaNWSfUJK8=";
     };

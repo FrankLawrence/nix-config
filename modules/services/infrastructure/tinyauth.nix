@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 let
   version = "5.0.7";
 
@@ -20,6 +20,17 @@ let
     installPhase = ''
       install -Dm755 $src $out/bin/tinyauth
     '';
+  };
+
+  appGroups = {
+    adguard = "admins";
+    glance = "admins";
+    grafana = "admins";
+    home = "admins"; # alias of glance
+    lidarr = "admins";
+    navidrome = "media";
+    qbittorrent = "admins";
+    suwayomi = "admins";
   };
 in
 {
@@ -47,13 +58,18 @@ in
       TINYAUTH_AUTH_SECURECOOKIE = "true";
       TINYAUTH_OAUTH_AUTOREDIRECT = "pocketid";
       TINYAUTH_OAUTH_PROVIDERS_POCKETID_NAME = "Pocket-ID";
-      TINYAUTH_OAUTH_PROVIDERS_POCKETID_AUTHURL = "https://pocket-id.wurt.net/authorize";
-      TINYAUTH_OAUTH_PROVIDERS_POCKETID_TOKENURL = "https://pocket-id.wurt.net/api/oidc/token";
-      TINYAUTH_OAUTH_PROVIDERS_POCKETID_USERINFOURL = "https://pocket-id.wurt.net/api/oidc/userinfo";
+      TINYAUTH_OAUTH_PROVIDERS_POCKETID_AUTHURL = "https://id.wurt.net/authorize";
+      TINYAUTH_OAUTH_PROVIDERS_POCKETID_TOKENURL = "https://id.wurt.net/api/oidc/token";
+      TINYAUTH_OAUTH_PROVIDERS_POCKETID_USERINFOURL = "https://id.wurt.net/api/oidc/userinfo";
       TINYAUTH_OAUTH_PROVIDERS_POCKETID_REDIRECTURL = "https://auth.wurt.net/api/oauth/callback/pocketid";
       TINYAUTH_OAUTH_PROVIDERS_POCKETID_SCOPES = "openid email profile groups";
-    };
-
+    }
+    # Only these LLDAP groups (via Pocket-ID's groups claim) may open each app.
+    # The app ID is the subdomain caddy forwards for.
+    // lib.concatMapAttrs (app: groups: {
+      "TINYAUTH_APPS_${lib.toUpper app}_CONFIG_DOMAIN" = "${app}.wurt.net";
+      "TINYAUTH_APPS_${lib.toUpper app}_OAUTH_GROUPS" = groups;
+    }) appGroups;
 
     serviceConfig = {
       ExecStart = "${tinyauth}/bin/tinyauth";
