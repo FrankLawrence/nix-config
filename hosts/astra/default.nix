@@ -1,4 +1,9 @@
-{ pkgs, inputs, config, ... }:
+{
+  pkgs,
+  inputs,
+  config,
+  ...
+}:
 {
   nixpkgs.hostPlatform = "aarch64-darwin";
   nixpkgs.config.allowUnfree = true;
@@ -69,7 +74,6 @@
       "ollama-app"
       "signal"
       "tailscale-app"
-      "vorssaint"
     ];
   };
 

@@ -10,7 +10,9 @@ lib.mkIf config.services.immich.enable {
   services.immich = {
     port = 1030;
     openFirewall = true;
-    mediaLocation = "/mnt/nfs/immich";
+    # Phone uploads stay on the local disk and are backed up to the NAS by restic.
+    # The NAS photo share is read-only, added in the UI as an external library at /mnt/photo
+    mediaLocation = "/var/lib/immich";
     secretsFile = config.age.secrets.immich.path;
 
     settings = {
@@ -24,6 +26,12 @@ lib.mkIf config.services.immich.enable {
 
     # host = "127.0.0.1"; # Use when reverse proxy is setup
     host = "0.0.0.0";
+  };
+
+  # Wait for the NAS so the external library is readable
+  systemd.services.immich-server = {
+    after = [ "remote-fs.target" ];
+    wants = [ "remote-fs.target" ];
   };
 
   custom.glance.monitoredSites = lib.mkIf config.services.immich.enable [

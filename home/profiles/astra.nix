@@ -75,6 +75,7 @@ in
     obsidian
     qbittorrent
     raycast
+    readest
     ripgrep
     shottr
     signal-cli
@@ -84,18 +85,24 @@ in
     syncthing-macos
     thunderbird
     tldr
-    typst
     whatcable
     wireshark
     yazi
     yt-dlp
     zoxide
-    
+
     # langauge support
     nixd
     nixfmt
-    pyright
     nodejs_26
+    pyright
+    typst
+    pwntools
+    gef
+    nmap
+    netcat
+    wget
+    exiftool
   ];
 
   home.stateVersion = "25.05";
