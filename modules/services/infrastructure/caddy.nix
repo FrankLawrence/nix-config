@@ -17,26 +17,42 @@ let
     ${tls}
   '';
 
+  # Apps behind tinyauth trust these headers, so a client must never be able to
+  # send them itself. route keeps the strip before forward_auth sets them.
+  authHeaders = "Remote-User Remote-Groups Remote-Name Remote-Email";
+  stripAuthHeaders = ''
+    request_header -Remote-User
+    request_header -Remote-Groups
+    request_header -Remote-Name
+    request_header -Remote-Email
+  '';
+
   mkProtectedProxy = upstream: ''
-    forward_auth 127.0.0.1:5000 {
-      uri /api/auth/caddy
-      copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
+    route {
+      ${stripAuthHeaders}
+      forward_auth 127.0.0.1:5000 {
+        uri /api/auth/caddy
+        copy_headers ${authHeaders}
+      }
+      reverse_proxy ${upstream}
     }
-    reverse_proxy ${upstream}
     ${tls}
   '';
 
   mkProtectedProxyPublicPaths = publicPaths: upstream:
-  	let paths = builtins.concatStringsSep " " publicPaths;
-	  in ''
-            @protected not path ${paths}
-	    forward_auth @protected 127.0.0.1:5000 {
-	      uri /api/auth/caddy
-	      copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
-	    }
-	    reverse_proxy ${upstream}
-	    ${tls}
-	  '';
+    let paths = builtins.concatStringsSep " " publicPaths;
+    in ''
+      @protected not path ${paths}
+      route {
+        ${stripAuthHeaders}
+        forward_auth @protected 127.0.0.1:5000 {
+          uri /api/auth/caddy
+          copy_headers ${authHeaders}
+        }
+        reverse_proxy ${upstream}
+      }
+      ${tls}
+    '';
 in
 {
   age.secrets.caddy = {
@@ -76,12 +92,11 @@ in
       "auth.wurt.net".extraConfig       = mkProxy          "127.0.0.1:5000";
       "id.wurt.net".extraConfig         = mkProxy          "127.0.0.1:5010";
       "forgejo.wurt.net".extraConfig    = mkProxy          "127.0.0.1:5020";
-      "immich.wurt.net".extraConfig     = mkProxy          "127.0.0.1:5030";
       "syncthing.wurt.net".extraConfig  = mkProxy          "127.0.0.1:5040";
       "lldap.wurt.net".extraConfig      = mkProxy          "127.0.0.1:5050";
       "grafana.wurt.net".extraConfig    = mkProtectedProxy "127.0.0.1:5070";
       # ── Media ──────────────────────────────────────────────────────────────
-      "navidrome.wurt.net".extraConfig   = mkProxy "127.0.0.1:2000";
+      "navidrome.wurt.net".extraConfig   = mkProtectedProxyPublicPaths [ "/rest/*" "/share/*" ] "127.0.0.1:2000"; # Subsonic apps use their own password
       "kavita.wurt.net".extraConfig      = mkProxy "127.0.0.1:2010";
       "komga.wurt.net".extraConfig       = mkProxy "127.0.0.1:2020";
       "audio.wurt.net".extraConfig       = ''
@@ -90,32 +105,32 @@ in
         ${tls}
       '';
       "calibre.wurt.net".extraConfig     = mkProxy "[::1]:2040";
-
-      "lidarr.wurt.net".extraConfig      = mkProxy "127.0.0.1:2050";
+      "lidarr.wurt.net".extraConfig      = mkProtectedProxy "127.0.0.1:2050";
       "slskd.wurt.net".extraConfig       = mkProxy "127.0.0.1:2051";
-      "qbittorrent.wurt.net".extraConfig = mkProxy "127.0.0.1:2052";
+      "qbittorrent.wurt.net".extraConfig = mkProtectedProxy "127.0.0.1:2052";
       "jellyfin.wurt.net".extraConfig    = mkProxy "127.0.0.1:8096";
-      "suwayomi.wurt.net".extraConfig    = mkProxy "127.0.0.1:2060";
+      "suwayomi.wurt.net".extraConfig    = mkProtectedProxy "127.0.0.1:2060";
+      "immich.wurt.net".extraConfig      = mkProxy "127.0.0.1:2070";
       # ── Productivity ───────────────────────────────────────────────────────
       "glance.wurt.net" = {
-        extraConfig   = mkProxy "127.0.0.1:3000";
+        extraConfig   = mkProtectedProxy "127.0.0.1:3000";
         serverAliases = [ "home.wurt.net" ];
       };
       "stirling-pdf.wurt.net" = {
         extraConfig   = mkProxy "127.0.0.1:3010";
         serverAliases = [ "pdf.wurt.net" "stirling.wurt.net" ];
       };
-      "paperless.wurt.net".extraConfig = mkProtectedProxy "127.0.0.1:3020";
-      "vikunja.wurt.net".extraConfig   = mkProtectedProxy "127.0.0.1:3030";
+      "paperless.wurt.net".extraConfig = mkProxy          "127.0.0.1:3020";
+      "vikunja.wurt.net".extraConfig   = mkProxy          "127.0.0.1:3030";
       "actual.wurt.net".extraConfig    = mkProxy          "127.0.0.1:3040";
-      # "karakeep.wurt.net".extraConfig  = mkProtectedProxy "127.0.0.1:3050";
-      "mealie.wurt.net".extraConfig    = mkProtectedProxyPublicPaths [ "/g/*" "/api/public/" "/api/recipes/shared/*" ] "127.0.0.1:3060";
+      "karakeep.wurt.net".extraConfig  = mkProxy          "127.0.0.1:3050";
+      "mealie.wurt.net".extraConfig    = mkProxy          "127.0.0.1:3060";
       "freshrss.wurt.net".extraConfig  = mkProxy          "127.0.0.1:3070";
       "bento.wurt.net".extraConfig     = mkProxy          "127.0.0.1:3080";
       # ── Utility ────────────────────────────────────────────────────────────
-      "adguard.wurt.net".extraConfig   = mkProxy          "127.0.0.1:4000";
+      "adguard.wurt.net".extraConfig   = mkProtectedProxy "127.0.0.1:4000";
       "dawarich.wurt.net".extraConfig  = mkProxy          "127.0.0.1:4010";
-      "home-assistant.wurt.net".extraConfig = mkProxy     "192.168.178.160:8123";
+      "home-assistant.wurt.net".extraConfig = mkProxy     "127.0.0.1:4020";
     };
 
     environmentFile = config.age.secrets.caddy.path;

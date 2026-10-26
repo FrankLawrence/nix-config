@@ -23,7 +23,7 @@ lib.mkIf config.services.pocket-id.enable {
       TRUST_PROXY = false;
       # PORT = 1411;
       PORT = 5010;
-      HOST = "0.0.0.0"; #TODO
+      HOST = "127.0.0.1";
       METRICS_ENABLED = true;
       OTEL_METRICS_EXPORTER = "prometheus";
       OTEL_EXPORTER_PROMETHEUS_PORT = 5073;

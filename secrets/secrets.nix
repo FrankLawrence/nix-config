@@ -11,7 +11,6 @@ in
   "dawarich-secret-key.age".publicKeys = users ++ systems;
   "dawarich.age".publicKeys            = users ++ systems;
   "freshrss-secret.age".publicKeys     = users ++ systems;
-  "freshrss.age".publicKeys            = users ++ systems;
   "grafana.age".publicKeys             = users ++ systems;
   "karakeep.age".publicKeys            = users ++ systems;
   "kavita.age".publicKeys              = users ++ systems;

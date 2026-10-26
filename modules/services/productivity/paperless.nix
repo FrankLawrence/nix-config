@@ -12,7 +12,7 @@ lib.mkIf config.services.paperless.enable {
   services.paperless = {
     port = 3020;
     address = "127.0.0.1";
-    # passwordFile = config.age.secrets.paperless.path;
+    passwordFile = config.age.secrets.paperless.path;
     database.createLocally = true;
     environmentFile = config.age.secrets.paperless-oidc.path;
     settings = {
@@ -35,10 +35,12 @@ lib.mkIf config.services.paperless.enable {
     };
   };
 
-  custom.glance.monitoredSites = [{
-    title = "Paperless-NGX";
-    url = "https://paperless.wurt.net";
-    check-url = "http://127.0.0.1:28981";
-    icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/paperless-ngx.svg";
-  }];
+  custom.glance.monitoredSites = [
+    {
+      title = "Paperless-NGX";
+      url = "https://paperless.wurt.net";
+      check-url = "http://127.0.0.1:3020";
+      icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/paperless-ngx.svg";
+    }
+  ];
 }

@@ -8,10 +8,10 @@ lib.mkIf config.services.lidarr.enable {
 
   services.lidarr = {
     # environmentFiles = [ config.age.secrets.lidarr.path ];
-    openFirewall = true;
     settings = {
-	    server.port = 2050;
-			server.bindaddress = "127.0.0.1";
+      server.port = 2050;
+      server.bindaddress = "127.0.0.1";
+      auth.method = "External"; # login is handled by tinyauth in front of caddy
     };
   };
 

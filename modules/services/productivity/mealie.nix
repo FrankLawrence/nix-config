@@ -20,7 +20,7 @@ lib.mkIf config.services.mealie.enable {
   services.mealie = {
     # port = 9000;
     port = 3060;
-    listenAddress = "0.0.0.0"; #TODO
+    listenAddress = "127.0.0.1";
     credentialsFile = config.age.secrets.mealie.path;
     settings = {
       DB_ENGINE = "postgres";
@@ -36,7 +36,7 @@ lib.mkIf config.services.mealie.enable {
       OIDC_CONFIGURATION_URL = "https://id.wurt.net/.well-known/openid-configuration";
       OIDC_USER_GROUP = "family";
       OIDC_REMEMBER_ME = true;
-      OIDC_ADMIN_GROUP = "admin";
+      OIDC_ADMIN_GROUP = "admins";
       OIDC_AUTO_REDIRECT = true;
       OIDC_PROVIDER_NAME = "Pocket-ID";
 
