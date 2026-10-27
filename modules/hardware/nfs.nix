@@ -40,8 +40,6 @@ in
     timerConfig.OnCalendar = "*-*-* 01:55:00";
   };
 
-  # The NAS doesn't power itself back on, so wake it over LAN 1.
-  # Needs "Enable WOL on LAN 1" in DSM (Control Panel > Hardware & Power).
   systemd.services.nas-wake = {
     description = "Wake the NAS with a magic packet";
     after = [ "network-online.target" ];
@@ -55,7 +53,6 @@ in
     wantedBy = [ "timers.target" ];
     timerConfig = {
       OnCalendar = "*-*-* 10:00:00";
-      # Also send it at boot if centauri was off at 10:00
       Persistent = true;
     };
   };
@@ -69,7 +66,6 @@ in
   fileSystems."/mnt/photo" = {
     device = "${nas}:/volume1/photo";
     fsType = "nfs";
-    # Nothing on centauri writes photos; immich only reads them as an external library
     options = nfsOptions ++ [ "ro" ];
   };
   fileSystems."/mnt/video" = {
@@ -95,14 +91,12 @@ in
       "frank"
       "immich"
       "jellyfin"
-      "navidrome"
       "slskd"
     ];
   };
   users.groups.nas-media-rw = {
     gid = 65537;
     members = [
-      "lidarr"
       "qbittorrent"
     ];
   };
@@ -128,9 +122,17 @@ in
     "komga"
     "suwayomi"
   ];
+  users.groups.music.members = [
+    "frank"
+    "navidrome"
+    "lidarr"
+    "slskd"
+    "music-assistant"
+  ];
   systemd.tmpfiles.rules = [
     "d /srv/library 2775 root library -"
     "d /srv/library/manga 2775 root library -"
     "d /srv/library/books 2775 root library -"
+    "d /srv/music 2775 root music -"
   ];
 }

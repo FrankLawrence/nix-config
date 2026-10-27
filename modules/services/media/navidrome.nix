@@ -13,7 +13,7 @@ lib.mkIf config.services.navidrome.enable {
   services.navidrome = {
     environmentFile = config.age.secrets.navidrome.path;
     settings = {
-      MusicFolder = "/mnt/music";
+      MusicFolder = "/srv/music";
       # Port = 5001;
       Port = 2000;
       ScanSchedule = "@every 1h";
