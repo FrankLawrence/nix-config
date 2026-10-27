@@ -5,8 +5,6 @@ lib.mkIf config.services.syncthing.enable {
     group = "users";
     dataDir = "/home/frank";
     configDir = "/home/frank/.config/syncthing";
-    cert = "${../../../hosts/centauri/syncthing-cert.pem}";
-    # key = config.age.secrets.syncthing-key.path;
     guiAddress = "127.0.0.1:5040";
     openDefaultPorts = true;
     settings = import ../../shared/syncthing.nix;
