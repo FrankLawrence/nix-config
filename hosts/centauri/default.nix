@@ -27,33 +27,6 @@
       22 # ssh
       80 # caddy
       443 # caddy
-
-      # 2000 # navidrome
-      # 2010 # kavita
-      # 2020 # komga
-      # 2060 # suwayomi
-      # 8096 # jellyfin
-
-      # 3000 # glance
-      # 3010 # stirling-pdf
-      # 3020 # paperless
-      # 3030 # vikunja
-      # 3050 # karakeep
-      # 3060 # mealie
-      # 3070 # freshrss
-      # 3080 # bento
-
-      # 4010 # dawarich
-
-      # 5000 # auth
-      # 5010 # pocket-id
-      # 5020 # forgejo
-      # 5030 # immich
-      # 5040 # syncthing
-      # 22000 # synchting TCP and UDP sync traffic
-      # 21027 # syncthing UDP discovery
-      # 5050 # lldap
-      # 5070 # grafana
     ];
   };
 
@@ -63,7 +36,7 @@
     forgejo.enable    = true;
     caddy.enable      = true;
     immich.enable     = true;
-    syncthing.enable  = false;
+    syncthing.enable  = true;
     postgresql.enable = true;
     lldap.enable      = true;
 
@@ -71,11 +44,11 @@
     navidrome.enable       = true;
     kavita.enable          = true;
     komga.enable           = false;
-    audiobookshelf.enable  = true;
-    music-assistant.enable = true;
+    audiobookshelf.enable  = false;
+    music-assistant.enable = false;
     calibre-web.enable     = false;
-    lidarr.enable          = true;
-    qbittorrent.enable     = true;
+    lidarr.enable          = false;
+    qbittorrent.enable     = false;
     jellyfin.enable        = true;
     suwayomi-server.enable = true;
 
@@ -83,7 +56,7 @@
     glance.enable    = true;
     paperless.enable = true;
     vikunja.enable   = false;
-    actual.enable    = true;
+    actual.enable    = false;
     karakeep.enable  = false;
     mealie.enable    = true;
     freshrss.enable  = true;
@@ -92,7 +65,7 @@
     # Utility
     adguardhome.enable    = true;
     dawarich.enable       = true;
-    home-assistant.enable = true;
+    home-assistant.enable = false;
 
     # -- System Services --
     tailscale.enable = true;

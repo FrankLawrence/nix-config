@@ -12,6 +12,7 @@ in
   "dawarich.age".publicKeys            = users ++ systems;
   "freshrss-secret.age".publicKeys     = users ++ systems;
   "grafana.age".publicKeys             = users ++ systems;
+  "immich-oidc.age".publicKeys         = users ++ systems;
   "karakeep.age".publicKeys            = users ++ systems;
   "kavita.age".publicKeys              = users ++ systems;
   "lldap-observer.age".publicKeys      = users ++ systems;
@@ -26,6 +27,7 @@ in
   "restic.age".publicKeys              = users ++ systems;
   "reverse-proxy.age".publicKeys       = users ++ systems;
   "slskd.age".publicKeys               = users ++ systems;
+  "syncthing-centauri.age".publicKeys  = users ++ systems;
   "tinyauth.age".publicKeys            = users ++ systems;
   "wg-astra-private.age".publicKeys    = [ astra ];
   "wg-astra-preshare.age".publicKeys   = [ astra ];

@@ -39,6 +39,7 @@ in
     ../programs/terminal/kitty.nix
     ../programs/editors/neovim.nix
     ../programs/editors/zed.nix
+    ../services/syncthing.nix
   ];
 
   home.username = "frank";
@@ -75,14 +76,12 @@ in
     obsidian
     qbittorrent
     raycast
-    readest
     ripgrep
     shottr
     signal-cli
     skimpdf
     spotify
     starship
-    syncthing-macos
     thunderbird
     tldr
     whatcable

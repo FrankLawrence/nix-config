@@ -108,7 +108,12 @@ in
       "auth.wurt.net".extraConfig       = mkProxy          "127.0.0.1:5000";
       "id.wurt.net".extraConfig         = mkProxy          "127.0.0.1:5010";
       "forgejo.wurt.net".extraConfig    = mkProxy          "127.0.0.1:5020";
-      "syncthing.wurt.net".extraConfig  = mkProxy          "127.0.0.1:5040";
+      # Syncthing rejects a Host header other than its own address
+      "syncthing.wurt.net".extraConfig  = mkProtectedProxy ''
+        127.0.0.1:5040 {
+          header_up Host {upstream_hostport}
+        }
+      '';
       "lldap.wurt.net".extraConfig      = mkProxy          "127.0.0.1:5050";
       "grafana.wurt.net".extraConfig    = mkProtectedProxy "127.0.0.1:5070";
       # ── Media ──────────────────────────────────────────────────────────────

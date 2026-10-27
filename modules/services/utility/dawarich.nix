@@ -50,7 +50,7 @@ lib.mkIf config.services.dawarich.enable {
       SELF_HOSTED = "true";
     };
     extraEnvFiles = [
-    	config.age.secrets.dawarich.path
+      config.age.secrets.dawarich.path
     ];
     secretKeyBaseFile = config.age.secrets.dawarich-secret-key.path;
   };

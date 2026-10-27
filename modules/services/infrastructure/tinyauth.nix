@@ -29,6 +29,7 @@ let
     navidrome = "family";
     qbittorrent = "admins";
     suwayomi = "admins";
+    syncthing = "admins";
   };
 in
 {

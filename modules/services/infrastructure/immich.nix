@@ -15,6 +15,8 @@ in
   imports = [ "${unstable}/nixos/modules/services/web-apps/immich.nix" ];
 
   config = lib.mkIf config.services.immich.enable {
+    age.secrets.immich-oidc.file = ../../../secrets/immich-oidc.age;
+
     services.immich = {
       package = unstablePkgs.immich;
       port = 2070;
@@ -25,6 +27,26 @@ in
       settings = {
         newVersionCheck.enabled = true;
         server.externalDomain = "https://immich.wurt.net";
+        oauth = {
+          enabled = true;
+          issuerUrl = "https://id.wurt.net";
+          clientId = "d7712d50-a75b-446b-9e38-5a74ff1f8faf";
+          clientSecret._secret = config.age.secrets.immich-oidc.path;
+          scope = "openid email profile";
+          buttonText = "Login with Pocket-ID";
+          autoRegister = true;
+          autoLaunch = false;
+          # Pocket-ID custom claim on the admins group: immich_role = admin
+          roleClaim = "immich_role";
+          storageLabelClaim = "preferred_username";
+          storageQuotaClaim = "immich_quota";
+          signingAlgorithm = "RS256";
+          profileSigningAlgorithm = "none";
+          tokenEndpointAuthMethod = "client_secret_post";
+          mobileOverrideEnabled = false;
+        };
+        # Turn off once a Pocket-ID admin can log in
+        passwordLogin.enabled = true;
       };
 
       host = "127.0.0.1";

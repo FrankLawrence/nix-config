@@ -53,45 +53,11 @@
     enable = true;
     group = "users";
     user = "frank";
-    dataDir = "/home/frank/";
-    configDir = "/home/frank/.config/syncthing/";
+    dataDir = "/home/frank";
+    configDir = "/home/frank/.config/syncthing";
     guiAddress = "127.0.0.1:8384";
-    settings = {
-      devices = {
-        terra = {
-          name = "terra";
-          id = "QJXO57G-AJVI2DV-T3L4VTI-CTSKCVP-2NU5K3D-DZ5VEKY-ZPOPV5O-TU4YTAM";
-        };
-        centauri = {
-          name = "centauri";
-          id = "CKT27MM-CB52JEP-ZWXWWCT-N2K4IRE-PWJRLNT-D4EBMZE-ZUBKI3B-SDXXPQN";
-        };
-      };
-      folders = {
-        "nb" = {
-          path = "~/.nb/";
-          devices = [ "terra" ];
-          # versioning = {
-          #   type = "staggered";
-          #   params = {
-          #     cleanInterval = "3600";
-          #     maxAge = "15552000"; # 180 days in seconds
-          #   };
-          # };
-        };
-        "default" = {
-          path = "~/Sync/";
-          devices = [ "terra" "centauri" ];
-          versioning = {
-            type = "staggered";
-            params = {
-              cleanInterval = "3600";
-              maxAge = "15552000"; # 180 days in seconds
-            };
-          };
-        };
-      };
-    };
+    openDefaultPorts = true;
+    settings = import ../../modules/shared/syncthing.nix;
   };
 
   services.blueman.enable = true;
