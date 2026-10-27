@@ -87,17 +87,7 @@ in
     '';
 
     virtualHosts = {
-      "proxmox.wurt.net" = {
-        extraConfig = mkProxy ''
-          https://beelink.tailc21299.ts.net:8006 {
-            transport http {
-              tls_insecure_skip_verify
-            }
-            header_up Host {upstream_hostport}
-          }'';
-        serverAliases = [ "beelink.wurt.net" ];
-      };
-      "nas.wurt.net".extraConfig = mkProxy ''
+      "synology.wurt.net".extraConfig = mkProxy ''
         192.168.178.40:5001 {
         	transport http {
          		tls_insecure_skip_verify

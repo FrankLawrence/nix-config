@@ -60,7 +60,7 @@
     karakeep.enable  = false;
     mealie.enable    = true;
     freshrss.enable  = true;
-    # bentopdf.enable     = true;
+    bentopdf.enable  = true;
 
     # Utility
     adguardhome.enable    = true;
