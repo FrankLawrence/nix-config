@@ -15,6 +15,7 @@ in
   "immich-oidc.age".publicKeys         = users ++ systems;
   "karakeep.age".publicKeys            = users ++ systems;
   "kavita.age".publicKeys              = users ++ systems;
+  "kavita-oidc.age".publicKeys         = users ++ systems;
   "lldap-observer.age".publicKeys      = users ++ systems;
   "lldap-user.age".publicKeys          = users ++ systems;
   "lldap.age".publicKeys               = users ++ systems;

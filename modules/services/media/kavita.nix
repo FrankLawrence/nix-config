@@ -5,6 +5,11 @@ lib.mkIf config.services.kavita.enable {
     owner = "kavita";
     group = "kavita";
   };
+  age.secrets.kavita-oidc = {
+    file = ../../../secrets/kavita.age;
+    owner = "kavita";
+    group = "kavita";
+  };
 
   services.kavita = {
     tokenKeyFile = config.age.secrets.kavita.path;
@@ -12,6 +17,13 @@ lib.mkIf config.services.kavita.enable {
     settings = {
       Port = 2010;
       IpAddresses = "127.0.0.1";
+      OpenIdConnectSettings = {
+        Authority = "https://id.wurt.net";
+        ClientId = "6b33a4fb-dba7-442d-909a-72642f881b57";
+        Secret = config.age.secrets.kavita-oidc.path;
+        CustomScopes = [];
+        Enabled = true;
+      };
     };
   };
 

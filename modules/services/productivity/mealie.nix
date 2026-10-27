@@ -23,6 +23,7 @@ lib.mkIf config.services.mealie.enable {
     listenAddress = "127.0.0.1";
     credentialsFile = config.age.secrets.mealie.path;
     settings = {
+      BASE_URL = "https://mealie.wurt.net";
       DB_ENGINE = "postgres";
       POSTGRES_USER = "mealie";
       POSTGRES_URL_OVERRIDE = "postgresql://mealie@/mealie?host=/run/postgresql";
@@ -39,6 +40,7 @@ lib.mkIf config.services.mealie.enable {
       OIDC_ADMIN_GROUP = "admins";
       OIDC_AUTO_REDIRECT = true;
       OIDC_PROVIDER_NAME = "Pocket-ID";
+      OIDC_GROUPS_CLAIM = "mealie-group";
 
       # Use Pocket-ID for login
       # LDAP_AUTH_ENABLED = true;

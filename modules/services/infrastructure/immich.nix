@@ -45,8 +45,8 @@ in
           tokenEndpointAuthMethod = "client_secret_post";
           mobileOverrideEnabled = false;
         };
-        # Turn off once a Pocket-ID admin can log in
-        passwordLogin.enabled = true;
+	machineLearning.urls = [ "http://100.89.96.126:3003" "http://localhost:3003" ];
+        passwordLogin.enabled = false;
       };
 
       host = "127.0.0.1";
