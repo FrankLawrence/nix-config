@@ -1,6 +1,7 @@
 { pkgs, ... }:
 let
   nas = "192.168.178.40";
+  nasMac = "00:11:32:aa:fb:13";
   mounts = [
     "/mnt/photo"
     "/mnt/video"
@@ -37,6 +38,26 @@ in
   systemd.timers.nas-unmount = {
     wantedBy = [ "timers.target" ];
     timerConfig.OnCalendar = "*-*-* 01:55:00";
+  };
+
+  # The NAS doesn't power itself back on, so wake it over LAN 1.
+  # Needs "Enable WOL on LAN 1" in DSM (Control Panel > Hardware & Power).
+  systemd.services.nas-wake = {
+    description = "Wake the NAS with a magic packet";
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.wakeonlan}/bin/wakeonlan -i 192.168.178.255 ${nasMac}";
+    };
+  };
+  systemd.timers.nas-wake = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "*-*-* 10:00:00";
+      # Also send it at boot if centauri was off at 10:00
+      Persistent = true;
+    };
   };
 
   # NFS mounts
