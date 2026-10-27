@@ -60,7 +60,7 @@
   services = {
     # Infrastructure
     pocket-id.enable  = true;
-    forgejo.enable    = false;
+    forgejo.enable    = true;
     caddy.enable      = true;
     immich.enable     = true;
     syncthing.enable  = false;
@@ -71,11 +71,11 @@
     navidrome.enable       = true;
     kavita.enable          = true;
     komga.enable           = false;
-    audiobookshelf.enable  = false;
-    music-assistant.enable = false;
+    audiobookshelf.enable  = true;
+    music-assistant.enable = true;
     calibre-web.enable     = false;
-    lidarr.enable          = false;
-    qbittorrent.enable     = false;
+    lidarr.enable          = true;
+    qbittorrent.enable     = true;
     jellyfin.enable        = true;
     suwayomi-server.enable = true;
 
@@ -83,16 +83,16 @@
     glance.enable    = true;
     paperless.enable = true;
     vikunja.enable   = false;
-    actual.enable    = false;
+    actual.enable    = true;
     karakeep.enable  = false;
     mealie.enable    = true;
-    freshrss.enable  = false;
+    freshrss.enable  = true;
     # bentopdf.enable     = true;
 
     # Utility
     adguardhome.enable    = true;
-    dawarich.enable       = false;
-    home-assistant.enable = false;
+    dawarich.enable       = true;
+    home-assistant.enable = true;
 
     # -- System Services --
     tailscale.enable = true;

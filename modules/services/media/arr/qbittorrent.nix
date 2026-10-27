@@ -12,6 +12,7 @@ lib.mkIf config.services.qbittorrent.enable {
 	      };
 	    };
     };
+    openFirewall = true;
   };
 
   custom.glance.monitoredSites = [{

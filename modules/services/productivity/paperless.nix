@@ -18,7 +18,9 @@ lib.mkIf config.services.paperless.enable {
     settings = {
       PAPERLESS_URL = "https://paperless.wurt.net";
       PAPERLESS_ADMIN_USER = "admin";
-      PAPERLESS_ACCOUNT_ALLOW_SIGNUPS = true;
+      # Accounts come from Pocket-ID only; no open signups with a local password
+      PAPERLESS_ACCOUNT_ALLOW_SIGNUPS = false;
+      PAPERLESS_SOCIALACCOUNT_ALLOW_SIGNUPS = true;
 
       PAPERLESS_OCR_LANGUAGE = "deu+eng";
       PAPERLESS_CONSUMER_POLLING = 60;

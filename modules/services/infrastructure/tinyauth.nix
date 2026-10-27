@@ -24,11 +24,9 @@ let
 
   appGroups = {
     adguard = "admins";
-    glance = "admins";
     grafana = "admins";
-    home = "admins"; # alias of glance
     lidarr = "admins";
-    navidrome = "media";
+    navidrome = "family";
     qbittorrent = "admins";
     suwayomi = "admins";
   };

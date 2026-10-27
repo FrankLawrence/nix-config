@@ -40,15 +40,16 @@ lib.mkIf config.services.mealie.enable {
       OIDC_AUTO_REDIRECT = true;
       OIDC_PROVIDER_NAME = "Pocket-ID";
 
-      LDAP_AUTH_ENABLED = true;
-      LDAP_SERVER_URL = "ldap://127.0.0.1:5051";
-      LDAP_BASE_DN = "ou=people,dc=wurt,dc=net";
-      LDAP_USER_FILTER = "(memberof=cn=mealie,ou=groups,dc=wurt,dc=net)";
-      LDAP_ADMIN_FILTER = "(memberof=cn=lldap_admin,ou=groups,dc=wurt,dc=net)";
-      LDAP_QUERY_BIND = "cn=ldap_observer,ou=people,dc=wurt,dc=net";
-      LDAP_ID_ATTRIBUTE = "uid";
-      LDAP_NAME_ATTRIBUTE = "cn";
-      LDAP_MAIL_ATTRIBUTE = "mail";
+      # Use Pocket-ID for login
+      # LDAP_AUTH_ENABLED = true;
+      # LDAP_SERVER_URL = "ldap://127.0.0.1:5051";
+      # LDAP_BASE_DN = "ou=people,dc=wurt,dc=net";
+      # LDAP_USER_FILTER = "(memberof=cn=mealie,ou=groups,dc=wurt,dc=net)";
+      # LDAP_ADMIN_FILTER = "(memberof=cn=lldap_admin,ou=groups,dc=wurt,dc=net)";
+      # LDAP_QUERY_BIND = "cn=ldap_observer,ou=people,dc=wurt,dc=net";
+      # LDAP_ID_ATTRIBUTE = "uid";
+      # LDAP_NAME_ATTRIBUTE = "cn";
+      # LDAP_MAIL_ATTRIBUTE = "mail";
     };
   };
 

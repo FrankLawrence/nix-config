@@ -11,8 +11,4 @@
     ./jellyfin.nix
     ./arr
   ];
-
-  systemd.tmpfiles.rules = [
-    "d /media 0755 frank media"
-  ];
 }

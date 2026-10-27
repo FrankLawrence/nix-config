@@ -31,8 +31,8 @@ lib.mkIf config.services.vikunja.enable {
 							usernamefallback = true;
 			        emailfallback = true;
               authurl = "https://id.wurt.net";
-              clientID = "f4e6ada2-a852-4dbe-b45c-d4c28faf9731";
-              clientsecret = "l7BqDa9O8xLMWoGQltMGtBSIW85UqSzM";
+              clientID = "";
+              clientsecret = "";
               scope = "openid profile email";
             };
           };
@@ -44,7 +44,7 @@ lib.mkIf config.services.vikunja.enable {
   custom.glance.monitoredSites = [{
     title = "Vikunja";
     url = "https://vikunja.wurt.net";
-    check-url = "http://127.0.0.1:3456";
+    check-url = "http://127.0.0.1:3030";
     icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/vikunja.png";
   }];
 }

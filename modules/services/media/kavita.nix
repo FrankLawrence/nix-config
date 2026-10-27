@@ -9,8 +9,10 @@ lib.mkIf config.services.kavita.enable {
   services.kavita = {
     tokenKeyFile = config.age.secrets.kavita.path;
     # settings.Port = 5000;
-    settings.Port = 2010;
-    settings.IpAddresses = "127.0.0.1";
+    settings = {
+      Port = 2010;
+      IpAddresses = "127.0.0.1";
+    };
   };
 
   custom.glance.monitoredSites = [{

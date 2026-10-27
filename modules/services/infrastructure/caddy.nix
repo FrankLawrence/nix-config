@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 let
   caddyWithPlugins = pkgs.caddy.withPlugins {
     plugins = [ "github.com/caddy-dns/cloudflare@v0.2.4" ];
@@ -39,9 +39,12 @@ let
     ${tls}
   '';
 
-  mkProtectedProxyPublicPaths = publicPaths: upstream:
-    let paths = builtins.concatStringsSep " " publicPaths;
-    in ''
+  mkProtectedProxyPublicPaths =
+    publicPaths: upstream:
+    let
+      paths = builtins.concatStringsSep " " publicPaths;
+    in
+    ''
       @protected not path ${paths}
       route {
         ${stripAuthHeaders}
@@ -60,6 +63,19 @@ in
     owner = "caddy";
     group = "caddy";
   };
+
+  # Services on this host call each other by public name (tinyauth -> id.wurt.net,
+  # OIDC discovery, ...). Tailscale's DNS can't resolve them, so send them to caddy here.
+  networking.hosts =
+    let
+      names = lib.concatMap (name: [ name ] ++ config.services.caddy.virtualHosts.${name}.serverAliases) (
+        builtins.attrNames config.services.caddy.virtualHosts
+      );
+    in
+    {
+      "127.0.0.1" = names;
+      "::1" = names;
+    };
 
   services.caddy = {
     package = caddyWithPlugins;
@@ -81,7 +97,7 @@ in
           }'';
         serverAliases = [ "beelink.wurt.net" ];
       };
-      "nas.wurt.net".extraConfig        = mkProxy ''
+      "nas.wurt.net".extraConfig = mkProxy ''
         192.168.178.40:5001 {
         	transport http {
          		tls_insecure_skip_verify
@@ -96,10 +112,11 @@ in
       "lldap.wurt.net".extraConfig      = mkProxy          "127.0.0.1:5050";
       "grafana.wurt.net".extraConfig    = mkProtectedProxy "127.0.0.1:5070";
       # ── Media ──────────────────────────────────────────────────────────────
-      "navidrome.wurt.net".extraConfig   = mkProtectedProxyPublicPaths [ "/rest/*" "/share/*" ] "127.0.0.1:2000"; # Subsonic apps use their own password
-      "kavita.wurt.net".extraConfig      = mkProxy "127.0.0.1:2010";
-      "komga.wurt.net".extraConfig       = mkProxy "127.0.0.1:2020";
-      "audio.wurt.net".extraConfig       = ''
+      # "navidrome.wurt.net".extraConfig   = mkProtectedProxyPublicPaths [ "/rest/*" "/share/*" ] "127.0.0.1:2000"; # Subsonic apps use their own password
+      "navidrome.wurt.net".extraConfig = mkProxy "127.0.0.1:2000"; # Subsonic apps use their own password
+      "kavita.wurt.net".extraConfig    = mkProxy "127.0.0.1:2010";
+      "komga.wurt.net".extraConfig     = mkProxy "127.0.0.1:2020";
+      "audio.wurt.net".extraConfig = ''
         encode gzip zstd
         reverse_proxy 127.0.0.1:2030
         ${tls}
@@ -113,7 +130,7 @@ in
       "immich.wurt.net".extraConfig      = mkProxy "127.0.0.1:2070";
       # ── Productivity ───────────────────────────────────────────────────────
       "glance.wurt.net" = {
-        extraConfig   = mkProtectedProxy "127.0.0.1:3000";
+        extraConfig = mkProxy "127.0.0.1:3000";
         serverAliases = [ "home.wurt.net" ];
       };
       "stirling-pdf.wurt.net" = {
