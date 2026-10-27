@@ -56,7 +56,8 @@ in
     backupAll = true;
     location = "/var/backup/postgresql";
     compression = "zstd";
-    startAt = "*-*-* 03:00:00";
+    # Before restic, and both well before the NAS powers off at 02:00
+    startAt = "*-*-* 23:15:00";
   };
 
   services.restic.backups.nas = {
@@ -83,7 +84,7 @@ in
     ];
 
     timerConfig = {
-      OnCalendar = "*-*-* 03:30:00";
+      OnCalendar = "*-*-* 23:30:00";
       Persistent = true;
     };
     pruneOpts = [

@@ -1,9 +1,20 @@
+{ pkgs, ... }:
 let
   nas = "192.168.178.40";
+  mounts = [
+    "/mnt/photo"
+    "/mnt/video"
+    "/mnt/music"
+    "/mnt/backup"
+  ];
   nfsOptions = [
     "x-systemd.automount"
     "noauto"
     "_netdev"
+    # Unmount when unused, and give up on a mount attempt while the NAS is off
+    # instead of blocking the process that touched the path
+    "x-systemd.idle-timeout=10min"
+    "x-systemd.mount-timeout=30s"
     "nfsvers=4.0"
     "nosuid"
     "nodev"
@@ -11,6 +22,23 @@ let
   ];
 in
 {
+  # The NAS powers off 02:00-10:00. A hard NFS mount that is still mounted then
+  # blocks everything that touches it until the NAS is back, so detach the mounts
+  # just before. The automounts stay armed: the first access after 10:00 mounts
+  # again, and accesses while the NAS is off fail after mount-timeout.
+  # Lazy, because jellyfin/navidrome keep inotify watches that make a plain umount busy.
+  systemd.services.nas-unmount = {
+    description = "Detach NAS mounts before the NAS powers off";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = map (m: "-${pkgs.util-linux}/bin/umount --lazy ${m}") mounts;
+    };
+  };
+  systemd.timers.nas-unmount = {
+    wantedBy = [ "timers.target" ];
+    timerConfig.OnCalendar = "*-*-* 01:55:00";
+  };
+
   # NFS mounts
   boot = {
     supportedFilesystems = [ "nfs" ];
