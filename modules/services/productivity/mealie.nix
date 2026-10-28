@@ -40,7 +40,8 @@ lib.mkIf config.services.mealie.enable {
       OIDC_ADMIN_GROUP = "admins";
       OIDC_AUTO_REDIRECT = true;
       OIDC_PROVIDER_NAME = "Pocket-ID";
-      OIDC_GROUPS_CLAIM = "mealie-group";
+      # Pocket-ID sends LLDAP groups in the standard "groups" claim
+      OIDC_GROUPS_CLAIM = "groups";
 
       # Use Pocket-ID for login
       # LDAP_AUTH_ENABLED = true;
@@ -58,7 +59,7 @@ lib.mkIf config.services.mealie.enable {
   custom.glance.monitoredSites = [{
     title = "Mealie";
     url = "https://mealie.wurt.net";
-    check-url = "http://127.0.0.1:9000";
+    check-url = "http://127.0.0.1:3060";
     icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/mealie.svg";
   }];
 }

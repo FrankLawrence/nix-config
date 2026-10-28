@@ -8,11 +8,8 @@ lib.mkIf config.services.freshrss.enable {
     }];
   };
 
-  age.secrets.freshrss = {
-    file = ../../../secrets/freshrss.age;
-    owner = "freshrss";
-    group = "freshrss";
-  };
+  # Password for the FreshRSS user. FreshRSS's OIDC_* variables only work in its
+  # Docker image (Apache + mod_auth_openidc), not behind caddy + php-fpm.
   age.secrets.freshrss-secret = {
     file = ../../../secrets/freshrss-secret.age;
     owner = "freshrss";
@@ -21,6 +18,8 @@ lib.mkIf config.services.freshrss.enable {
 
 	services.freshrss = {
 		webserver = "caddy";
+		# The module serves php-fpm from this caddy vhost itself; nothing listens on a port
+		virtualHost = "freshrss.wurt.net";
 		database = {
 			type = "pgsql";
 			user = "freshrss";
@@ -29,28 +28,8 @@ lib.mkIf config.services.freshrss.enable {
 			# port = 5432;
 		};
 
-		# Must match the Pocket-ID username (OIDC_REMOTE_USER_CLAIM)
 		defaultUser = "frank";
 		passwordFile = config.age.secrets.freshrss-secret.path;
 		baseUrl = "https://freshrss.wurt.net";
 	};
-
-  services.phpfpm.pools.freshrss = {
-    phpEnv = {
-      OIDC_ENABLED = "1";
-      OIDC_PROVIDER_METADATA_URL = "https://id.wurt.net/.well-known/openid-configuration";
-      OIDC_SCOPES = "openid email profile";
-      OIDC_X_FORWARDED_HEADERS = "X-Forwarded-Proto X-Forwarded-Host";
-      OIDC_REMOTE_USER_CLAIM = "preferred_username";
-    };
-    # Allow workers to inherit OIDC_CLIENT_ID and OIDC_CLIENT_SECRET from the
-    # service environment (injected below via EnvironmentFile) without exposing
-    # them in the Nix store.
-    settings."clear_env" = "no";
-  };
-
-  # Inject client credentials from agenix secret into the phpfpm service
-  # environment; clear_env=no above makes them visible to PHP workers.
-  systemd.services.phpfpm-freshrss.serviceConfig.EnvironmentFile =
-    config.age.secrets.freshrss.path;
 }

@@ -137,8 +137,8 @@ in
       "actual.wurt.net".extraConfig    = mkProxy          "127.0.0.1:3040";
       "karakeep.wurt.net".extraConfig  = mkProxy          "127.0.0.1:3050";
       "mealie.wurt.net".extraConfig    = mkProxy          "127.0.0.1:3060";
-      "freshrss.wurt.net".extraConfig  = mkProxy          "127.0.0.1:3070";
-      "bento.wurt.net".extraConfig     = mkProxy          "127.0.0.1:3080";
+      # freshrss.wurt.net and bento.wurt.net are set up by their own modules
+      # (php-fpm and static files, no port to proxy to)
       # ── Utility ────────────────────────────────────────────────────────────
       "adguard.wurt.net".extraConfig   = mkProtectedProxy "127.0.0.1:4000";
       "dawarich.wurt.net".extraConfig  = mkProxy          "127.0.0.1:4010";
