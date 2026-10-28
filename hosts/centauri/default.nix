@@ -47,8 +47,8 @@
     audiobookshelf.enable  = false;
     music-assistant.enable = false;
     calibre-web.enable     = false;
-    lidarr.enable          = false;
-    qbittorrent.enable     = false;
+    lidarr.enable          = true;
+    qbittorrent.enable     = true;
     jellyfin.enable        = true;
     suwayomi-server.enable = true;
 
@@ -59,13 +59,13 @@
     actual.enable    = false;
     karakeep.enable  = false;
     mealie.enable    = true;
-    freshrss.enable  = false;
+    freshrss.enable  = true;
     bentopdf.enable  = true;
 
     # Utility
     adguardhome.enable    = true;
     dawarich.enable       = true;
-    home-assistant.enable = false;
+    home-assistant.enable = true;
 
     # -- System Services --
     tailscale.enable = true;
