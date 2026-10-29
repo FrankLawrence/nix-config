@@ -10,7 +10,7 @@ let
     (old: {
       src = pkgs.fetchurl {
         inherit (old.src) url;
-        hash = "sha256-fq5PSCk3sjv6gyheYcLZ5Q1NjP1mLfqm6oMHKPw0Riw=";
+        hash = "sha256-QKFPwISB+Ptzisn2qc8A3+jRXkmteGoYLHAi9D5IK48=";
       };
       nativeBuildInputs = [ pkgs._7zz ];
       unpackPhase = ''
